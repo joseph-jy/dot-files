@@ -47,7 +47,10 @@ set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 let g:nvim_config_root = stdpath('config')
 let g:config_file_list = ['plugin.vim',
             \ 'plugins/nerdtree/nerdtree.vim',
-            \ 'keymappings.vim'
+            \ 'plugins/vim-airline/vim-airline.vim',
+            \ 'plugins/fugitive/fugitive.vim',
+            \ 'keymappings.vim',
+            \ 'color.vim'
             \ ]
 
 for f in g:config_file_list
