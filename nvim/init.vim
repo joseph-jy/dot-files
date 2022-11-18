@@ -49,6 +49,8 @@ let g:config_file_list = ['plugin.vim',
             \ 'plugins/nerdtree/nerdtree.vim',
             \ 'plugins/vim-airline/vim-airline.vim',
             \ 'plugins/fugitive/fugitive.vim',
+            \ 'plugins/fzf/fzf.vim',
+			\ 'plugins/coc/coc.vim', 
             \ 'keymappings.vim',
             \ 'color.vim'
             \ ]
