@@ -8,6 +8,8 @@ Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
+Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
+Plug 'mhinz/vim-startify'
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'

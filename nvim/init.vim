@@ -51,6 +51,9 @@ let g:config_file_list = ['plugin.vim',
             \ 'plugins/fugitive/fugitive.vim',
             \ 'plugins/fzf/fzf.vim',
 			\ 'plugins/coc/coc.vim', 
+            \ 'plugins/vimwiki/function.vim',
+            \ 'plugins/vimwiki/vimwiki.vim',
+            \ 'plugins/startify/startify.vim',
             \ 'keymappings.vim',
             \ 'color.vim'
             \ ]
