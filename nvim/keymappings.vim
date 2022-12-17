@@ -84,3 +84,9 @@ nnoremap <S-F4> :execute "VWB" <Bar> :lopen<CR>
 
 "" Startify
 noremap <leader>s :Startify<CR>
+
+" Python Settings
+autocmd FileType python map <buffer> <F9> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+autocmd FileType python imap <buffer> <F9> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+
+
