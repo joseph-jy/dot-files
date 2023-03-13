@@ -9,7 +9,6 @@ Plug 'puremourning/vimspector'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
-Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
 Plug 'mhinz/vim-startify'
 Plug 'udalov/kotlin-vim', {'for': 'kotlin'}
 Plug 'weirongxu/coc-kotlin', {'for': 'kotlin', 'branch': 'master', 'do': 'yarn install --frozen-lockfile'}

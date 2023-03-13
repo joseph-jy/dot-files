@@ -61,21 +61,6 @@ vmap > >gv
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
-"" start vimwiki's bindings
-command! Wikiindex :VimwikiIndex
-nmap <LocalLeader>ww <Plug>VimwikiIndex
-nmap <LocalLeader>wi <Plug>VimwikiDiaryIndex
-nmap <LocalLeader>w<leader>w <Plug>VimwikiMakeDiaryNote
-nmap <LocalLeader>wt :VimwikiTable<CR>
-
-"" F4 for wiki documents search
-nnoremap <F4> :execute "VWS /" . expand("<cword>") . "/" <Bar> :lopen<CR>
-
-"" Shift - F4 for search all documents which links current document
-nnoremap <S-F4> :execute "VWB" <Bar> :lopen<CR>
-
-"" end vimwiki's bindings
-
 "" Startify
 noremap <leader>s :Startify<CR>
 
