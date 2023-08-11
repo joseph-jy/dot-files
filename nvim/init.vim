@@ -8,9 +8,13 @@ set fileencodings=utf-8
 set backspace=indent,eol,start
 
 "" Tabs. May be overridden by autocmd rules
+set autoindent
+set cindent
 set tabstop=4
 set softtabstop=0
 set shiftwidth=4
+set paste!
+set showmatch
 set expandtab
 
 "" Map leader to ,
