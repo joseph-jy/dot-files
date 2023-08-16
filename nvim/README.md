@@ -2,6 +2,7 @@
 
 ## Directory Structures
 
+```text
 📂 ROOT
 ├── 🌑 init.lua
 └── 📂 lua  
@@ -32,6 +33,7 @@
       ├── 🌑 toggleterm.lua
       ├── 🌑 treesitter.lua
       └── 🌑 whichkey.lua
+```
 
 ## Plugins
 
