@@ -2,31 +2,40 @@
 
 ## Directory Structures
 
-root ━ init.vim         # root config
-     │ keymappings.vim  # key mappins
-     │ plug.vim         # Vim-Plug config
-     ┣ pluins/          # plugins configs
-     ┣ plugged/         # after installed plugins
-     ┕ colors/          # color themes
+📂 ROOT
+├── 🌑 init.lua
+└── 📂 lua  
+   ├── 📂 core
+   │  ├── 🌑 options.lua
+   │  ├── 🌑 keymaps.lua
+   │  ├── 🌑 plugins.lua
+   │  ├── 🌑 colorscheme.lua
+   │  └── 🌑 autocommands.lua
+   ├── 📂 lsp
+   │  ├── 🌑 init.lua
+   │  ├── 🌑 mason.lua
+   │  ├── 🌑 null-ls.lua
+   │  └── 🌑 handlers.lua
+   └── 📂 plugins
+      ├── 🌑 alpha.lua
+      ├── 🌑 autopairs.lua
+      ├── 🌑 bufferline.lua
+      ├── 🌑 cmp.lua
+      ├── 🌑 comment.lua
+      ├── 🌑 gitsigns.lua
+      ├── 🌑 impatient.lua
+      ├── 🌑 indentline.lua
+      ├── 🌑 lualine.lua
+      ├── 🌑 nvim-tree.lua
+      ├── 🌑 project.lua
+      ├── 🌑 telescope.lua
+      ├── 🌑 toggleterm.lua
+      ├── 🌑 treesitter.lua
+      └── 🌑 whichkey.lua
 
 ## Plugins
 
-### Nerdtree
-
- File system explorer for vim editor
-
- - [github](https://github.com/preservim/nerdtree)
-
-### vim-airline
-
- Status Plugin for vim
-
- - [github](https://github.com/vim-airline/vim-airline)
- - [github](https://github.com/vim-airline/vim-airline-themes)
-
-### fugitive
-
- Git plugin for vim
-
- - [github](https://github.com/tpope/vim-fugitive)
+### nvim-cmp
+ 
+- [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) 는 자동완성 엔진이다. 
 
