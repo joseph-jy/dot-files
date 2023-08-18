@@ -4,6 +4,8 @@ require "core.plugins"
 require "core.colorscheme"
 require "core.autocommands"
 
+require "lsp.init"
+
 require "plugins.alpha"
 require "plugins.autopairs"
 require "plugins.bufferline"

@@ -1,2 +1,4 @@
 nvim/plugged/
 nvim/session/
+nvim/plugin/
+*.swp

@@ -13,6 +13,10 @@
    │  ├── 🌑 colorscheme.lua
    │  └── 🌑 autocommands.lua
    ├── 📂 lsp
+   │  ├──── 📂 settings
+   │  │   ├──🌑 jsonls.lua
+   │  │   ├──🌑 lua_ls.lua
+   │  │   └──🌑 pyright.lua
    │  ├── 🌑 init.lua
    │  ├── 🌑 mason.lua
    │  ├── 🌑 null-ls.lua
