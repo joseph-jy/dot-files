@@ -98,8 +98,12 @@ return packer.startup(function(use)
   use { "github/copilot.vim" }
 
   -- Markdown
-  use {'iamcco/markdown-preview.nvim'}
+  use { 'iamcco/markdown-preview.nvim' }
 
+  -- Debugger
+  use { 'mfussenegger/nvim-dap' }
+  use { 'mfussenegger/nvim-dap-python' }
+  use { 'rcarriga/nvim-dap-ui' }
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
