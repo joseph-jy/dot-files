@@ -371,7 +371,8 @@ set -g prefix C-a
 bind C-a send-prefix
 
 # synchronize all panes in a windows
-bind y set-window-option synchronize-panes
+bind y setw synchronize-panes \; display "All Panes ON/OFF"
+
 
 # if you don't want Oh my tmux! to alter a binding, use #!important
 # bind c new-window -c '#{pane_current_path}' #!important

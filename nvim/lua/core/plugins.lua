@@ -55,7 +55,7 @@ return packer.startup(function(use)
   use { "lewis6991/impatient.nvim", commit = "b842e16ecc1a700f62adb9802f8355b99b52a5a6" }
   use { "lukas-reineke/indent-blankline.nvim", commit = "db7cbcb40cc00fc5d6074d7569fb37197705e7f6" }
   use { "goolord/alpha-nvim", commit = "0bb6fc0646bcd1cdb4639737a1cee8d6e08bcc31" }
-	use { "folke/which-key.nvim" }
+	use { "folke/which-key.nvim", commit = "d65087b892c45d3722b6511c83a029671d6290e5" }
 
 	-- Colorschemes
   use { "folke/tokyonight.nvim", commit = "66bfc2e8f754869c7b651f3f47a2ee56ae557764" }
@@ -85,25 +85,23 @@ return packer.startup(function(use)
 	use { "nvim-telescope/telescope.nvim", commit = "6213322ab56eb27356fdc09a5078e41e3ea7f3bc" }
 
 	-- Treesitter
-	use {
-		"nvim-treesitter/nvim-treesitter",
-		commit = "226c1475a46a2ef6d840af9caa0117a439465500",
-	}
+	use { "nvim-treesitter/nvim-treesitter", commit = "226c1475a46a2ef6d840af9caa0117a439465500" }
 
 	-- Git
 	use { "lewis6991/gitsigns.nvim", commit = "2c6f96dda47e55fa07052ce2e2141e8367cbaaf2" }
-  use { "tpope/vim-fugitive" }
+  use { "tpope/vim-fugitive", commit = "59659093581aad2afacedc81f009ed6a4bfad275" }
 
   -- Copilot
-  use { "github/copilot.vim" }
+  use { "github/copilot.vim", commit = "5b19fb001d7f31c4c7c5556d7a97b243bd29f45f" }
 
   -- Markdown
-  use { 'iamcco/markdown-preview.nvim' }
+  use { 'iamcco/markdown-preview.nvim', commit = "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee" }
 
   -- Debugger
-  use { 'mfussenegger/nvim-dap' }
-  use { 'mfussenegger/nvim-dap-python' }
-  use { 'rcarriga/nvim-dap-ui' }
+  use { 'mfussenegger/nvim-dap', commit = "f0dca670fa059eb89dda8869a6310c804241345c" }
+  -- Debugger For Python
+  use { 'mfussenegger/nvim-dap-python', commit = "091e4ae00a12085f9ed4200a3cd04af7179b8a23" }
+  use { 'rcarriga/nvim-dap-ui', commit = "34160a7ce6072ef332f350ae1d4a6a501daf0159" }
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
