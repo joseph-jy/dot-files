@@ -449,3 +449,12 @@ tmux_conf_uninstall_plugins_on_reload=true
 #
 # "$@"
 # # /!\ do not remove the previous line
+
+# 설치할 플러그인들
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
+
+# 설정 예시
+set -g @continuum-restore 'on'
+set -g @resurrect-save 'on'
+
