@@ -371,7 +371,7 @@ set -g prefix C-a
 bind C-a send-prefix
 
 # synchronize all panes in a windows
-bind y setw synchronize-panes \; display "All Panes ON/OFF"
+bind S setw synchronize-panes \; display "Sync Panes ON/OFF"
 
 
 # if you don't want Oh my tmux! to alter a binding, use #!important
@@ -416,11 +416,11 @@ tmux_conf_uninstall_plugins_on_reload=true
 
 # to enable a plugin, use the 'set -g @plugin' syntax:
 # visit https://github.com/tmux-plugins for available plugins
-#set -g @plugin 'tmux-plugins/tmux-copycat'
-#set -g @plugin 'tmux-plugins/tmux-cpu'
-#set -g @plugin 'tmux-plugins/tmux-resurrect'
-#set -g @plugin 'tmux-plugins/tmux-continuum'
-#set -g @continuum-restore 'on'
+set -g @plugin 'tmux-plugins/tmux-copycat'
+set -g @plugin 'tmux-plugins/tmux-cpu'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @continuum-restore 'on'
 
 
 # -- custom variables ----------------------------------------------------------
@@ -449,12 +449,4 @@ tmux_conf_uninstall_plugins_on_reload=true
 #
 # "$@"
 # # /!\ do not remove the previous line
-
-# 설치할 플러그인들
-set -g @plugin 'tmux-plugins/tmux-resurrect'
-set -g @plugin 'tmux-plugins/tmux-continuum'
-
-# 설정 예시
-set -g @continuum-restore 'on'
-set -g @resurrect-save 'on'
 
