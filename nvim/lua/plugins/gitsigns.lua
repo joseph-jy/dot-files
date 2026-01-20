@@ -27,9 +27,7 @@ gitsigns.setup {
     delay = 1000,
     ignore_whitespace = false,
   },
-  current_line_blame_formatter_opts = {
-    relative_time = false,
-  },
+  -- 'current_line_blame_formatter_opts' was removed; configure via 'current_line_blame_formatter' if needed
   sign_priority = 6,
   update_debounce = 100,
   status_formatter = nil, -- Use default
@@ -42,7 +40,5 @@ gitsigns.setup {
     row = 0,
     col = 1,
   },
-  yadm = {
-    enable = false,
-  },
+  -- 'yadm' config key was removed in newer gitsigns and causes warnings
 }

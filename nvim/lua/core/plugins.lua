@@ -44,7 +44,7 @@ return packer.startup(function(use)
   use { "nvim-lua/plenary.nvim", commit = "857c5ac632080dba10aae49dba902ce3abf91b35" } -- Useful lua functions used by lots of plugins
   use { "windwp/nvim-autopairs", commit = "2a406cdd8c373ae7fe378a9e062a5424472bd8d8" } -- Autopairs, integrates with both cmp and treesitter
   use { "numToStr/Comment.nvim", commit = "e30b7f2008e52442154b66f7c519bfd2f1e32acb" }
-  use { "JoosepAlviste/nvim-ts-context-commentstring", commit = "e30b7f2008e52442154b66f7c519bfd2f1e32acb" }
+  use { "JoosepAlviste/nvim-ts-context-commentstring", commit = "1b212c2eee76d787bbea6aa5e92a2b534e7b4f8f" }
   use { "nvim-tree/nvim-web-devicons", commit = "1fb58cca9aebbc4fd32b086cb413548ce132c127" }
   use { "nvim-tree/nvim-tree.lua", commit = "1c733e8c1957dc67f47580fe9c458a13b5612d5b" }
   use { "akinsho/bufferline.nvim", commit = "73edc1f2732678e7a681e3d3be49782610914f6b" }
