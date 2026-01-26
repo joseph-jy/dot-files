@@ -5,11 +5,11 @@
 ```text
 📂 ROOT
 ├── 🌑 init.lua
-└── 📂 lua  
+└── 📂 lua
    ├── 📂 core
    │  ├── 🌑 options.lua
    │  ├── 🌑 keymaps.lua
-   │  ├── 🌑 plugins.lua
+   │  ├── 🌑 plugins.lua (lazy.nvim)
    │  ├── 🌑 colorscheme.lua
    │  └── 🌑 autocommands.lua
    ├── 📂 lsp
@@ -19,7 +19,6 @@
    │  │   └──🌑 pyright.lua
    │  ├── 🌑 init.lua
    │  ├── 🌑 mason.lua
-   │  ├── 🌑 null-ls.lua
    │  └── 🌑 handlers.lua
    └── 📂 plugins
       ├── 🌑 alpha.lua
@@ -27,11 +26,10 @@
       ├── 🌑 bufferline.lua
       ├── 🌑 cmp.lua
       ├── 🌑 comment.lua
+      ├── 🌑 copilot.lua
       ├── 🌑 gitsigns.lua
-      ├── 🌑 impatient.lua
       ├── 🌑 indentline.lua
       ├── 🌑 lualine.lua
-      ├── 🌑 nvim-tree.lua
       ├── 🌑 project.lua
       ├── 🌑 telescope.lua
       ├── 🌑 toggleterm.lua
@@ -39,20 +37,24 @@
       └── 🌑 whichkey.lua
 ```
 
+## Plugin Manager
+
+- [lazy.nvim](https://github.com/folke/lazy.nvim)
+
 ## Plugins
 
-### nvim-cmp
- 
-- [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) 는 자동완성 엔진이다. 
-
-### Comment
-
-- [Comment](https://github.com/numToStr/Comment.nvim) 는 각종 주석처리용 플러그인이다.
-
-### gitsigns
-
-- [gitsigns](https://github.com/lewis6991/gitsigns.nvim) 는 git 통합 플러그인이다.
-
-### alpha-nvim
-
-- [alph-nvim](https://github.com/goolord/alpha-nvim) 는 nvim 용 Dashboard 같은 플러그인이다.
+| Plugin | Description |
+|--------|-------------|
+| [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) | Autocompletion engine |
+| [Comment.nvim](https://github.com/numToStr/Comment.nvim) | Comment toggling |
+| [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) | Git integration |
+| [alpha-nvim](https://github.com/goolord/alpha-nvim) | Dashboard |
+| [copilot.lua](https://github.com/zbirenbaum/copilot.lua) | GitHub Copilot |
+| [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) | Fuzzy finder |
+| [which-key.nvim](https://github.com/folke/which-key.nvim) | Keybinding hints |
+| [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim) | Terminal integration |
+| [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | Syntax highlighting |
+| [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) | Statusline |
+| [bufferline.nvim](https://github.com/akinsho/bufferline.nvim) | Buffer tabs |
+| [indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim) | Indentation guides |
+| [mason.nvim](https://github.com/mason-org/mason.nvim) | LSP installer |
