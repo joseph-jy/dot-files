@@ -19,6 +19,7 @@ require("lazy").setup({
   { "numToStr/Comment.nvim", config = function() require "plugins.comment" end },
   "JoosepAlviste/nvim-ts-context-commentstring",
   "nvim-tree/nvim-web-devicons",
+  { "stevearc/oil.nvim", lazy = false, config = function() require "plugins.oil" end },
   { "akinsho/bufferline.nvim", config = function() require "plugins.bufferline" end },
   "moll/vim-bbye",
   { "nvim-lualine/lualine.nvim", config = function() require "plugins.lualine" end },
