@@ -1,0 +1,17 @@
+# Package directory
+elpa/
+
+# Custom settings (machine-specific)
+custom.el
+
+# Byte-compiled files
+*.elc
+
+# Backup and auto-save
+*~
+\#*\#
+.\#*
+
+# Transient files
+transient/
+eln-cache/

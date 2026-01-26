@@ -1,21 +1,40 @@
-[#](#) local-dot-files
+# dot-files
 
-## Init
+개인 dotfiles 설정 모음
+
+## 구조
 
 ```
-$ cd {LOCA_BASE}
-$ git clone git@github.com:joseph-jy/local-dot-files.git
+dot-files/
+├── brew/       # Homebrew Brewfile
+├── emacs/      # Emacs 설정
+├── nvim/       # Neovim 설정
+└── tmux/       # Tmux 설정
 ```
 
-```zsh
-$ ln -s {LOCAL_BASE}/local-dot-files/nvim ~/.config/nvim
-$ ln -s {LOCAL_BASE}/local-dot-files/doomemacs ~/.doom.d
+## 설치
+
+```bash
+git clone git@github.com:joseph-jy/dot-files.git
+cd dot-files
 ```
 
-## Homebrew
+### 심볼릭 링크
 
-```zsh
-$ ln -s {LOCAL_BASE}/brew/Brewfile-{LATEST_VERISON} ~/Brewfile
-$ brew bundle
+```bash
+# Neovim
+ln -s $(pwd)/nvim ~/.config/nvim
+
+# Emacs
+ln -s $(pwd)/emacs ~/.emacs.d
+
+# Tmux
+ln -s $(pwd)/tmux/tmux.conf.local ~/.tmux.conf.local
 ```
 
+### Homebrew
+
+```bash
+ln -s $(pwd)/brew/Brewfile-latest ~/Brewfile
+brew bundle
+```
