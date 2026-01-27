@@ -63,4 +63,9 @@ require("lazy").setup({
 
   -- Copilot
   { "zbirenbaum/copilot.lua", config = function() require "plugins.copilot" end },
+
+  -- DAP
+  { "mfussenegger/nvim-dap", config = function() require "plugins.dap" end },
+  { "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } },
+  "jay-babu/mason-nvim-dap.nvim",
 })

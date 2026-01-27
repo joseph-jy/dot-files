@@ -58,3 +58,26 @@
 | [bufferline.nvim](https://github.com/akinsho/bufferline.nvim) | Buffer tabs |
 | [indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim) | Indentation guides |
 | [mason.nvim](https://github.com/mason-org/mason.nvim) | LSP installer |
+| [nvim-dap](https://github.com/mfussenegger/nvim-dap) | Debug Adapter Protocol |
+| [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui) | UI for nvim-dap |
+
+## Debugging
+
+This configuration uses `nvim-dap` for debugging. Debuggers (like `debugpy`, `cpptools`) are managed via `mason.nvim`.
+
+### Keymaps
+
+| Key | Description |
+|-----|-------------|
+| `<leader>dt` | Toggle Breakpoint |
+| `<leader>ds` | Start / Continue |
+| `<leader>dc` | Continue |
+| `<leader>di` | Step Into |
+| `<leader>do` | Step Over |
+| `<leader>du` | Step Out |
+| `<leader>dr` | Toggle REPL |
+| `<leader>dl` | Run Last |
+| `<leader>dh` | Hover Variables |
+| `<leader>dg` | Get Session |
+| `<leader>dq` | Terminate |
+| `<leader>dU` | Toggle UI |
