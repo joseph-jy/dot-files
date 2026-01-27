@@ -40,14 +40,21 @@ which_key.setup({
 
 which_key.add({
   { "<leader>a", "<cmd>Alpha<cr>", desc = "Alpha" },
-  { "<leader>b", "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>", desc = "Buffers" },
+  -- Buffers
+  { "<leader>b", group = "Buffers" },
+  { "<leader>bb", "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>", desc = "Switch Buffers" },
+  { "<leader>bc", "<cmd>Bdelete!<CR>", desc = "Close Buffer" },
+
+  -- Files
+  { "<leader>f", group = "Files" },
+  { "<leader>ff", "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>", desc = "Find files" },
+  { "<leader>ft", "<cmd>Telescope live_grep theme=ivy<cr>", desc = "Find Text" },
+  { "<leader>fp", "<cmd>lua require('telescope').extensions.projects.projects()<cr>", desc = "Projects" },
+
+  -- General
   { "<leader>w", "<cmd>w!<CR>", desc = "Save" },
   { "<leader>q", "<cmd>q!<CR>", desc = "Quit" },
-  { "<leader>c", "<cmd>Bdelete!<CR>", desc = "Close Buffer" },
   { "<leader>h", "<cmd>nohlsearch<CR>", desc = "No Highlight" },
-  { "<leader>f", "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>", desc = "Find files" },
-  { "<leader>F", "<cmd>Telescope live_grep theme=ivy<cr>", desc = "Find Text" },
-  { "<leader>P", "<cmd>lua require('telescope').extensions.projects.projects()<cr>", desc = "Projects" },
 
   -- Lazy
   { "<leader>p", group = "Lazy" },
