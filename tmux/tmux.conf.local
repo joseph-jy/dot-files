@@ -72,16 +72,16 @@ tmux_conf_theme_colour_1="#e4e4e4"    # light gray (status bar bg)
 tmux_conf_theme_colour_2="#d0d0d0"    # lighter gray (pane border)
 tmux_conf_theme_colour_3="#585858"    # dark gray (inactive window text)
 tmux_conf_theme_colour_4="#00afff"    # light blue
-tmux_conf_theme_colour_5="#ffff00"    # yellow
+tmux_conf_theme_colour_5="#d7af5f"    # muted gold
 tmux_conf_theme_colour_6="#303030"    # dark gray (status left text)
 tmux_conf_theme_colour_7="#303030"    # dark (status left text)
-tmux_conf_theme_colour_8="#ffffff"    # white (status left text)
-tmux_conf_theme_colour_9="#ffff00"    # yellow
+tmux_conf_theme_colour_8="#c6c6c6"    # soft white (status left text)
+tmux_conf_theme_colour_9="#d7af5f"    # muted gold
 tmux_conf_theme_colour_10="#ff00af"   # pink
 tmux_conf_theme_colour_11="#1a6b3c"   # dark green
 tmux_conf_theme_colour_12="#585858"   # dark gray (status right text)
 tmux_conf_theme_colour_13="#303030"   # dark (status right text)
-tmux_conf_theme_colour_14="#ffffff"   # white (status right text)
+tmux_conf_theme_colour_14="#c6c6c6"   # soft white (status right text)
 tmux_conf_theme_colour_15="#e4e4e4"   # light gray (status right bg)
 tmux_conf_theme_colour_16="#d70000"   # red
 tmux_conf_theme_colour_17="#303030"   # dark (status right bg)
@@ -309,7 +309,7 @@ tmux_conf_battery_bar_length="auto"
 #   - gradient (default)
 #   - heat
 #   - "colour_full_fg,colour_empty_fg,colour_bg"
-tmux_conf_battery_bar_palette="gradient"
+tmux_conf_battery_bar_palette="#1a6b3c,#e4e4e4,#e4e4e4"
 #tmux_conf_battery_bar_palette="#d70000,#e4e4e4,#000000"   # red, white, black
 
 # battery hbar palette, possible values are:
