@@ -1,0 +1,354 @@
+tap "argoproj/tap"
+tap "d12frosted/emacs-plus"
+tap "dkos/dkosctl", "https://github.daumkakao.com/DKOS/homebrew-dkosctl"
+tap "eugene-babichenko/fixit"
+tap "mongodb/brew"
+tap "oven-sh/bun"
+tap "raine/workmux"
+tap "romkatv/powerlevel10k"
+# OpenType text shaping engine
+brew "harfbuzz"
+# General-purpose data compression with high compression ratio
+brew "xz"
+# Color management engine supporting ICC profiles
+brew "little-cms2"
+# Development kit for the Java programming language
+brew "openjdk"
+# Java build tool
+brew "ant"
+# Image format providing lossless and lossy compression for web images
+brew "webp"
+# New file format for still image compression
+brew "jpeg-xl"
+# Cryptography and SSL/TLS Toolkit
+brew "openssl@3"
+# Record and share terminal sessions
+brew "asciinema"
+# Conversion library
+brew "libiconv"
+# Extendable version manager with support for Ruby, Node.js, Erlang & more
+brew "asdf"
+# Bourne-Again SHell, a UNIX command interpreter
+brew "bash"
+# Clone of cat(1) with syntax highlighting and Git integration
+brew "bat"
+# Bash scripts that integrate bat with various command-line tools
+brew "bat-extras"
+# Linux virtual machines
+brew "lima"
+# Container runtimes on MacOS (and Linux) with minimal setup
+brew "colima"
+# Reimplementation of ctags(1)
+brew "ctags"
+# Get a file from an HTTP, HTTPS or FTP server
+brew "curl"
+# Tools to manipulate dates with a focus on financial data
+brew "dateutils"
+# Message bus system, providing inter-application communication
+brew "dbus"
+# Tool for exploring each layer in a docker image
+brew "dive"
+# Lightweight DNS forwarder and DHCP server
+brew "dnsmasq"
+# Pack, ship and run any application as a lightweight container
+brew "docker", link: false
+# Isolated development environments using Docker
+brew "docker-compose"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
+# Play, record, convert, and stream select audio and video codecs
+brew "ffmpeg"
+# Command-line fuzzy finder written in Go
+brew "fzf"
+# GitHub command-line tool
+brew "gh"
+# GIF image/animation creator/editor
+brew "gifsicle"
+# Terminal multiplexer
+brew "tmux"
+# Git status in tmux status bar
+brew "gitmux"
+# Blazing fast terminal-ui for git written in rust
+brew "gitui"
+# Validating, recursive, caching DNS resolver
+brew "unbound"
+# Open source programming language to build simple/reliable/efficient software
+brew "go"
+# Open-source build automation tool based on the Groovy and Kotlin DSL
+brew "gradle"
+# Java-based scripting language
+brew "groovy"
+# Kubernetes package manager
+brew "helm"
+# Improved top (interactive process viewer)
+brew "htop"
+# C/C++ and Java libraries for Unicode and globalization
+brew "icu4c@76"
+# Tools and libraries to manipulate images in select formats
+brew "imagemagick"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
+# Modern load testing tool, using Go and JavaScript
+brew "k6"
+# Kubernetes CLI To Manage Your Clusters In Style!
+brew "k9s"
+# Generic command-line non-JVM Apache Kafka producer and consumer
+brew "kcat"
+# Statically typed programming language for the JVM
+brew "kotlin"
+# Development kit for the Java programming language
+brew "openjdk@21"
+# Intelligent Kotlin support for any editor/IDE using the Language Server Protocol
+brew "kotlin-language-server"
+# Kubernetes command-line interface
+brew "kubernetes-cli"
+# Kubernetes prompt info for bash and zsh
+brew "kube-ps1"
+# Tool that can switch between kubectl contexts easily and create aliases
+brew "kubectx"
+# Template-free customization of Kubernetes YAML manifests
+brew "kustomize"
+# Simple terminal UI for git commands
+brew "lazygit"
+# Library for JPEG-2000 image manipulation
+brew "openjpeg"
+# Image processing and image analysis library
+brew "leptonica"
+# Portable Foreign Function Interface library
+brew "libffi"
+# GNOME XML library
+brew "libxml2"
+# Powerful, lightweight programming language
+brew "lua"
+# Just-In-Time Compiler (JIT) for the Lua programming language
+brew "luajit"
+# Swiss Army knife of email handling
+brew "mailutils"
+# Polyglot runtime manager (asdf rust clone)
+brew "mise"
+# Open-source, cross-platform JavaScript runtime environment
+brew "node"
+# Turn marked-up plain text into well-formatted documents
+brew "multimarkdown"
+# General-purpose lossless data-compression library
+brew "zlib"
+# Open source relational database management system
+brew "mysql"
+# Ambitious Vim-fork focused on extensibility and agility
+brew "neovim"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# AI coding agent, built for the terminal
+brew "opencode"
+# Development kit for the Java programming language
+brew "openjdk@11"
+# Development kit for the Java programming language
+brew "openjdk@17"
+# Open Visual Inference And Optimization toolkit for AI inference
+brew "openvino"
+# Swiss-army knife of markup format conversion
+brew "pandoc"
+# Python dependency management tool
+brew "pipenv"
+# PDF rendering library (based on the xpdf-3.0 code base)
+brew "poppler"
+# Theme for zsh
+brew "powerlevel10k"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.9"
+# Generic machine emulator and virtualizer
+brew "qemu"
+# Messaging and streaming broker
+brew "rabbitmq", restart_service: :changed
+# Persistent key-value database, with built-in net interface
+brew "redis"
+# SVG rendering tool and library
+brew "resvg"
+# Safe, concurrent, practical language
+brew "rust"
+# JVM-based programming language
+brew "scala"
+# Generate ASCII art with terminal, shell, and OS info
+brew "screenfetch"
+# 7-Zip is a file archiver with a high compression ratio
+brew "sevenzip"
+# Tail multiple Kubernetes pods & their containers
+brew "stern"
+# Version control system designed to be a better CVS
+brew "subversion"
+# OCR (Optical Character Recognition) engine
+brew "tesseract"
+# Code-search similar to ack
+brew "the_silver_searcher"
+# Simplified and community-driven man pages
+brew "tldr"
+# Manage complex tmux sessions easily
+brew "tmuxinator"
+# Incremental parsing library
+brew "tree-sitter"
+# Your CLI home video recorder
+brew "vhs"
+# Executes a program periodically, showing output fullscreen
+brew "watch"
+# Internet file retriever
+brew "wget"
+# JavaScript package manager
+brew "yarn"
+# Blazing fast terminal file manager written in Rust, based on async I/O
+brew "yazi"
+# Process YAML, JSON, XML, CSV and properties documents from the CLI
+brew "yq"
+# Centralized server for distributed coordination of services
+brew "zookeeper"
+# Shell extension to navigate your filesystem faster
+brew "zoxide"
+# Fish shell like syntax highlighting for zsh
+brew "zsh-syntax-highlighting"
+# Kubectl Argo Rollouts Plugin.
+brew "argoproj/tap/kubectl-argo-rollouts"
+# dkosctl sc : select cluster from dkosv3
+# dkosctl dashboard : open dashboard
+# dkosctl open : open dkos web
+# dkosctl ns : change namespace
+# dkosctl ssh : connect to node with a SSH
+# dkosctl create : create nodes
+# dkosctl delete : delete nodes
+# or you can do same thing with kubectl!
+brew "dkos/dkosctl/dkosctl"
+# A utility to fix mistakes in your commands.
+brew "eugene-babichenko/fixit/fixit"
+# This package contains standard utilities for interacting with MongoDB.
+brew "mongodb/brew/mongodb-database-tools"
+# High-performance, schema-free, document-oriented database
+brew "mongodb/brew/mongodb-community"
+# Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
+brew "oven-sh/bun/bun"
+# Opinionated workflow tool that orchestrates git worktrees and tmux
+brew "raine/workmux/workmux"
+# Application launcher and productivity software
+cask "alfred"
+# Redis desktop manager
+cask "another-redis-desktop-manager"
+# Application uninstaller
+cask "appcleaner"
+# OpenAI's official ChatGPT desktop app
+cask "chatgpt"
+# Anthropic's official Claude AI desktop app
+cask "claude"
+# Write, edit, and chat about your code with AI
+cask "cursor"
+# Databases and SQL IDE
+cask "datagrip"
+# App to build and share containerised applications and microservices
+cask "docker-desktop"
+# GNU Emacs text editor with patches for macOS
+cask "d12frosted/emacs-plus/emacs-plus-app"
+# Web browser
+cask "firefox"
+cask "font-d2coding"
+cask "font-d2coding-nerd-font"
+cask "font-jetbrains-mono-nerd-font"
+cask "font-meslo-lg-nerd-font"
+cask "font-source-code-pro"
+cask "font-symbols-only-nerd-font"
+# Terminal emulator that uses platform-native UI and GPU acceleration
+cask "ghostty"
+# Git client focusing on productivity
+cask "gitkraken"
+# CLI for GitKraken
+cask "gitkraken-cli"
+# Web browser
+cask "google-chrome"
+# Client for the Google Drive storage service
+cask "google-drive"
+# Libhangul-based keyboard input
+cask "gureumkim"
+# Desktop automation application
+cask "hammerspoon"
+# Free and open-source media player
+cask "iina"
+# Terminal emulator as alternative to Apple's Terminal app
+cask "iterm2"
+# Keyboard customiser
+cask "karabiner-elements"
+# Open-source keystroke visualiser
+cask "keycastr"
+# Clipboard manager
+cask "maccy"
+# App to write, plan, collaborate, and get organised
+cask "notion"
+# Knowledge base that works on top of a local folder of plain text Markdown files
+cask "obsidian"
+# Finder Toolbar app to open the current directory in Terminal or Editor
+cask "openinterminal"
+# Open source build of Lens Kubernetes IDE
+cask "openlens"
+# HTTP debugging proxy
+cask "proxyman"
+# HTTP client that helps testing and describing APIs
+cask "rapidapi"
+# GUI for streamlined Redis application development
+cask "redis-insight"
+# Screenshot measurement and annotation tool
+cask "shottr"
+# Team communication and collaboration software
+cask "slack"
+# Music streaming service
+cask "spotify"
+# Video game digital distribution service
+cask "steam"
+# General-purpose text editor
+cask "textmate"
+# Open-source code editor
+cask "visual-studio-code"
+# Multimedia player
+cask "vlc"
+# Open-source version of the X.Org X Window System
+cask "xquartz"
+# Video communication and virtual meeting platform
+cask "zoom"
+vscode "angular.ng-template"
+vscode "anthropic.claude-code"
+vscode "atlassian.atlascode"
+vscode "catppuccin.catppuccin-vsc"
+vscode "dracula-theme.theme-dracula"
+vscode "eamodio.gitlens"
+vscode "ecmel.vscode-html-css"
+vscode "editorconfig.editorconfig"
+vscode "fwcd.kotlin"
+vscode "github.copilot-chat"
+vscode "github.vscode-github-actions"
+vscode "github.vscode-pull-request-github"
+vscode "guodongsun.vscode-git-cruise"
+vscode "kruemelkatze.vscode-dashboard"
+vscode "mechatroner.rainbow-csv"
+vscode "mhutchie.git-graph"
+vscode "ms-azuretools.vscode-containers"
+vscode "ms-kubernetes-tools.vscode-kubernetes-tools"
+vscode "ms-python.debugpy"
+vscode "ms-python.python"
+vscode "ms-python.vscode-pylance"
+vscode "ms-python.vscode-python-envs"
+vscode "ms-vscode-remote.remote-containers"
+vscode "ms-vscode.makefile-tools"
+vscode "ms-vscode.powershell"
+vscode "naco-siren.gradle-language"
+vscode "openai.chatgpt"
+vscode "redhat.java"
+vscode "redhat.vscode-yaml"
+vscode "scala-lang.scala"
+vscode "scalameta.metals"
+vscode "vmware.vscode-boot-dev-pack"
+vscode "vmware.vscode-spring-boot"
+vscode "vscjava.vscode-gradle"
+vscode "vscjava.vscode-java-debug"
+vscode "vscjava.vscode-java-dependency"
+vscode "vscjava.vscode-java-pack"
+vscode "vscjava.vscode-java-test"
+vscode "vscjava.vscode-lombok"
+vscode "vscjava.vscode-maven"
+vscode "vscjava.vscode-spring-boot-dashboard"
+vscode "vscjava.vscode-spring-initializr"
+vscode "vscodevim.vim"
+vscode "waderyan.gitblame"
+go "github.com/kakao/kubectl-cilium"
