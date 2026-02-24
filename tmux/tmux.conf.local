@@ -357,6 +357,7 @@ set -g history-limit 10000
 
 # start with mouse mode enabled
 set -g mouse on
+set -g allow-passthrough on
 
 # force Vi mode
 #   really you should export VISUAL or EDITOR environment variable, see manual
