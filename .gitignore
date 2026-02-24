@@ -2,3 +2,6 @@ nvim/plugged/
 nvim/session/
 nvim/plugin/
 *.swp
+.HANDOFF.md.bak
+HANDOFF.md
+

@@ -14,12 +14,22 @@ diagram.setup({
   renderer_options = {
     mermaid = {
       background = nil,
-      theme = nil,
-      scale = 1,
+      theme = "forest",
+      scale = 4,
+      width = 480,
+      height = 640
     },
   },
+  keys = {
+    {
+      "K", -- or any key you prefer
+      function()
+        require("diagram").show_diagram_hover()
+      end,
+      mode = "n",
+      ft = { "markdown", "norg" }, -- Only in these filetypes
+      desc = "Show diagram in new tab",
+    },
+  }
 })
 
-vim.keymap.set("n", "<leader>dd", function()
-  require("diagram").show_diagram_hover()
-end, { desc = "Show diagram hover" })
