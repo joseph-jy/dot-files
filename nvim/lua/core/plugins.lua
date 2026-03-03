@@ -64,6 +64,14 @@ require("lazy").setup({
   -- Copilot
   { "zbirenbaum/copilot.lua", config = function() require "plugins.copilot" end },
 
+  -- Markdown
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+    ft = { "markdown" },
+    config = function() require "plugins.render-markdown" end,
+  },
+
   -- Diagram
   {
     "3rd/diagram.nvim",

@@ -15,9 +15,7 @@ diagram.setup({
     mermaid = {
       background = nil,
       theme = "forest",
-      scale = 4,
-      width = 480,
-      height = 640
+      scale = 2
     },
   },
   keys = {
