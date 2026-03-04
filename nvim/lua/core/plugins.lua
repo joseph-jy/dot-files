@@ -72,16 +72,6 @@ require("lazy").setup({
     config = function() require "plugins.render-markdown" end,
   },
 
-  -- Diagram
-  {
-    "3rd/diagram.nvim",
-    dependencies = {
-      { "3rd/image.nvim", opts = {} },
-    },
-    ft = { "markdown", "norg" },
-    config = function() require "plugins.diagram" end,
-  },
-
   -- DAP
   { "mfussenegger/nvim-dap", config = function() require "plugins.dap" end },
   { "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } },
