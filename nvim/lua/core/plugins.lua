@@ -72,6 +72,14 @@ require("lazy").setup({
     config = function() require "plugins.render-markdown" end,
   },
 
+  -- Markdown TOC
+  {
+    "hedyhli/markdown-toc.nvim",
+    ft = "markdown",
+    cmd = { "Mtoc" },
+    config = function() require "plugins.markdown-toc" end,
+  },
+
   -- Minimap
   { "echasnovski/mini.map", config = function() require "plugins.minimap" end },
 

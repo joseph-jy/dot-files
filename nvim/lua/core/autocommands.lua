@@ -30,6 +30,9 @@ vim.cmd [[
   augroup end
 ]]
 
+-- Markdown code block folding (treesitter-based)
+require "plugins.markdown-fold"
+
 -- Autoformat
 -- augroup _lsp
 --   autocmd!
