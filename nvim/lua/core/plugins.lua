@@ -72,6 +72,9 @@ require("lazy").setup({
     config = function() require "plugins.render-markdown" end,
   },
 
+  -- Minimap
+  { "echasnovski/mini.map", config = function() require "plugins.minimap" end },
+
   -- DAP
   { "mfussenegger/nvim-dap", config = function() require "plugins.dap" end },
   { "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } },
