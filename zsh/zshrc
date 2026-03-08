@@ -1,0 +1,22 @@
+# ~/.config/zsh/zshrc — XDG-based zsh loader
+# This file is sourced from ~/.zshrc (or via ZDOTDIR)
+
+ZSHDIR="${ZDOTDIR:-$HOME/.config/zsh}"
+
+# Load conf.d/*.zsh in sorted order
+for conf in "$ZSHDIR"/conf.d/*.zsh(N); do
+  source "$conf"
+done
+
+# Load OS-specific config
+case "$OSTYPE" in
+  darwin*)  [[ -f "$ZSHDIR/os/darwin.zsh" ]]  && source "$ZSHDIR/os/darwin.zsh" ;;
+  linux*)   [[ -f "$ZSHDIR/os/linux.zsh" ]]   && source "$ZSHDIR/os/linux.zsh" ;;
+esac
+
+# Load host-specific config (optional, gitignored)
+local _host="${HOST%%.*}"
+[[ -f "$ZSHDIR/host/${_host}.zsh" ]] && source "$ZSHDIR/host/${_host}.zsh"
+
+# Load local overrides (gitignored — secrets, company paths, tokens)
+[[ -f "$ZSHDIR/local.zsh" ]] && source "$ZSHDIR/local.zsh"

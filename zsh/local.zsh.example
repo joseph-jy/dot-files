@@ -1,0 +1,9 @@
+# local.zsh — Machine-specific overrides (gitignored)
+# Copy this file to local.zsh and fill in your values.
+
+# Company/project paths
+# export PLAY_PATH="/path/to/your/project"
+# export PATH="$PATH:$PLAY_PATH"
+
+# API tokens (NEVER commit real values)
+# export JIRA_API_TOKEN="your-token-here"

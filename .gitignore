@@ -5,3 +5,7 @@ nvim/plugin/
 .HANDOFF.md.bak
 HANDOFF.md
 
+# zsh — machine-specific (secrets, tokens, host config)
+zsh/local.zsh
+zsh/host/
+
