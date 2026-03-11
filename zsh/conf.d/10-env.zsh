@@ -6,4 +6,4 @@ export EDITOR="nvim"
 eval "$(mise activate zsh)"
 
 # PATH — common entries (deduplicated)
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
