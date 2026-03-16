@@ -1,0 +1,13 @@
+name: <%= File.basename(Dir.pwd) %>
+root: ./
+
+on_project_start: caffeinate -s & echo $! > /tmp/tmuxinator-caffeinate-<%= File.basename(Dir.pwd) %>.pid
+on_project_exit: kill $(cat /tmp/tmuxinator-caffeinate-<%= File.basename(Dir.pwd) %>.pid 2>/dev/null) 2>/dev/null; rm -f /tmp/tmuxinator-caffeinate-<%= File.basename(Dir.pwd) %>.pid
+
+windows:
+  - dev:
+      layout: main-vertical
+      panes:
+        - copilot
+        - lazygit
+        - y

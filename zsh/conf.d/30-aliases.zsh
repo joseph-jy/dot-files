@@ -20,9 +20,9 @@ alias tk='tmux kill-session -t'
 alias td='tmux detach'
 
 # tmuxinator
-alias mux-cc='tmuxinator claude-code-workspace'
-alias mux-co='tmuxinator copilot-workspace'
-alias mux-ai='tmuxinator ai-agent-workspace'
+alias claude-mux='tmuxinator claude-code-workspace'
+alias copilot-mux='tmuxinator copilot-workspace'
+alias codex-mux='tmuxinator codex-workspace'
 
 # workmux
 alias wm='workmux'
@@ -37,7 +37,7 @@ alias cc='claude --continue'
 alias cr='claude --resume'
 alias ch='claude --chrome'
 alias cus="npx ccusage"
-alias cmo='claude-monitor --plan pro --view realtime'
+alias cmo='claude-monitor --plan max --view realtime'
 
 # Git
 alias gb='git branch'
@@ -47,4 +47,5 @@ alias gd='git diff'
 
 # eza
 alias ll='eza -lbh --icons'
+alias la='eza -labh --icons'
 alias lt='eza --tree --git --icons --git-ignore'
