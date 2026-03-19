@@ -1,6 +1,8 @@
-[user]
-  name = Joseph
-  email = joseph.jyoon@kakaocorp.com
+[include]
+  path = ~/.config/dotfiles/git/gitconfig.personal
+
+[includeIf "gitdir:~/Documents/github.daumkakao.com/"]
+  path = ~/.config/dotfiles/git/gitconfig.work
 
 [alias]
   # 가장 최근에 업데이트된 원격 브랜치 TOP N (기본 10개)
