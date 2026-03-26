@@ -8,9 +8,6 @@ alias cl="clear"
 alias history="history 1"
 alias q='exit'
 
-# Kubernetes
-alias k="kubectl"
-
 # tmux
 alias t='tmux attach || tmux new-session'
 alias ta='tmux attach -t'
@@ -23,13 +20,6 @@ alias td='tmux detach'
 alias claude-mux='tmuxinator claude-code-workspace'
 alias copilot-mux='tmuxinator copilot-workspace'
 alias codex-mux='tmuxinator codex-workspace'
-
-# workmux
-alias wm='workmux'
-alias wml='workmux list'
-alias wma='workmux add'
-alias wmm='workmux merge'
-alias wmd='workmux dashboard'
 
 # Claude Code
 alias c='claude'
@@ -49,3 +39,4 @@ alias gd='git diff'
 alias ll='eza -lbh --icons'
 alias la='eza -labh --icons'
 alias lt='eza --tree --git --icons --git-ignore'
+alias llt='eza --tree --icons'

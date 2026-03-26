@@ -17,6 +17,3 @@ eval "$(zoxide init zsh)"
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-# krew (kubectl plugin manager)
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
