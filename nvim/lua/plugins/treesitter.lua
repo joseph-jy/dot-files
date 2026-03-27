@@ -1,29 +1,22 @@
-local M = {
-}
+local M = {}
+
 function M.config()
-  local treesitter = require "nvim-treesitter"
-  local configs = require "nvim-treesitter.configs"
+  require("nvim-treesitter").setup({})
 
-  configs.setup {
-    ensure_installed = { "lua", "markdown", "markdown_inline", "bash", "python", "javascript"}, -- put the language you want in this array
-    -- ensure_installed = "all", -- one of "all" or a list of languages
-    ignore_install = { "" },                                                       -- List of parsers to ignore installing
-    sync_install = false,                                                          -- install languages synchronously (only applied to `ensure_installed`)
+  local languages = { "lua", "markdown", "markdown_inline", "bash", "python", "javascript" }
+  local installed = require("nvim-treesitter.config").get_installed()
+  local missing = vim.tbl_filter(function(lang)
+    return not vim.list_contains(installed, lang)
+  end, languages)
+  if #missing > 0 then
+    require("nvim-treesitter").install(missing)
+  end
 
-    highlight = {
-      enable = true,       -- false will disable the whole extension
-      disable = { "css" }, -- list of language that will be disabled
-    },
-    autopairs = {
-      enable = true,
-    },
-    indent = { enable = true, disable = { "python", "css" } },
-
-    context_commentstring = {
-      enable = true,
-      enable_autocmd = false,
-    },
-  }
+  vim.api.nvim_create_autocmd("FileType", {
+    callback = function(args)
+      pcall(vim.treesitter.start, args.buf)
+    end,
+  })
 end
 
 return M
