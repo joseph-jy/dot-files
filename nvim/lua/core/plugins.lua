@@ -20,6 +20,12 @@ require("lazy").setup({
   "JoosepAlviste/nvim-ts-context-commentstring",
   "nvim-tree/nvim-web-devicons",
   { "stevearc/oil.nvim", lazy = false, config = function() require "plugins.oil" end },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons", "MunifTanjim/nui.nvim" },
+    config = function() require "plugins.neo-tree" end,
+  },
   { "akinsho/bufferline.nvim", config = function() require "plugins.bufferline" end },
   "moll/vim-bbye",
   { "nvim-lualine/lualine.nvim", config = function() require "plugins.lualine" end },
@@ -30,8 +36,7 @@ require("lazy").setup({
   { "folke/which-key.nvim", config = function() require "plugins.whichkey" end },
 
   -- Colorschemes
-  "folke/tokyonight.nvim",
-  "lunarvim/darkplus.nvim",
+  "savq/melange-nvim",
 
   -- Cmp
   { "hrsh7th/nvim-cmp", config = function() require "plugins.cmp" end },
