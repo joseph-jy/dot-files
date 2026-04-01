@@ -5,6 +5,10 @@ export EDITOR="nvim"
 # PATH — common entries (deduplicated)
 export PATH="$HOME/.local/bin:$PATH"
 
+# play-1.40
+export PLAY_1_4_0_PATH="/Users/joseph-jyoon/Documents/github.daumkakao.com/kakao-gift/gift-play-1.4.0"
+export PATH="$PLAY_1_4_0_PATH:$PATH"
+
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
