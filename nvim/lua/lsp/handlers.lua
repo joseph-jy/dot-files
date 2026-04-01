@@ -37,19 +37,11 @@ vim.diagnostic.config({
   },
 })
 
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-  border = "rounded",
-})
-
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-  border = "rounded",
-})
-
 local function lsp_keymaps(bufnr)
   local opts = { noremap = true, silent = true, buffer = bufnr }
   vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
   vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-  vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+  vim.keymap.set("n", "K", function() vim.lsp.buf.hover({ border = "rounded" }) end, opts)
   vim.keymap.set("n", "gI", vim.lsp.buf.implementation, opts)
   vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
   vim.keymap.set("n", "gl", vim.diagnostic.open_float, opts)
@@ -59,7 +51,7 @@ local function lsp_keymaps(bufnr)
   vim.keymap.set("n", "<leader>lj", function() vim.diagnostic.goto_next({ buffer = 0 }) end, opts)
   vim.keymap.set("n", "<leader>lk", function() vim.diagnostic.goto_prev({ buffer = 0 }) end, opts)
   vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, opts)
-  vim.keymap.set("n", "<leader>ls", vim.lsp.buf.signature_help, opts)
+  vim.keymap.set("n", "<leader>ls", function() vim.lsp.buf.signature_help({ border = "rounded" }) end, opts)
   vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist, opts)
 end
 

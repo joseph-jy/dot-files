@@ -17,7 +17,7 @@ require("lazy").setup({
 
   { "windwp/nvim-autopairs", config = function() require "plugins.autopairs" end },
   { "numToStr/Comment.nvim", config = function() require "plugins.comment" end },
-  "JoosepAlviste/nvim-ts-context-commentstring",
+  { "JoosepAlviste/nvim-ts-context-commentstring", opts = { enable_autocmd = false } },
   "nvim-tree/nvim-web-devicons",
   { "stevearc/oil.nvim", lazy = false, config = function() require "plugins.oil" end },
   {
