@@ -9,9 +9,6 @@ elif [[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; th
   source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
-# fixit
-eval "$(fixit init zsh)"
-
 # zoxide
 eval "$(zoxide init zsh)"
 
