@@ -36,3 +36,6 @@
 
 [merge]
   conflictstyle = zdiff3
+[user]
+	name = joseph.jyoon
+	email = joseph.jyoon@kakaocorp.com
