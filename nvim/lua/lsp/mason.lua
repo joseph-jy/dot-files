@@ -3,10 +3,12 @@ local servers = {
   "cssls",
   "html",
   "pyright",
+  "jdtls",
+  "kotlin_language_server",
+  "ts_ls",
   "bashls",
   "jsonls",
   "yamlls",
-  "kotlin_language_server",
 }
 
 local settings = {
@@ -25,7 +27,7 @@ local settings = {
 require("mason").setup(settings)
 require("mason-lspconfig").setup({
   ensure_installed = servers,
-  automatic_installation = true,
+  automatic_enable = false,
 })
 
 local handlers = require("lsp.handlers")

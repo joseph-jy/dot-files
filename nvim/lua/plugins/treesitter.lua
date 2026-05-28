@@ -3,7 +3,18 @@ local M = {}
 function M.config()
   require("nvim-treesitter").setup({})
 
-  local languages = { "lua", "markdown", "markdown_inline", "bash", "python", "javascript" }
+  local languages = {
+    "lua",
+    "markdown",
+    "markdown_inline",
+    "bash",
+    "python",
+    "javascript",
+    "typescript",
+    "tsx",
+    "java",
+    "kotlin",
+  }
   local installed = require("nvim-treesitter.config").get_installed()
   local missing = vim.tbl_filter(function(lang)
     return not vim.list_contains(installed, lang)
