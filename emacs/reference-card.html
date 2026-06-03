@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GNU Emacs Reference Card</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #020303;
+      --title: #00f5f7;
+      --text: #fff170;
+      --key: #ff9dd7;
+      --muted: #b6b06b;
+      --rule: #1d2424;
+      --panel: #071010;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    body {
+      padding: 24px;
+      font-size: 13px;
+      line-height: 1.14;
+    }
+
+    .page {
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 18px;
+      align-items: end;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      grid-column: 2;
+      margin: 0;
+      color: var(--title);
+      font-size: 21px;
+      line-height: 1;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .version {
+      display: block;
+      margin-top: 2px;
+      font-size: 12px;
+      color: var(--title);
+    }
+
+    .note {
+      justify-self: end;
+      max-width: 330px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: right;
+    }
+
+    .columns {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(240px, 1fr));
+      gap: 22px;
+      align-items: start;
+    }
+
+    .column {
+      min-width: 0;
+    }
+
+    section {
+      break-inside: avoid;
+      margin: 0 0 11px;
+    }
+
+    h2 {
+      margin: 0 0 4px;
+      color: var(--title);
+      font-size: 17px;
+      line-height: 1;
+    }
+
+    h3 {
+      margin: 7px 0 3px;
+      color: var(--title);
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .entry,
+    .table-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: baseline;
+      min-height: 15px;
+    }
+
+    .entry span:first-child,
+    .table-row span:first-child {
+      min-width: 0;
+    }
+
+    .keys,
+    kbd {
+      color: var(--key);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) auto auto;
+      gap: 4px 11px;
+      align-items: baseline;
+    }
+
+    .matrix .head {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .matrix .keys {
+      text-align: right;
+    }
+
+    .hint {
+      margin-top: 4px;
+      color: var(--text);
+    }
+
+    .example {
+      margin: 4px 0 0;
+      color: var(--key);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
+      white-space: pre-wrap;
+    }
+
+    .compact {
+      margin-bottom: 6px;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 1180px) {
+      .columns {
+        grid-template-columns: repeat(2, minmax(240px, 1fr));
+      }
+
+      header {
+        grid-template-columns: 1fr;
+      }
+
+      h1,
+      .note {
+        grid-column: auto;
+        justify-self: start;
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 620px) {
+      body {
+        padding: 16px;
+        font-size: 12px;
+      }
+
+      h1 {
+        font-size: 19px;
+        white-space: normal;
+      }
+
+      .columns,
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      .entry,
+      .table-row {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1px;
+        margin-bottom: 4px;
+      }
+
+      .keys {
+        white-space: normal;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div></div>
+      <h1>GNU Emacs Reference Card <span class="version">core default keys</span></h1>
+      <div class="note">Separate from the personal init.el cheat sheet. Dense screen card inspired by the classic GNU Emacs layout.</div>
+    </header>
+
+    <div class="columns">
+      <div class="column">
+        <section>
+          <h2>Starting Emacs</h2>
+          <div class="entry"><span>open Emacs from a shell</span><span class="keys">emacs</span></div>
+          <div class="entry"><span>open a file immediately</span><span class="keys">emacs file</span></div>
+          <div class="entry"><span>skip startup file</span><span class="keys">emacs -q</span></div>
+        </section>
+
+        <section>
+          <h2>Leaving Emacs</h2>
+          <div class="entry"><span>suspend Emacs</span><span class="keys">C-z</span></div>
+          <div class="entry"><span>quit Emacs permanently</span><span class="keys">C-x C-c</span></div>
+          <div class="entry"><span>cancel current command</span><span class="keys">C-g</span></div>
+        </section>
+
+        <section>
+          <h2>Files</h2>
+          <div class="entry"><span>visit a file</span><span class="keys">C-x C-f</span></div>
+          <div class="entry"><span>save current buffer</span><span class="keys">C-x C-s</span></div>
+          <div class="entry"><span>save all changed buffers</span><span class="keys">C-x s</span></div>
+          <div class="entry"><span>write buffer to another file</span><span class="keys">C-x C-w</span></div>
+          <div class="entry"><span>insert file contents here</span><span class="keys">C-x i</span></div>
+          <div class="entry"><span>revert buffer from disk</span><span class="keys">M-x revert-buffer</span></div>
+          <div class="entry"><span>toggle read-only</span><span class="keys">C-x C-q</span></div>
+        </section>
+
+        <section>
+          <h2>Getting Help</h2>
+          <div class="entry"><span>help dispatcher</span><span class="keys">C-h</span></div>
+          <div class="entry"><span>tutorial</span><span class="keys">C-h t</span></div>
+          <div class="entry"><span>describe key</span><span class="keys">C-h k</span></div>
+          <div class="entry"><span>describe command</span><span class="keys">C-h f</span></div>
+          <div class="entry"><span>describe variable</span><span class="keys">C-h v</span></div>
+          <div class="entry"><span>describe mode</span><span class="keys">C-h m</span></div>
+          <div class="entry"><span>apropos command</span><span class="keys">C-h a</span></div>
+          <div class="entry"><span>view Info manual</span><span class="keys">C-h i</span></div>
+        </section>
+
+        <section>
+          <h2>Error Recovery</h2>
+          <div class="entry"><span>abort command</span><span class="keys">C-g</span></div>
+          <div class="entry"><span>undo last edit</span><span class="keys">C-/</span></div>
+          <div class="entry"><span>undo, alternate key</span><span class="keys">C-x u</span></div>
+          <div class="entry"><span>recover edited file</span><span class="keys">M-x recover-file</span></div>
+          <div class="entry"><span>recover session</span><span class="keys">M-x recover-session</span></div>
+          <div class="entry"><span>redraw screen</span><span class="keys">C-l</span></div>
+        </section>
+
+        <section>
+          <h2>Incremental Search</h2>
+          <div class="entry"><span>search forward</span><span class="keys">C-s</span></div>
+          <div class="entry"><span>search backward</span><span class="keys">C-r</span></div>
+          <div class="entry"><span>regexp search forward</span><span class="keys">C-M-s</span></div>
+          <div class="entry"><span>regexp search backward</span><span class="keys">C-M-r</span></div>
+          <div class="entry"><span>repeat in same direction</span><span class="keys">C-s / C-r</span></div>
+          <div class="entry"><span>leave search at match</span><span class="keys">RET</span></div>
+          <div class="entry"><span>delete char from search</span><span class="keys">DEL</span></div>
+          <div class="entry"><span>cancel search</span><span class="keys">C-g</span></div>
+        </section>
+
+        <section>
+          <h2>Shells</h2>
+          <div class="entry"><span>run one shell command</span><span class="keys">M-!</span></div>
+          <div class="entry"><span>run command on region</span><span class="keys">M-|</span></div>
+          <div class="entry"><span>filter region through command</span><span class="keys">C-u M-|</span></div>
+          <div class="entry"><span>start shell buffer</span><span class="keys">M-x shell</span></div>
+        </section>
+
+        <section>
+          <h2>Transposing</h2>
+          <div class="entry"><span>transpose chars</span><span class="keys">C-t</span></div>
+          <div class="entry"><span>transpose words</span><span class="keys">M-t</span></div>
+          <div class="entry"><span>transpose lines</span><span class="keys">C-x C-t</span></div>
+          <div class="entry"><span>transpose expressions</span><span class="keys">C-M-t</span></div>
+        </section>
+      </div>
+
+      <div class="column">
+        <section>
+          <h2>Motion</h2>
+          <div class="matrix">
+            <span></span><span class="head">backward</span><span class="head">forward</span>
+            <span>character</span><span class="keys">C-b</span><span class="keys">C-f</span>
+            <span>word</span><span class="keys">M-b</span><span class="keys">M-f</span>
+            <span>line</span><span class="keys">C-p</span><span class="keys">C-n</span>
+            <span>sentence</span><span class="keys">M-a</span><span class="keys">M-e</span>
+            <span>paragraph</span><span class="keys">M-{</span><span class="keys">M-}</span>
+            <span>page</span><span class="keys">C-x [</span><span class="keys">C-x ]</span>
+            <span>sexp</span><span class="keys">C-M-b</span><span class="keys">C-M-f</span>
+            <span>function</span><span class="keys">C-M-a</span><span class="keys">C-M-e</span>
+            <span>buffer edge</span><span class="keys">M-&lt;</span><span class="keys">M-&gt;</span>
+          </div>
+          <div class="hint">line start/end: <span class="keys">C-a</span> / <span class="keys">C-e</span></div>
+          <div class="hint">scroll: <span class="keys">C-v</span> forward, <span class="keys">M-v</span> backward</div>
+        </section>
+
+        <section>
+          <h2>Killing and Deleting</h2>
+          <div class="matrix">
+            <span></span><span class="head">backward</span><span class="head">forward</span>
+            <span>character delete</span><span class="keys">DEL</span><span class="keys">C-d</span>
+            <span>word kill</span><span class="keys">M-DEL</span><span class="keys">M-d</span>
+            <span>line kill</span><span class="keys"></span><span class="keys">C-k</span>
+            <span>sentence kill</span><span class="keys">C-x DEL</span><span class="keys">M-k</span>
+            <span>sexp kill</span><span class="keys">M-- C-M-k</span><span class="keys">C-M-k</span>
+          </div>
+          <div class="entry"><span>kill region</span><span class="keys">C-w</span></div>
+          <div class="entry"><span>copy region</span><span class="keys">M-w</span></div>
+          <div class="entry"><span>yank last kill</span><span class="keys">C-y</span></div>
+          <div class="entry"><span>cycle older kills</span><span class="keys">M-y</span></div>
+          <div class="entry"><span>join with previous line</span><span class="keys">M-^</span></div>
+        </section>
+
+        <section>
+          <h2>Marking</h2>
+          <div class="entry"><span>set mark</span><span class="keys">C-SPC</span></div>
+          <div class="entry"><span>exchange point and mark</span><span class="keys">C-x C-x</span></div>
+          <div class="entry"><span>mark word</span><span class="keys">M-@</span></div>
+          <div class="entry"><span>mark paragraph</span><span class="keys">M-h</span></div>
+          <div class="entry"><span>mark page</span><span class="keys">C-x C-p</span></div>
+          <div class="entry"><span>mark sexp</span><span class="keys">C-M-@</span></div>
+          <div class="entry"><span>mark function</span><span class="keys">C-M-h</span></div>
+          <div class="entry"><span>mark whole buffer</span><span class="keys">C-x h</span></div>
+        </section>
+
+        <section>
+          <h2>Query Replace</h2>
+          <div class="entry"><span>query replace text</span><span class="keys">M-%</span></div>
+          <div class="entry"><span>query replace regexp</span><span class="keys">C-M-%</span></div>
+          <div class="entry"><span>replace this match</span><span class="keys">SPC</span></div>
+          <div class="entry"><span>skip this match</span><span class="keys">DEL</span></div>
+          <div class="entry"><span>replace all remaining</span><span class="keys">!</span></div>
+          <div class="entry"><span>edit replacement</span><span class="keys">E</span></div>
+          <div class="entry"><span>quit replace</span><span class="keys">RET</span></div>
+          <div class="entry"><span>recursive edit</span><span class="keys">C-r</span></div>
+        </section>
+
+        <section>
+          <h2>Spell Check</h2>
+          <div class="entry"><span>check current word</span><span class="keys">M-$</span></div>
+          <div class="entry"><span>check region</span><span class="keys">M-x ispell-region</span></div>
+          <div class="entry"><span>check buffer</span><span class="keys">M-x ispell-buffer</span></div>
+        </section>
+
+        <section>
+          <h2>Buffers</h2>
+          <div class="entry"><span>switch buffer</span><span class="keys">C-x b</span></div>
+          <div class="entry"><span>list buffers</span><span class="keys">C-x C-b</span></div>
+          <div class="entry"><span>kill buffer</span><span class="keys">C-x k</span></div>
+          <div class="entry"><span>next buffer</span><span class="keys">C-x &lt;right&gt;</span></div>
+          <div class="entry"><span>previous buffer</span><span class="keys">C-x &lt;left&gt;</span></div>
+        </section>
+      </div>
+
+      <div class="column">
+        <section>
+          <h2>Multiple Windows</h2>
+          <div class="entry"><span>delete other windows</span><span class="keys">C-x 1</span></div>
+          <div class="entry"><span>split above/below</span><span class="keys">C-x 2</span></div>
+          <div class="entry"><span>split side by side</span><span class="keys">C-x 3</span></div>
+          <div class="entry"><span>delete this window</span><span class="keys">C-x 0</span></div>
+          <div class="entry"><span>switch to other window</span><span class="keys">C-x o</span></div>
+          <div class="entry"><span>scroll other window</span><span class="keys">C-M-v</span></div>
+          <div class="entry"><span>find file in other window</span><span class="keys">C-x 4 f</span></div>
+          <div class="entry"><span>switch buffer in other window</span><span class="keys">C-x 4 b</span></div>
+          <div class="entry"><span>open Dired in other window</span><span class="keys">C-x 4 d</span></div>
+          <div class="entry"><span>balance windows</span><span class="keys">C-x +</span></div>
+          <div class="entry"><span>make window taller</span><span class="keys">C-x ^</span></div>
+          <div class="entry"><span>make window wider</span><span class="keys">C-x }</span></div>
+          <div class="entry"><span>make window narrower</span><span class="keys">C-x {</span></div>
+        </section>
+
+        <section>
+          <h2>Formatting</h2>
+          <div class="entry"><span>indent current line</span><span class="keys">TAB</span></div>
+          <div class="entry"><span>indent region</span><span class="keys">C-M-\</span></div>
+          <div class="entry"><span>indent sexp</span><span class="keys">C-M-q</span></div>
+          <div class="entry"><span>insert newline and indent</span><span class="keys">C-j</span></div>
+          <div class="entry"><span>fill paragraph</span><span class="keys">M-q</span></div>
+          <div class="entry"><span>fill region</span><span class="keys">M-x fill-region</span></div>
+          <div class="entry"><span>set fill column</span><span class="keys">C-x f</span></div>
+          <div class="entry"><span>set prefix for fill</span><span class="keys">C-x .</span></div>
+        </section>
+
+        <section>
+          <h2>Case Change</h2>
+          <div class="entry"><span>uppercase word</span><span class="keys">M-u</span></div>
+          <div class="entry"><span>lowercase word</span><span class="keys">M-l</span></div>
+          <div class="entry"><span>capitalize word</span><span class="keys">M-c</span></div>
+          <div class="entry"><span>uppercase region</span><span class="keys">C-x C-u</span></div>
+          <div class="entry"><span>lowercase region</span><span class="keys">C-x C-l</span></div>
+        </section>
+
+        <section>
+          <h2>The Minibuffer</h2>
+          <div class="entry"><span>complete as much as possible</span><span class="keys">TAB</span></div>
+          <div class="entry"><span>complete one word</span><span class="keys">SPC</span></div>
+          <div class="entry"><span>show completions</span><span class="keys">?</span></div>
+          <div class="entry"><span>accept input</span><span class="keys">RET</span></div>
+          <div class="entry"><span>previous history item</span><span class="keys">M-p</span></div>
+          <div class="entry"><span>next history item</span><span class="keys">M-n</span></div>
+          <div class="entry"><span>regexp search history back</span><span class="keys">M-r</span></div>
+          <div class="entry"><span>regexp search history forward</span><span class="keys">M-s</span></div>
+          <div class="entry"><span>abort minibuffer</span><span class="keys">C-g</span></div>
+        </section>
+
+        <section>
+          <h2>Tags</h2>
+          <div class="entry"><span>find tag definition</span><span class="keys">M-.</span></div>
+          <div class="entry"><span>next alternate tag</span><span class="keys">C-u M-.</span></div>
+          <div class="entry"><span>new tags table</span><span class="keys">M-x visit-tags-table</span></div>
+          <div class="entry"><span>regexp search tags</span><span class="keys">M-x tags-search</span></div>
+          <div class="entry"><span>query replace across tags</span><span class="keys">M-x tags-query-replace</span></div>
+          <div class="entry"><span>continue tags search</span><span class="keys">M-,</span></div>
+        </section>
+
+        <section>
+          <h2>Dired</h2>
+          <div class="entry"><span>open directory editor</span><span class="keys">C-x d</span></div>
+          <div class="entry"><span>mark file</span><span class="keys">m</span></div>
+          <div class="entry"><span>unmark file</span><span class="keys">u</span></div>
+          <div class="entry"><span>delete flagged files</span><span class="keys">x</span></div>
+          <div class="entry"><span>copy file</span><span class="keys">C</span></div>
+          <div class="entry"><span>rename file</span><span class="keys">R</span></div>
+          <div class="entry"><span>refresh Dired</span><span class="keys">g</span></div>
+        </section>
+      </div>
+
+      <div class="column">
+        <section>
+          <h2>Rectangles</h2>
+          <div class="entry"><span>copy rectangle to register</span><span class="keys">C-x r r</span></div>
+          <div class="entry"><span>kill rectangle</span><span class="keys">C-x r k</span></div>
+          <div class="entry"><span>yank rectangle</span><span class="keys">C-x r y</span></div>
+          <div class="entry"><span>open rectangle</span><span class="keys">C-x r o</span></div>
+          <div class="entry"><span>clear rectangle</span><span class="keys">C-x r c</span></div>
+          <div class="entry"><span>string rectangle</span><span class="keys">C-x r t</span></div>
+          <div class="entry"><span>number rectangle lines</span><span class="keys">C-x r N</span></div>
+        </section>
+
+        <section>
+          <h2>Abbrevs</h2>
+          <div class="entry"><span>add global abbrev</span><span class="keys">C-x a g</span></div>
+          <div class="entry"><span>add local abbrev</span><span class="keys">C-x a l</span></div>
+          <div class="entry"><span>inverse global add</span><span class="keys">C-x a i g</span></div>
+          <div class="entry"><span>inverse local add</span><span class="keys">C-x a i l</span></div>
+          <div class="entry"><span>expand previous word</span><span class="keys">M-/</span></div>
+        </section>
+
+        <section>
+          <h2>Registers</h2>
+          <div class="entry"><span>save region in register</span><span class="keys">C-x r s</span></div>
+          <div class="entry"><span>insert register contents</span><span class="keys">C-x r i</span></div>
+          <div class="entry"><span>save point in register</span><span class="keys">C-x r SPC</span></div>
+          <div class="entry"><span>jump to saved point</span><span class="keys">C-x r j</span></div>
+          <div class="entry"><span>save window layout</span><span class="keys">C-x r w</span></div>
+          <div class="entry"><span>restore window layout</span><span class="keys">C-x r j</span></div>
+        </section>
+
+        <section>
+          <h2>Keyboard Macros</h2>
+          <div class="entry"><span>start macro</span><span class="keys">C-x (</span></div>
+          <div class="entry"><span>end macro</span><span class="keys">C-x )</span></div>
+          <div class="entry"><span>run last macro</span><span class="keys">C-x e</span></div>
+          <div class="entry"><span>append to macro</span><span class="keys">C-u C-x (</span></div>
+          <div class="entry"><span>name last macro</span><span class="keys">M-x name-last-kbd-macro</span></div>
+          <div class="entry"><span>insert macro as Lisp</span><span class="keys">M-x insert-kbd-macro</span></div>
+        </section>
+
+        <section>
+          <h2>Emacs Lisp</h2>
+          <div class="entry"><span>evaluate expression before point</span><span class="keys">C-x C-e</span></div>
+          <div class="entry"><span>evaluate defun</span><span class="keys">C-M-x</span></div>
+          <div class="entry"><span>evaluate region</span><span class="keys">M-x eval-region</span></div>
+          <div class="entry"><span>read and evaluate minibuffer input</span><span class="keys">M-:</span></div>
+          <div class="entry"><span>load Lisp library</span><span class="keys">M-x load-library</span></div>
+        </section>
+
+        <section>
+          <h2>Customization</h2>
+          <div class="entry"><span>customize variables and faces</span><span class="keys">M-x customize</span></div>
+          <div class="entry"><span>customize current group</span><span class="keys">M-x customize-group</span></div>
+          <div class="entry"><span>customize option</span><span class="keys">M-x customize-option</span></div>
+          <div class="entry"><span>customize face</span><span class="keys">M-x customize-face</span></div>
+        </section>
+
+        <section>
+          <h2>Writing Commands</h2>
+          <div class="example">(defun command-name (args)
+  "Documentation string."
+  (interactive "template")
+  body)</div>
+          <h3>Global key examples</h3>
+          <div class="example">(global-set-key (kbd "C-c g") #'grep)
+(global-set-key (kbd "M-#") #'query-replace-regexp)</div>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

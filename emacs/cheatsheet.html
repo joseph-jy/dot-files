@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Emacs Key Sheet</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f8;
+      --panel: #ffffff;
+      --ink: #1f2937;
+      --muted: #64748b;
+      --line: #d8dee6;
+      --blue: #2563eb;
+      --green: #047857;
+      --amber: #b45309;
+      --red: #be123c;
+      --key-bg: #111827;
+      --key-ink: #f8fafc;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: rgba(246, 247, 248, 0.96);
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar-inner {
+      display: grid;
+      grid-template-columns: minmax(160px, 1fr) minmax(220px, 380px);
+      gap: 16px;
+      align-items: center;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 14px 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 760;
+    }
+
+    .subtitle {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 2px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel);
+      white-space: nowrap;
+    }
+
+    .count-label {
+      margin-left: 3px;
+    }
+
+    .search {
+      display: grid;
+      gap: 4px;
+    }
+
+    .search label {
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 680;
+    }
+
+    .search input {
+      width: 100%;
+      min-height: 40px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--ink);
+      font: inherit;
+      outline: none;
+    }
+
+    .search input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+      gap: 18px;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 18px;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 92px;
+      align-self: start;
+      display: grid;
+      gap: 14px;
+    }
+
+    .nav,
+    .prefixes {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      overflow: hidden;
+    }
+
+    .nav a {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 9px 11px;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink);
+      font-size: 0.88rem;
+    }
+
+    .nav a:last-child {
+      border-bottom: 0;
+    }
+
+    .nav a:hover {
+      background: #eef4ff;
+    }
+
+    .nav span {
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .prefixes {
+      padding: 12px;
+    }
+
+    .prefixes h2 {
+      margin: 0 0 9px;
+      color: var(--muted);
+      font-size: 0.76rem;
+      text-transform: uppercase;
+    }
+
+    .prefix-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .prefix-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 9px;
+      align-items: center;
+      min-height: 30px;
+      font-size: 0.86rem;
+    }
+
+    .content {
+      display: grid;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .sheet-section {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      overflow: hidden;
+    }
+
+    .sheet-section.empty {
+      display: none;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: baseline;
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 760;
+    }
+
+    .scope {
+      color: var(--muted);
+      font-size: 0.76rem;
+      white-space: nowrap;
+    }
+
+    .rows {
+      display: grid;
+    }
+
+    .key-row {
+      display: grid;
+      grid-template-columns: minmax(92px, 132px) minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      min-height: 54px;
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .key-row:last-child {
+      border-bottom: 0;
+    }
+
+    .key-row:hover {
+      background: #f8fbff;
+    }
+
+    .key-row.search-hit {
+      background: #fff8e8;
+    }
+
+    kbd {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 72px;
+      min-height: 30px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: var(--key-bg);
+      color: var(--key-ink);
+      font: 700 0.82rem ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      white-space: nowrap;
+      box-shadow: inset 0 -2px 0 rgba(255, 255, 255, 0.12);
+    }
+
+    .keys {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .keys kbd {
+      min-width: auto;
+    }
+
+    .command {
+      display: block;
+      font-weight: 720;
+    }
+
+    .desc {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      margin-left: 6px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      color: #ffffff;
+      font-size: 0.68rem;
+      font-weight: 760;
+      vertical-align: 1px;
+    }
+
+    .tag.blue { background: var(--blue); }
+    .tag.green { background: var(--green); }
+    .tag.amber { background: var(--amber); }
+    .tag.red { background: var(--red); }
+
+    .footer {
+      padding: 10px 2px 24px;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    @media (max-width: 760px) {
+      .topbar-inner,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .nav {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+      }
+
+      .nav a {
+        border-right: 1px solid var(--line);
+      }
+
+      .key-row {
+        grid-template-columns: 88px minmax(0, 1fr);
+        gap: 10px;
+        padding: 9px 11px;
+      }
+
+      .section-head {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .scope {
+        white-space: normal;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar" role="banner">
+    <div class="topbar-inner">
+      <div>
+        <h1>Emacs Key Sheet</h1>
+        <div class="subtitle">
+          <span class="pill">init.el 기준</span>
+          <span class="pill">Vanilla Emacs + packages</span>
+          <span class="pill"><span id="visible-count">0</span><span class="count-label">keys</span></span>
+        </div>
+      </div>
+      <div class="search">
+        <label for="filter">Filter</label>
+        <input id="filter" type="search" autocomplete="off" placeholder="키, 명령, 설명 검색">
+      </div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <div class="sidebar" aria-label="Sections">
+      <div class="nav" role="navigation">
+        <a href="#focus">자주 쓰는 키 <span>9</span></a>
+        <a href="#search">검색/이동 <span>7</span></a>
+        <a href="#project">프로젝트 <span>3</span></a>
+        <a href="#lsp">LSP/Eglot <span>6</span></a>
+        <a href="#debug">Debug <span>10</span></a>
+        <a href="#git">Git/Magit <span>10</span></a>
+        <a href="#tree">Treemacs <span>5</span></a>
+      </div>
+
+      <div class="prefixes">
+        <h2>Prefixes</h2>
+        <div class="prefix-list">
+          <div class="prefix-item"><kbd>C-c l</kbd><span>LSP</span></div>
+          <div class="prefix-item"><kbd>C-c d</kbd><span>Debug</span></div>
+          <div class="prefix-item"><kbd>C-c p</kbd><span>Project</span></div>
+          <div class="prefix-item"><kbd>C-c t</kbd><span>Tree</span></div>
+          <div class="prefix-item"><kbd>C-x g</kbd><span>Git</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content" role="main">
+      <div class="sheet-section" id="focus">
+        <div class="section-head">
+          <h2>자주 쓰는 키</h2>
+          <span class="scope">전역 중심</span>
+        </div>
+        <div class="rows">
+          <div class="key-row" data-keywords="C-s consult-line 현재 버퍼 검색">
+            <kbd>C-s</kbd>
+            <div><span class="command">consult-line <span class="tag blue">search</span></span><span class="desc">현재 버퍼에서 빠르게 줄 검색</span></div>
+          </div>
+          <div class="key-row" data-keywords="M-s r consult-ripgrep 프로젝트 전체 검색 ripgrep">
+            <kbd>M-s r</kbd>
+            <div><span class="command">consult-ripgrep <span class="tag blue">search</span></span><span class="desc">프로젝트 전체 텍스트 검색</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c p f projectile-find-file 프로젝트 파일 찾기">
+            <kbd>C-c p f</kbd>
+            <div><span class="command">projectile-find-file <span class="tag green">project</span></span><span class="desc">현재 프로젝트 안에서 파일 열기</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-x g magit-status git status">
+            <kbd>C-x g</kbd>
+            <div><span class="command">magit-status <span class="tag amber">git</span></span><span class="desc">Git status와 diff 작업 시작</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c t treemacs sidebar directory project tree">
+            <kbd>C-c t</kbd>
+            <div><span class="command">treemacs <span class="tag green">tree</span></span><span class="desc">좌측 디렉토리/프로젝트 사이드바</span></div>
+          </div>
+          <div class="key-row" data-keywords="M-. xref-find-definitions eglot definition jump">
+            <kbd>M-.</kbd>
+            <div><span class="command">xref-find-definitions <span class="tag blue">lsp</span></span><span class="desc">Eglot 연결 기준 정의로 이동</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c l a eglot-code-actions code action">
+            <kbd>C-c l a</kbd>
+            <div><span class="command">eglot-code-actions <span class="tag blue">lsp</span></span><span class="desc">현재 위치에서 가능한 code action</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c l r eglot-rename rename refactor">
+            <kbd>C-c l r</kbd>
+            <div><span class="command">eglot-rename <span class="tag blue">lsp</span></span><span class="desc">심볼 이름 변경</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c d d dap-debug debug configuration">
+            <kbd>C-c d d</kbd>
+            <div><span class="command">dap-debug <span class="tag red">debug</span></span><span class="desc">Debug configuration 실행</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sheet-section" id="search">
+        <div class="section-head">
+          <h2>검색/이동</h2>
+          <span class="scope">consult + xref</span>
+        </div>
+        <div class="rows">
+          <div class="key-row" data-keywords="C-s consult-line line search buffer">
+            <kbd>C-s</kbd>
+            <div><span class="command">consult-line</span><span class="desc">현재 버퍼 검색</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-x b consult-buffer buffer switch">
+            <kbd>C-x b</kbd>
+            <div><span class="command">consult-buffer</span><span class="desc">버퍼 전환</span></div>
+          </div>
+          <div class="key-row" data-keywords="M-g g consult-goto-line goto line">
+            <kbd>M-g g</kbd>
+            <div><span class="command">consult-goto-line</span><span class="desc">라인 번호로 이동</span></div>
+          </div>
+          <div class="key-row" data-keywords="M-g f consult-flymake diagnostics flymake">
+            <kbd>M-g f</kbd>
+            <div><span class="command">consult-flymake</span><span class="desc">Flymake 진단 위치로 이동</span></div>
+          </div>
+          <div class="key-row" data-keywords="M-s r consult-ripgrep ripgrep project search">
+            <kbd>M-s r</kbd>
+            <div><span class="command">consult-ripgrep</span><span class="desc">프로젝트 텍스트 검색</span></div>
+          </div>
+          <div class="key-row" data-keywords="M-. xref-find-definitions definition eglot">
+            <kbd>M-.</kbd>
+            <div><span class="command">xref-find-definitions</span><span class="desc">정의로 이동</span></div>
+          </div>
+          <div class="key-row" data-keywords="M-, xref-go-back pop marker return">
+            <kbd>M-,</kbd>
+            <div><span class="command">xref-go-back</span><span class="desc">이전 위치로 복귀</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sheet-section" id="project">
+        <div class="section-head">
+          <h2>프로젝트</h2>
+          <span class="scope">projectile</span>
+        </div>
+        <div class="rows">
+          <div class="key-row" data-keywords="C-c p projectile command map project menu">
+            <kbd>C-c p</kbd>
+            <div><span class="command">projectile-command-map</span><span class="desc">Projectile 명령 prefix</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c p f projectile-find-file project file">
+            <kbd>C-c p f</kbd>
+            <div><span class="command">projectile-find-file</span><span class="desc">프로젝트 파일 찾기</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c p p projectile-switch-project project switch">
+            <kbd>C-c p p</kbd>
+            <div><span class="command">projectile-switch-project</span><span class="desc">다른 프로젝트로 이동</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sheet-section" id="lsp">
+        <div class="section-head">
+          <h2>LSP/Eglot</h2>
+          <span class="scope">eglot-mode-map</span>
+        </div>
+        <div class="rows">
+          <div class="key-row" data-keywords="C-c l a eglot-code-actions code action">
+            <kbd>C-c l a</kbd>
+            <div><span class="command">eglot-code-actions</span><span class="desc">Code action 선택</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c l r eglot-rename rename">
+            <kbd>C-c l r</kbd>
+            <div><span class="command">eglot-rename</span><span class="desc">심볼 이름 변경</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c l f eglot-format format">
+            <kbd>C-c l f</kbd>
+            <div><span class="command">eglot-format</span><span class="desc">현재 버퍼 또는 선택 영역 format</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c l d flymake-show-buffer-diagnostics diagnostics">
+            <kbd>C-c l d</kbd>
+            <div><span class="command">flymake-show-buffer-diagnostics</span><span class="desc">현재 버퍼 진단 목록</span></div>
+          </div>
+          <div class="key-row" data-keywords="M-. definition jump xref eglot">
+            <kbd>M-.</kbd>
+            <div><span class="command">xref-find-definitions</span><span class="desc">정의로 이동</span></div>
+          </div>
+          <div class="key-row" data-keywords="M-, back xref eglot">
+            <kbd>M-,</kbd>
+            <div><span class="command">xref-go-back</span><span class="desc">정의 이동 전 위치로 복귀</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sheet-section" id="debug">
+        <div class="section-head">
+          <h2>Debug</h2>
+          <span class="scope">dap-mode</span>
+        </div>
+        <div class="rows">
+          <div class="key-row" data-keywords="C-c d d dap-debug JVM Attach localhost 5005 Python Attach localhost 5678">
+            <kbd>C-c d d</kbd>
+            <div><span class="command">dap-debug</span><span class="desc">JVM Attach localhost:5005, Python Attach localhost:5678 선택</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c d e dap-debug-edit-template edit template">
+            <kbd>C-c d e</kbd>
+            <div><span class="command">dap-debug-edit-template</span><span class="desc">Debug template 편집</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c d b dap-breakpoint-toggle breakpoint">
+            <kbd>C-c d b</kbd>
+            <div><span class="command">dap-breakpoint-toggle</span><span class="desc">Breakpoint toggle</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c d B dap-breakpoint-condition breakpoint condition">
+            <kbd>C-c d B</kbd>
+            <div><span class="command">dap-breakpoint-condition</span><span class="desc">조건부 breakpoint</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c d D dap-breakpoint-delete-all delete breakpoints">
+            <kbd>C-c d D</kbd>
+            <div><span class="command">dap-breakpoint-delete-all</span><span class="desc">모든 breakpoint 삭제</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c d c dap-continue continue">
+            <kbd>C-c d c</kbd>
+            <div><span class="command">dap-continue</span><span class="desc">Continue</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c d n dap-next step over">
+            <kbd>C-c d n</kbd>
+            <div><span class="command">dap-next</span><span class="desc">Step over</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c d i dap-step-in step in">
+            <kbd>C-c d i</kbd>
+            <div><span class="command">dap-step-in</span><span class="desc">Step in</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c d o dap-step-out step out">
+            <kbd>C-c d o</kbd>
+            <div><span class="command">dap-step-out</span><span class="desc">Step out</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c d q dap-disconnect quit disconnect">
+            <kbd>C-c d q</kbd>
+            <div><span class="command">dap-disconnect</span><span class="desc">Debug disconnect</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sheet-section" id="git">
+        <div class="section-head">
+          <h2>Git/Magit</h2>
+          <span class="scope">global + Magit buffer</span>
+        </div>
+        <div class="rows">
+          <div class="key-row" data-keywords="C-x g magit-status status diff git">
+            <kbd>C-x g</kbd>
+            <div><span class="command">magit-status</span><span class="desc">Magit status 열기</span></div>
+          </div>
+          <div class="key-row" data-keywords="g magit refresh buffer">
+            <kbd>g</kbd>
+            <div><span class="command">magit-refresh</span><span class="desc">Magit 버퍼 새로고침</span></div>
+          </div>
+          <div class="key-row" data-keywords="TAB magit section expand collapse">
+            <kbd>TAB</kbd>
+            <div><span class="command">magit-section-toggle</span><span class="desc">섹션 펼치기/접기</span></div>
+          </div>
+          <div class="key-row" data-keywords="s magit stage hunk file">
+            <kbd>s</kbd>
+            <div><span class="command">magit-stage</span><span class="desc">파일 또는 hunk stage</span></div>
+          </div>
+          <div class="key-row" data-keywords="u magit unstage hunk file">
+            <kbd>u</kbd>
+            <div><span class="command">magit-unstage</span><span class="desc">파일 또는 hunk unstage</span></div>
+          </div>
+          <div class="key-row" data-keywords="c c magit commit create">
+            <div class="keys"><kbd>c</kbd><kbd>c</kbd></div>
+            <div><span class="command">magit-commit-create</span><span class="desc">Commit 작성 시작</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c C-c with-editor finish commit">
+            <kbd>C-c C-c</kbd>
+            <div><span class="command">with-editor-finish</span><span class="desc">Commit message 저장/완료</span></div>
+          </div>
+          <div class="key-row" data-keywords="b b magit branch checkout switch">
+            <div class="keys"><kbd>b</kbd><kbd>b</kbd></div>
+            <div><span class="command">magit-branch-checkout</span><span class="desc">Branch checkout</span></div>
+          </div>
+          <div class="key-row" data-keywords="F p magit pull current push">
+            <div class="keys"><kbd>F</kbd><kbd>p</kbd></div>
+            <div><span class="command">magit-pull-from-pushremote</span><span class="desc">Push remote 기준 pull</span></div>
+          </div>
+          <div class="key-row" data-keywords="P p magit push current">
+            <div class="keys"><kbd>P</kbd><kbd>p</kbd></div>
+            <div><span class="command">magit-push-current-to-pushremote</span><span class="desc">현재 branch push</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sheet-section" id="tree">
+        <div class="section-head">
+          <h2>Treemacs</h2>
+          <span class="scope">global + Treemacs buffer</span>
+        </div>
+        <div class="rows">
+          <div class="key-row" data-keywords="C-c t treemacs sidebar project tree">
+            <kbd>C-c t</kbd>
+            <div><span class="command">treemacs</span><span class="desc">사이드바 열기/포커스</span></div>
+          </div>
+          <div class="key-row" data-keywords="RET treemacs open file directory">
+            <kbd>RET</kbd>
+            <div><span class="command">treemacs-RET-action</span><span class="desc">파일 열기 또는 디렉토리 이동</span></div>
+          </div>
+          <div class="key-row" data-keywords="TAB treemacs expand collapse node">
+            <kbd>TAB</kbd>
+            <div><span class="command">treemacs-TAB-action</span><span class="desc">노드 펼치기/접기</span></div>
+          </div>
+          <div class="key-row" data-keywords="g treemacs refresh">
+            <kbd>g</kbd>
+            <div><span class="command">treemacs-refresh</span><span class="desc">Tree 새로고침</span></div>
+          </div>
+          <div class="key-row" data-keywords="q treemacs quit window">
+            <kbd>q</kbd>
+            <div><span class="command">quit-window</span><span class="desc">Treemacs 창 닫기</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        Source: emacs/init.el, emacs/README.md. Generic Emacs defaults are intentionally omitted except when they are part of this Eglot/consult workflow.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const filter = document.querySelector("#filter");
+    const rows = Array.from(document.querySelectorAll(".key-row"));
+    const sections = Array.from(document.querySelectorAll(".sheet-section"));
+    const visibleCount = document.querySelector("#visible-count");
+
+    function searchableText(row) {
+      return [
+        row.dataset.keywords || "",
+        row.textContent || ""
+      ].join(" ").toLowerCase();
+    }
+
+    function updateFilter() {
+      const query = filter.value.trim().toLowerCase();
+      let count = 0;
+
+      rows.forEach((row) => {
+        const match = query === "" || searchableText(row).includes(query);
+        row.hidden = !match;
+        row.classList.toggle("search-hit", query !== "" && match);
+        if (match) count += 1;
+      });
+
+      sections.forEach((section) => {
+        const hasVisibleRow = Array.from(section.querySelectorAll(".key-row")).some((row) => !row.hidden);
+        section.classList.toggle("empty", !hasVisibleRow);
+      });
+
+      visibleCount.textContent = String(count);
+    }
+
+    filter.addEventListener("input", updateFilter);
+    updateFilter();
+  </script>
+</body>
+</html>

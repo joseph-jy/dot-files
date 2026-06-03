@@ -113,6 +113,12 @@ machine github.daumkakao.com/api/v3 login <github-username>^forge password <toke
 
 토큰 scope는 일반적으로 `repo`, `user`, `read:org`가 필요하다.
 
+## 단축키 유지보수 규칙
+
+`emacs/init.el`에서 package, keybinding, prefix map, debug template, LSP command, Git/Magit/Treemacs 흐름을 바꾸면 같은 변경 안에서 `emacs/cheatsheet.html`도 함께 확인하고 갱신한다. `emacs/README.md`의 "먼저 익힐 키" 목록을 바꿀 때도 동일하게 `emacs/cheatsheet.html`을 맞춘다.
+
+`emacs/reference-card.html`은 일반 Emacs 기본 키 레퍼런스이므로 개인 설정 변경만으로는 수정하지 않는다.
+
 ## 먼저 익힐 키
 
 - `C-x C-f`: 파일 열기
