@@ -1,6 +1,7 @@
 ;;; init.el --- Emacs Configuration -*- lexical-binding: t -*-
 
 ;;; Package Management
+(require 'cl-lib)
 (require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("gnu" . "https://elpa.gnu.org/packages/")))
@@ -39,6 +40,15 @@
   :config
   (setq doom-modeline-height 28))
 
+;;; macOS environment
+(use-package exec-path-from-shell
+  :if (memq window-system '(mac ns x))
+  :custom
+  (exec-path-from-shell-variables
+   '("PATH" "MANPATH" "JAVA_HOME" "KUBECONFIG" "GITHUB_TOKEN" "GH_TOKEN"))
+  :config
+  (exec-path-from-shell-initialize))
+
 ;;; Editing
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
@@ -63,6 +73,7 @@
   :bind (("C-s" . consult-line)
          ("C-x b" . consult-buffer)
          ("M-g g" . consult-goto-line)
+         ("M-g f" . consult-flymake)
          ("M-s r" . consult-ripgrep)))
 
 ;;; In-buffer Completion - Corfu
@@ -74,24 +85,144 @@
   :init (global-corfu-mode))
 
 ;;; LSP - Eglot (built-in for Emacs 29+)
+(defun jy/executable-find-any (executables)
+  "Return the first executable found from EXECUTABLES."
+  (cl-some #'executable-find executables))
+
+(defun jy/eglot-ensure-when-server-present (executables)
+  "Start Eglot when one of EXECUTABLES is available."
+  (when (jy/executable-find-any executables)
+    (eglot-ensure)))
+
+(defun jy/kotlin-eglot-server (&optional _interactive _project)
+  "Prefer JetBrains' official Kotlin LSP and fall back to the old server."
+  (cond
+   ((executable-find "kotlin-lsp") '("kotlin-lsp"))
+   ((executable-find "kotlin-language-server") '("kotlin-language-server"))
+   (t (error "Install kotlin-lsp or kotlin-language-server"))))
+
+(defun jy/remove-eglot-server-programs (modes)
+  "Remove Eglot server entries for MODES."
+  (setq eglot-server-programs
+        (cl-remove-if
+         (lambda (entry)
+           (let ((entry-modes (if (listp (car entry))
+                                  (car entry)
+                                (list (car entry)))))
+             (cl-some (lambda (mode) (memq mode entry-modes)) modes)))
+         eglot-server-programs)))
+
 (use-package eglot
   :ensure nil
-  :hook ((python-mode . eglot-ensure)
-         (js-mode . eglot-ensure)
-         (typescript-mode . eglot-ensure)
-         (go-mode . eglot-ensure)
-         (rust-mode . eglot-ensure)
-         (kotlin-mode . eglot-ensure))
+  :bind (:map eglot-mode-map
+              ("C-c l a" . eglot-code-actions)
+              ("C-c l r" . eglot-rename)
+              ("C-c l f" . eglot-format)
+              ("C-c l d" . flymake-show-buffer-diagnostics))
   :config
-  (add-to-list 'eglot-server-programs '(kotlin-mode "kotlin-language-server")))
+  (setq eglot-autoshutdown t)
+  (jy/remove-eglot-server-programs '(kotlin-mode kotlin-ts-mode))
+  (add-to-list 'eglot-server-programs
+               '((kotlin-mode kotlin-ts-mode) . jy/kotlin-eglot-server))
+  (add-to-list 'eglot-server-programs
+               '((yaml-mode yaml-ts-mode) "yaml-language-server" "--stdio"))
+  (dolist (hook '(java-mode-hook java-ts-mode-hook))
+    (add-hook hook
+              (lambda ()
+                (jy/eglot-ensure-when-server-present
+                 '("jdtls" "java-language-server")))))
+  (dolist (hook '(kotlin-mode-hook kotlin-ts-mode-hook))
+    (add-hook hook
+              (lambda ()
+                (jy/eglot-ensure-when-server-present
+                 '("kotlin-lsp" "kotlin-language-server")))))
+  (dolist (hook '(python-mode-hook python-ts-mode-hook))
+    (add-hook hook
+              (lambda ()
+                (jy/eglot-ensure-when-server-present
+                 '("basedpyright-langserver" "pyright-langserver"
+                   "pylsp" "jedi-language-server" "ruff")))))
+  (dolist (hook '(sh-mode-hook bash-ts-mode-hook))
+    (add-hook hook
+              (lambda ()
+                (jy/eglot-ensure-when-server-present
+                 '("bash-language-server")))))
+  (dolist (hook '(yaml-mode-hook yaml-ts-mode-hook))
+    (add-hook hook
+              (lambda ()
+                (jy/eglot-ensure-when-server-present
+                 '("yaml-language-server"))))))
 
 ;;; Kotlin
 (use-package kotlin-mode
-  :mode "\\.kt\\'")
+  :mode ("\\.kt\\'" "\\.kts\\'"))
+
+;;; Kubernetes / YAML
+(use-package yaml-mode
+  :mode ("\\.ya?ml\\'" . yaml-mode))
+
+;;; Debugging - Debug Adapter Protocol
+(use-package lsp-java
+  :commands (lsp lsp-deferred)
+  :custom
+  (lsp-java-jdt-ls-prefer-native-command t)
+  (lsp-java-jdt-ls-command "jdtls"))
+
+(use-package dap-mode
+  :commands (dap-debug
+             dap-debug-edit-template
+             dap-breakpoint-toggle
+             dap-breakpoint-condition
+             dap-breakpoint-delete-all
+             dap-continue
+             dap-next
+             dap-step-in
+             dap-step-out
+             dap-disconnect)
+  :bind (("C-c d d" . dap-debug)
+         ("C-c d e" . dap-debug-edit-template)
+         ("C-c d b" . dap-breakpoint-toggle)
+         ("C-c d B" . dap-breakpoint-condition)
+         ("C-c d D" . dap-breakpoint-delete-all)
+         ("C-c d c" . dap-continue)
+         ("C-c d n" . dap-next)
+         ("C-c d i" . dap-step-in)
+         ("C-c d o" . dap-step-out)
+         ("C-c d q" . dap-disconnect))
+  :config
+  (setq dap-auto-configure-features '(sessions locals controls tooltip))
+  (setq dap-python-debugger 'debugpy)
+  (dap-mode 1)
+  (dap-ui-mode 1)
+  (dap-ui-controls-mode 1)
+  (require 'dap-java)
+  (require 'dap-python)
+  (dap-register-debug-template
+   "JVM Attach localhost:5005"
+   (list :type "java"
+         :request "attach"
+         :name "JVM Attach localhost:5005"
+         :hostName "localhost"
+         :port 5005))
+  (dap-register-debug-template
+   "Python Attach localhost:5678"
+   (list :type "python"
+         :request "attach"
+         :name "Python Attach localhost:5678"
+         :connect (list :host "localhost" :port 5678))))
 
 ;;; Git - Magit
 (use-package magit
   :bind ("C-x g" . magit-status))
+
+(use-package forge
+  :after magit
+  :config
+  (add-to-list 'forge-alist
+               '("github.daumkakao.com"
+                 "github.daumkakao.com/api/v3"
+                 "github.daumkakao.com"
+                 forge-github-repository)))
 
 ;;; Project Management
 (use-package projectile
@@ -115,9 +246,12 @@
   :config
   (setq which-key-idle-delay 0.5))
 
-;;; Syntax Checking - Flycheck
-(use-package flycheck
-  :init (global-flycheck-mode))
+;;; Diagnostics - Flymake
+(use-package flymake
+  :ensure nil
+  :bind (("M-g n" . flymake-goto-next-error)
+         ("M-g p" . flymake-goto-prev-error)
+         ("M-g d" . flymake-show-buffer-diagnostics)))
 
 ;;; Org-mode
 (use-package org
