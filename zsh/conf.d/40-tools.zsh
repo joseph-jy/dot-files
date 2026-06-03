@@ -1,5 +1,7 @@
 # Tool integrations and completions
 
+autoload -Uz compinit && compinit
+
 # zsh-syntax-highlighting (path may differ per OS; homebrew default for macOS)
 if [[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
   source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
