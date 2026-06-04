@@ -7,6 +7,7 @@ Vanilla Emacs를 Java/Kotlin 백엔드 개발, AI agent 결과 리뷰, GitHub En
 - `eglot`: Java/Kotlin/Python/Bash/YAML LSP 클라이언트
 - `magit` + `forge`: Git 및 GitHub Enterprise PR/issue 확인
 - `projectile` + `consult`: 프로젝트 이동, 파일/텍스트 검색
+- `treemacs`: 좌측 디렉토리/프로젝트 사이드바
 - `corfu`: 버퍼 안 completion
 - `flymake`: Eglot 진단 확인
 - `dap-mode`: JVM/Python debug attach 및 Java test debug
@@ -126,6 +127,7 @@ machine github.daumkakao.com/api/v3 login <github-username>^forge password <toke
 - `C-x 1`, `C-x 2`, `C-x 3`, `C-x 0`: 창 제어
 - `C-s`: 현재 버퍼 검색
 - `M-s r`: 프로젝트 ripgrep 검색
+- `C-c t`: Treemacs 디렉토리/프로젝트 사이드바 열기
 - `C-c p f`: 프로젝트 파일 찾기
 - `C-x g`: Magit status
 - `M-.`: 정의로 이동

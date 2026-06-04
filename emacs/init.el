@@ -13,6 +13,16 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+;;; Runtime state
+(defconst jy/emacs-state-directory
+  (file-name-as-directory
+   (expand-file-name "emacs" (or (getenv "XDG_STATE_HOME") "~/.local/state")))
+  "Directory for Emacs runtime state files.")
+(make-directory jy/emacs-state-directory t)
+(setq project-list-file (expand-file-name "projects" jy/emacs-state-directory))
+(setq auto-save-list-file-prefix
+      (expand-file-name "auto-save-list/.saves-" jy/emacs-state-directory))
+
 ;;; UI
 (menu-bar-mode -1)
 (when (display-graphic-p)
@@ -238,6 +248,25 @@
         '(".git" ".hg" ".svn" ".cache" ".gradle"
           "node_modules" "build" "dist" "target" "out"))
   :bind-keymap ("C-c p" . projectile-command-map))
+
+;;; Sidebar - Treemacs
+(use-package treemacs
+  :defer t
+  :bind ("C-c t" . treemacs)
+  :init
+  (setq treemacs-persist-file
+        (expand-file-name "treemacs-persist" jy/emacs-state-directory))
+  (setq treemacs-last-error-persist-file
+        (expand-file-name "treemacs-persist-at-last-error"
+                          jy/emacs-state-directory))
+  :config
+  (setq treemacs-width 34)
+  (setq treemacs-follow-after-init t)
+  (setq treemacs-is-never-other-window t)
+  (setq treemacs-sorting 'alphabetic-asc))
+
+(use-package treemacs-projectile
+  :after (treemacs projectile))
 
 ;;; Which-key - Keybinding hints
 (use-package which-key

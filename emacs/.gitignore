@@ -15,3 +15,6 @@ custom.el
 # Transient files
 transient/
 eln-cache/
+.cache/
+projects
+projectile-bookmarks.eld
