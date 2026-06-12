@@ -28,6 +28,9 @@
 (when (display-graphic-p)
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
+  (set-face-attribute 'default nil :family "Maple Mono" :height 130)
+  (set-fontset-font t 'hangul (font-spec :family "NanumGothicCoding"))
+  (add-to-list 'default-frame-alist '(font . "Maple Mono-13"))
   (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 (global-display-line-numbers-mode 1)
 (column-number-mode 1)
@@ -121,6 +124,11 @@
                                 (list (car entry)))))
              (cl-some (lambda (mode) (memq mode entry-modes)) modes)))
          eglot-server-programs)))
+
+(defun jy/projectile-ignored-project-p (project-root)
+  "Return non-nil when PROJECT-ROOT should not be treated as a project."
+  (file-equal-p (expand-file-name project-root)
+                (expand-file-name "~")))
 
 (use-package eglot
   :ensure nil
@@ -238,7 +246,10 @@
 (use-package projectile
   :diminish projectile-mode
   :config
+  (setq projectile-ignored-project-function #'jy/projectile-ignored-project-p)
   (projectile-mode +1)
+  ;; `package.json` 같은 manifest만 있는 홈 디렉토리는 프로젝트로 취급하지 않음.
+  (projectile-discard-root-cache)
   ;; 'alien' = git/fd 등 외부 도구 사용 (.gitignore 존중, 빠름)
   (setq projectile-indexing-method 'alien)
   ;; 프로젝트들이 위치한 상위 디렉토리 (필요시 수정)
