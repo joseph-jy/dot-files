@@ -250,6 +250,7 @@
   :bind-keymap ("C-c p" . projectile-command-map))
 
 ;;; Sidebar - Treemacs
+(global-unset-key (kbd "C-c t"))
 (use-package treemacs
   :defer t
   :bind (("C-c t t" . treemacs)
