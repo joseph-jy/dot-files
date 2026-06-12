@@ -252,7 +252,7 @@
 ;;; Sidebar - Treemacs
 (use-package treemacs
   :defer t
-  :bind (("C-c t"   . treemacs)
+  :bind (("C-c t t" . treemacs)
          ("C-c t s" . treemacs-select-window))
   :init
   (setq treemacs-persist-file
