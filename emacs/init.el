@@ -70,6 +70,26 @@
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 
+;; Duplicate line
+(defun jy/duplicate-line-below ()
+  "Duplicate the current line below the cursor."
+  (interactive)
+  (save-excursion
+    (let ((line (thing-at-point 'line t)))
+      (end-of-line)
+      (newline)
+      (insert (string-trim-right line "\n")))))
+
+(defun jy/duplicate-line-above ()
+  "Duplicate the current line above the cursor."
+  (interactive)
+  (let ((col (current-column))
+        (line (thing-at-point 'line t)))
+    (beginning-of-line)
+    (insert line)
+    (forward-line -1)
+    (move-to-column col)))
+
 ;;; Completion - Vertico + Orderless + Marginalia
 (use-package vertico
   :init (vertico-mode))
@@ -324,6 +344,9 @@
 
 ;;; Keybindings
 (global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-S-d") #'jy/duplicate-line-below)
+(global-set-key (kbd "M-S-<down>") #'jy/duplicate-line-below)
+(global-set-key (kbd "M-S-<up>") #'jy/duplicate-line-above)
 
 ;;; Custom file (keep init.el clean)
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
