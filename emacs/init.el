@@ -90,6 +90,21 @@
     (forward-line -1)
     (move-to-column col)))
 
+;;; Tree-sitter
+(setq treesit-language-source-alist
+      '((typescript "https://github.com/tree-sitter/tree-sitter-typescript" nil "typescript/src")
+        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" nil "tsx/src")))
+
+(when (treesit-available-p)
+  (require 'treesit)
+  (dolist (lang '(typescript tsx))
+    (unless (treesit-ready-p lang t)
+      (message "Installing tree-sitter grammar: %s..." lang)
+      (condition-case err
+          (treesit-install-language-grammar lang)
+        (error (message "Grammar install failed (%s): %s"
+                        lang (error-message-string err)))))))
+
 ;;; Completion - Vertico + Orderless + Marginalia
 (use-package vertico
   :init (vertico-mode))
@@ -189,7 +204,12 @@
     (add-hook hook
               (lambda ()
                 (jy/eglot-ensure-when-server-present
-                 '("yaml-language-server"))))))
+                 '("yaml-language-server")))))
+  (dolist (hook '(typescript-ts-mode-hook tsx-ts-mode-hook))
+    (add-hook hook
+              (lambda ()
+                (jy/eglot-ensure-when-server-present
+                 '("typescript-language-server"))))))
 
 ;;; Kotlin
 (use-package kotlin-mode

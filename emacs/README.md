@@ -4,7 +4,7 @@ Vanilla Emacs를 Java/Kotlin 백엔드 개발, AI agent 결과 리뷰, GitHub En
 
 ## 현재 방향
 
-- `eglot`: Java/Kotlin/Python/Bash/YAML LSP 클라이언트
+- `eglot`: Java/Kotlin/TypeScript/Python/Bash/YAML LSP 클라이언트
 - `magit` + `forge`: Git 및 GitHub Enterprise PR/issue 확인
 - `projectile` + `consult`: 프로젝트 이동, 파일/텍스트 검색
 - `treemacs`: 좌측 디렉토리/프로젝트 사이드바
@@ -24,6 +24,9 @@ brew install jdtls
 # Kotlin: 공식 JetBrains LSP 우선, 없으면 기존 kotlin-language-server 사용
 brew install JetBrains/utils/kotlin-lsp
 brew install kotlin-language-server
+
+# TypeScript / TSX
+npm install -g typescript-language-server typescript
 
 # YAML / Kubernetes
 brew install yaml-language-server
