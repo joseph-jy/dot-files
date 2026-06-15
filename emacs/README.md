@@ -21,7 +21,7 @@ Vanilla Emacs를 Java/Kotlin 백엔드 개발, AI agent 결과 리뷰, GitHub En
 # Java
 brew install jdtls
 
-# Kotlin: 공식 JetBrains LSP 우선, 없으면 기존 kotlin-language-server 사용
+# Kotlin: 현재 설정은 kotlin-language-server 우선, 없으면 공식 JetBrains LSP 사용
 brew install JetBrains/utils/kotlin-lsp
 brew install kotlin-language-server
 
@@ -38,7 +38,7 @@ brew install pyright
 brew install bash-language-server shellcheck
 ```
 
-Kotlin 공식 LSP가 회사 장비에서 tap 정책 때문에 막히면 기존 `kotlin-language-server`로 시작하고, 나중에 `kotlin-lsp`를 별도로 테스트한다.
+JetBrains `kotlin-lsp`는 intellij-server build 만료 이슈가 생길 수 있어 `kotlin-language-server`를 기본값으로 둔다. `kotlin-lsp`를 최신 build로 갱신해 안정화되면 `jy/kotlin-eglot-server`의 우선순위를 다시 바꾼다.
 
 ## 디버깅
 
@@ -140,6 +140,7 @@ machine github.daumkakao.com/api/v3 login <github-username>^forge password <toke
 - `C-c l r`: LSP rename
 - `C-c l f`: LSP format
 - `C-c l d`: 현재 버퍼 진단 목록
+- `C-c l g r`: 참조 위치 모두 찾기
 - `C-c d d`: debug configuration 실행
 - `C-c d b`: breakpoint toggle
 - `C-c d c`: continue

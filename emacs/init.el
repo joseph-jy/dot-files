@@ -143,10 +143,10 @@
     (eglot-ensure)))
 
 (defun jy/kotlin-eglot-server (&optional _interactive _project)
-  "Prefer JetBrains' official Kotlin LSP and fall back to the old server."
+  "Prefer the stable Kotlin language server and fall back to JetBrains' LSP."
   (cond
-   ((executable-find "kotlin-lsp") '("kotlin-lsp"))
    ((executable-find "kotlin-language-server") '("kotlin-language-server"))
+   ((executable-find "kotlin-lsp") '("kotlin-lsp"))
    (t (error "Install kotlin-lsp or kotlin-language-server"))))
 
 (defun jy/remove-eglot-server-programs (modes)
@@ -170,6 +170,7 @@
 
 (use-package eglot
   :ensure nil
+  :demand t
   :bind (:map jy/lsp-command-map
               ("a" . eglot-code-actions)
               ("r" . eglot-rename)
@@ -183,6 +184,7 @@
               ("g b" . xref-go-back))           ;; 뒤로 가기 (M-,)
   :config
   (setq eglot-autoshutdown t)
+  (setq eglot-connect-timeout 120)
   (jy/remove-eglot-server-programs '(kotlin-mode kotlin-ts-mode))
   (add-to-list 'eglot-server-programs
                '((kotlin-mode kotlin-ts-mode) . jy/kotlin-eglot-server))
