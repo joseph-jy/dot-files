@@ -376,7 +376,7 @@
         <a href="#focus">자주 쓰는 키 <span>9</span></a>
         <a href="#search">검색/이동 <span>7</span></a>
         <a href="#project">프로젝트 <span>3</span></a>
-        <a href="#lsp">LSP/Eglot <span>6</span></a>
+        <a href="#lsp">LSP/Eglot <span>11</span></a>
         <a href="#debug">Debug <span>10</span></a>
         <a href="#git">Git/Magit <span>10</span></a>
         <a href="#tree">Treemacs <span>6</span></a>
@@ -527,6 +527,26 @@
           <div class="key-row" data-keywords="M-, back xref eglot">
             <kbd>M-,</kbd>
             <div><span class="command">xref-go-back</span><span class="desc">정의 이동 전 위치로 복귀</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c l g d xref-find-definitions definition jump">
+            <kbd>C-c l g d</kbd>
+            <div><span class="command">xref-find-definitions</span><span class="desc">정의로 이동 (M-. 과 동일)</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c l g r xref-find-references references usages">
+            <kbd>C-c l g r</kbd>
+            <div><span class="command">xref-find-references</span><span class="desc">참조 위치 모두 찾기 (M-? 과 동일)</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c l g i eglot-find-implementation implementation interface">
+            <kbd>C-c l g i</kbd>
+            <div><span class="command">eglot-find-implementation</span><span class="desc">인터페이스의 구현체로 이동</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c l g t eglot-find-typeDefinition type definition">
+            <kbd>C-c l g t</kbd>
+            <div><span class="command">eglot-find-typeDefinition</span><span class="desc">타입 정의로 이동</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c l g b xref-go-back back return navigation">
+            <kbd>C-c l g b</kbd>
+            <div><span class="command">xref-go-back</span><span class="desc">이전 위치로 복귀 (M-, 과 동일)</span></div>
           </div>
         </div>
       </div>

@@ -171,7 +171,13 @@
               ("C-c l a" . eglot-code-actions)
               ("C-c l r" . eglot-rename)
               ("C-c l f" . eglot-format)
-              ("C-c l d" . flymake-show-buffer-diagnostics))
+              ("C-c l d" . flymake-show-buffer-diagnostics)
+              ;; Navigation (xref)
+              ("C-c l g d" . xref-find-definitions)     ;; 정의로 이동 (M-.)
+              ("C-c l g r" . xref-find-references)    ;; 참조 찾기 (M-?)
+              ("C-c l g i" . eglot-find-implementation) ;; 구현 찾기
+              ("C-c l g t" . eglot-find-typeDefinition) ;; 타입 정의로 이동
+              ("C-c l g b" . xref-go-back))           ;; 뒤로 가기 (M-,)
   :config
   (setq eglot-autoshutdown t)
   (jy/remove-eglot-server-programs '(kotlin-mode kotlin-ts-mode))
