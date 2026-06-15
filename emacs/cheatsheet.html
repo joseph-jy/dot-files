@@ -373,10 +373,11 @@
   <div class="layout">
     <div class="sidebar" aria-label="Sections">
       <div class="nav" role="navigation">
-        <a href="#focus">자주 쓰는 키 <span>9</span></a>
+        <a href="#focus">자주 쓰는 키 <span>10</span></a>
         <a href="#search">검색/이동 <span>7</span></a>
         <a href="#project">프로젝트 <span>3</span></a>
         <a href="#lsp">LSP/Eglot <span>11</span></a>
+        <a href="#org">Org <span>3</span></a>
         <a href="#debug">Debug <span>10</span></a>
         <a href="#git">Git/Magit <span>10</span></a>
         <a href="#tree">Treemacs <span>6</span></a>
@@ -389,6 +390,7 @@
           <div class="prefix-item"><kbd>C-c d</kbd><span>Debug</span></div>
           <div class="prefix-item"><kbd>C-c p</kbd><span>Project</span></div>
           <div class="prefix-item"><kbd>C-c t</kbd><span>Tree</span></div>
+          <div class="prefix-item"><kbd>C-c o</kbd><span>Org</span></div>
           <div class="prefix-item"><kbd>C-x g</kbd><span>Git</span></div>
         </div>
       </div>
@@ -436,6 +438,10 @@
           <div class="key-row" data-keywords="C-c d d dap-debug debug configuration">
             <kbd>C-c d d</kbd>
             <div><span class="command">dap-debug <span class="tag red">debug</span></span><span class="desc">Debug configuration 실행</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c o l org-store-link org link">
+            <kbd>C-c o l</kbd>
+            <div><span class="command">org-store-link <span class="tag green">org</span></span><span class="desc">현재 위치를 Org link로 저장</span></div>
           </div>
         </div>
       </div>
@@ -547,6 +553,27 @@
           <div class="key-row" data-keywords="C-c l g b xref-go-back back return navigation">
             <kbd>C-c l g b</kbd>
             <div><span class="command">xref-go-back</span><span class="desc">이전 위치로 복귀 (M-, 과 동일)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sheet-section" id="org">
+        <div class="section-head">
+          <h2>Org</h2>
+          <span class="scope">global</span>
+        </div>
+        <div class="rows">
+          <div class="key-row" data-keywords="C-c a org-agenda agenda">
+            <kbd>C-c a</kbd>
+            <div><span class="command">org-agenda</span><span class="desc">Org agenda 열기</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c c org-capture capture note task">
+            <kbd>C-c c</kbd>
+            <div><span class="command">org-capture</span><span class="desc">Task 또는 note 캡처</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c o l org-store-link link store">
+            <kbd>C-c o l</kbd>
+            <div><span class="command">org-store-link</span><span class="desc">현재 위치를 Org link로 저장</span></div>
           </div>
         </div>
       </div>

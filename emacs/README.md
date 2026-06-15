@@ -133,6 +133,7 @@ machine github.daumkakao.com/api/v3 login <github-username>^forge password <toke
 - `C-c t`: Treemacs 디렉토리/프로젝트 사이드바 열기
 - `C-c p f`: 프로젝트 파일 찾기
 - `C-x g`: Magit status
+- `C-c o l`: Org link 저장
 - `M-.`: 정의로 이동
 - `M-,`: 이전 위치로 복귀
 - `C-c l a`: LSP code action

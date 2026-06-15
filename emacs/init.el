@@ -342,11 +342,12 @@
          ("M-g d" . flymake-show-buffer-diagnostics)))
 
 ;;; Org-mode
+(global-unset-key (kbd "C-c l")) ; Reserve C-c l for the Eglot prefix.
 (use-package org
   :ensure nil
   :bind (("C-c a" . org-agenda)
          ("C-c c" . org-capture)
-         ("C-c l" . org-store-link))
+         ("C-c o l" . org-store-link))
   :config
   (setq org-directory "~/org")
   (setq org-agenda-files '("~/org"))
