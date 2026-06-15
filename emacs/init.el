@@ -28,9 +28,14 @@
 (when (display-graphic-p)
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
-  (set-face-attribute 'default nil :family "Maple Mono" :height 130)
+  (let ((jy/default-font-height (if (eq system-type 'darwin) 150 130)))
+    (set-face-attribute 'default nil
+                        :family "Maple Mono"
+                        :height jy/default-font-height)
+    (add-to-list 'default-frame-alist
+                 `(font . ,(format "Maple Mono-%d"
+                                    (/ jy/default-font-height 10)))))
   (set-fontset-font t 'hangul (font-spec :family "NanumGothicCoding"))
-  (add-to-list 'default-frame-alist '(font . "Maple Mono-13"))
   (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 (global-display-line-numbers-mode 1)
 (column-number-mode 1)
