@@ -26,7 +26,6 @@
       ├── 🌑 bufferline.lua
       ├── 🌑 cmp.lua
       ├── 🌑 comment.lua
-      ├── 🌑 copilot.lua
       ├── 🌑 gitsigns.lua
       ├── 🌑 indentline.lua
       ├── 🌑 lualine.lua
@@ -49,7 +48,6 @@
 | [Comment.nvim](https://github.com/numToStr/Comment.nvim) | Comment toggling |
 | [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) | Git integration |
 | [alpha-nvim](https://github.com/goolord/alpha-nvim) | Dashboard |
-| [copilot.lua](https://github.com/zbirenbaum/copilot.lua) | GitHub Copilot |
 | [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) | Fuzzy finder |
 | [which-key.nvim](https://github.com/folke/which-key.nvim) | Keybinding hints |
 | [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim) | Terminal integration |

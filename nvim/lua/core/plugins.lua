@@ -66,9 +66,6 @@ require("lazy").setup({
   { "lewis6991/gitsigns.nvim", config = function() require "plugins.gitsigns" end },
   "tpope/vim-fugitive",
 
-  -- Copilot
-  { "zbirenbaum/copilot.lua", config = function() require "plugins.copilot" end },
-
   -- Markdown
   {
     "MeanderingProgrammer/render-markdown.nvim",

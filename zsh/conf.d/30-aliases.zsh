@@ -18,7 +18,6 @@ alias td='tmux detach'
 
 # tmuxinator
 alias claude-mux='tmuxinator claude-code-workspace'
-alias copilot-mux='tmuxinator copilot-workspace'
 alias codex-mux='tmuxinator codex-workspace'
 
 # Claude Code
