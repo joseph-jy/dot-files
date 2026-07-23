@@ -41,11 +41,34 @@
 (column-number-mode 1)
 (setq inhibit-startup-screen t)
 
-;; Theme
+;; Theme - 시스템 다크/라이트 모드를 따라감 (macOS)
 (use-package doom-themes
   :config
-  (load-theme 'doom-one t)
-  (doom-themes-org-config))
+  (defun jy/load-theme-by-appearance (appearance)
+    "시스템 APPEARANCE(`dark' 또는 `light')에 맞춰 doom 테마를 로드한다."
+    (mapc #'disable-theme custom-enabled-themes)
+    (load-theme (if (eq appearance 'light) 'doom-nord-light 'doom-one) t)
+    (doom-themes-org-config))
+  (defun jy/detect-system-appearance ()
+    "macOS 시스템 외관을 반환한다. `light' 또는 `dark'."
+    (if (eq system-type 'darwin)
+        (let ((result (shell-command-to-string
+                       "defaults read -g AppleInterfaceStyle 2>/dev/null")))
+          (if (string-match-p "Dark" result) 'dark 'light))
+      'dark))
+  ;; GUI: ns-system-appearance 훅 사용
+  (if (boundp 'ns-system-appearance-change-functions)
+      (progn
+        (add-hook 'ns-system-appearance-change-functions #'jy/load-theme-by-appearance)
+        (jy/load-theme-by-appearance
+         (if (and (boundp 'ns-system-appearance)
+                  (eq ns-system-appearance 'light))
+             'light 'dark)))
+    ;; 터미널: macOS defaults로 외관 감지, 새 프레임마다 재확인
+    (jy/load-theme-by-appearance (jy/detect-system-appearance))
+    (add-hook 'server-after-make-frame-functions
+              (lambda (_frame)
+                (jy/load-theme-by-appearance (jy/detect-system-appearance))))))
 
 ;; Icons (doom-modeline 의존성)
 (use-package nerd-icons)
