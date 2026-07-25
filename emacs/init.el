@@ -284,10 +284,38 @@ dape가 jdtls를 통해 디버그 세션을 시작하려면 이 번들이 필요
                  '("typescript-language-server"))))))
 
 ;; 워크스페이스 심볼 검색 — IntelliJ Cmd+O(클래스)/Cmd+Opt+O(심볼) 대응
+;;
+;; consult-eglot은 workspace/symbol 응답의 location.range가 있다고 가정하고
+;; (1+ range.start.line)을 계산한다. LSP 3.17의 WorkspaceSymbol은 location을
+;; {uri}만으로 보내는 것이 허용돼 있어서, 서버가 소스 위치를 확정하지 못한 심볼
+;; (예: 소스 첨부가 없는 jar 클래스)을 섞어 보내면 range가 nil이 되고
+;;   Error running timer: (wrong-type-argument number-or-marker-p nil)
+;; 로 목록 전체가 죽는다. range가 없는 항목은 파일 첫 줄로 보정해서
+;; 목록과 미리보기가 모두 살아 있게 한다.
+(defconst jy/consult-eglot-fallback-range
+  '(:start (:line 0 :character 0) :end (:line 0 :character 0))
+  "location.range가 없는 workspace/symbol 항목에 채워 넣을 기본 range.")
+
+(defun jy/consult-eglot-normalize-symbol (args)
+  "consult-eglot 진입 ARGS의 SymbolInformation에 빠진 range를 보정한다."
+  (let* ((symbol-info (car args))
+         (location (plist-get symbol-info :location))
+         (start (plist-get (plist-get location :range) :start)))
+    (if (or (null location) (numberp (plist-get start :line)))
+        args
+      (cons (plist-put (copy-sequence symbol-info) :location
+                       (plist-put (copy-sequence location)
+                                  :range jy/consult-eglot-fallback-range))
+            (cdr args)))))
+
 (use-package consult-eglot
   :bind (("M-g s" . consult-eglot-symbols)
          :map jy/lsp-command-map
-         ("g s" . consult-eglot-symbols)))
+         ("g s" . consult-eglot-symbols))
+  :config
+  (dolist (fn '(consult-eglot--transformer
+                consult-eglot--symbol-information-to-grep-params))
+    (advice-add fn :filter-args #'jy/consult-eglot-normalize-symbol)))
 
 ;;; Kotlin
 (use-package kotlin-mode
