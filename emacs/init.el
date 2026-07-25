@@ -358,6 +358,11 @@ Kotlin 버퍼에서도 같은 프로젝트의 jdtls 세션을 찾아 쓸 수 있
                  :type "python"
                  :justMyCode nil)))
 
+;;; Build/Test - Gradle 러너 (IDE-PLAN.md Phase 2/4)
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(require 'jy-gradle)
+(global-set-key (kbd "C-c g") jy/gradle-command-map)
+
 ;;; Git - Magit
 (use-package magit
   :bind ("C-x g" . magit-status))

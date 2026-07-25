@@ -373,11 +373,12 @@
   <div class="layout">
     <div class="sidebar" aria-label="Sections">
       <div class="nav" role="navigation">
-        <a href="#focus">자주 쓰는 키 <span>10</span></a>
+        <a href="#focus">자주 쓰는 키 <span>11</span></a>
         <a href="#search">검색/이동 <span>8</span></a>
         <a href="#project">프로젝트 <span>3</span></a>
         <a href="#lsp">LSP/Eglot <span>12</span></a>
         <a href="#org">Org <span>3</span></a>
+        <a href="#gradle">Gradle <span>7</span></a>
         <a href="#debug">Debug <span>12</span></a>
         <a href="#git">Git/Magit <span>10</span></a>
         <a href="#tree">Treemacs <span>6</span></a>
@@ -387,6 +388,7 @@
         <h2>Prefixes</h2>
         <div class="prefix-list">
           <div class="prefix-item"><kbd>C-c l</kbd><span>LSP</span></div>
+          <div class="prefix-item"><kbd>C-c g</kbd><span>Gradle</span></div>
           <div class="prefix-item"><kbd>C-c d</kbd><span>Debug</span></div>
           <div class="prefix-item"><kbd>C-c p</kbd><span>Project</span></div>
           <div class="prefix-item"><kbd>C-c t</kbd><span>Tree</span></div>
@@ -434,6 +436,10 @@
           <div class="key-row" data-keywords="C-c l r eglot-rename rename refactor">
             <kbd>C-c l r</kbd>
             <div><span class="command">eglot-rename <span class="tag blue">lsp</span></span><span class="desc">심볼 이름 변경</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c g t jy/gradle-test-at-point test method 테스트 실행">
+            <kbd>C-c g t</kbd>
+            <div><span class="command">jy/gradle-test-at-point <span class="tag red">gradle</span></span><span class="desc">커서 위치의 테스트 메서드 실행</span></div>
           </div>
           <div class="key-row" data-keywords="C-c d d dape debug jvm attach">
             <kbd>C-c d d</kbd>
@@ -582,6 +588,43 @@
           <div class="key-row" data-keywords="C-c o l org-store-link link store">
             <kbd>C-c o l</kbd>
             <div><span class="command">org-store-link</span><span class="desc">현재 위치를 Org link로 저장</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sheet-section" id="gradle">
+        <div class="section-head">
+          <h2>Gradle</h2>
+          <span class="scope">jy/gradle-command-map</span>
+        </div>
+        <div class="rows">
+          <div class="key-row" data-keywords="C-c g t jy/gradle-test-at-point test method 테스트 메서드 실행">
+            <kbd>C-c g t</kbd>
+            <div><span class="command">jy/gradle-test-at-point</span><span class="desc">커서 위치의 테스트 메서드 하나만 실행</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c g c jy/gradle-test-class test class 테스트 클래스 실행">
+            <kbd>C-c g c</kbd>
+            <div><span class="command">jy/gradle-test-class</span><span class="desc">현재 클래스의 테스트 전부 실행</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c g m jy/gradle-test-module test module 모듈 테스트">
+            <kbd>C-c g m</kbd>
+            <div><span class="command">jy/gradle-test-module</span><span class="desc">현재 모듈의 테스트 전부 실행</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c g r jy/gradle-rerun rerun 재실행 IntelliJ Ctrl+R">
+            <kbd>C-c g r</kbd>
+            <div><span class="command">jy/gradle-rerun</span><span class="desc">마지막 Gradle 명령 재실행 (IntelliJ Ctrl+R 대응)</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c g b jy/gradle-boot-run bootRun spring boot profile">
+            <kbd>C-c g b</kbd>
+            <div><span class="command">jy/gradle-boot-run</span><span class="desc">Spring Boot 실행 (C-u로 profile 지정)</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c g d jy/gradle-debug-test-at-point debug test method 테스트 디버그 breakpoint">
+            <kbd>C-c g d</kbd>
+            <div><span class="command">jy/gradle-debug-test-at-point</span><span class="desc">테스트 메서드 디버그 — --debug-jvm 후 자동 attach</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c g D jy/gradle-debug-test-class debug test class 클래스 디버그">
+            <kbd>C-c g D</kbd>
+            <div><span class="command">jy/gradle-debug-test-class</span><span class="desc">테스트 클래스 디버그 — --debug-jvm 후 자동 attach</span></div>
           </div>
         </div>
       </div>
