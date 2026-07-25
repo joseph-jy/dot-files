@@ -16,6 +16,18 @@ Vanilla Emacs를 Java/Kotlin 백엔드 개발, AI agent 결과 리뷰, GitHub En
 
 IntelliJ 대체 계획과 진행 상황은 `IDE-PLAN.md` 참고.
 
+## 학습 가이드 (guide/)
+
+`guide/`는 Java/Kotlin + Spring Boot 사용자를 위한 시나리오형 학습 문서 사이트다 (Astro Starlight). 사이드바 네비게이션, 페이지 내 목차, 검색이 된다.
+
+```bash
+cd guide
+npm install   # 최초 1회
+npm run dev   # http://localhost:4321 에서 열람
+```
+
+키바인딩이나 워크플로우를 바꾸면 `guide/src/content/docs/`의 해당 페이지도 함께 갱신한다.
+
 ## 필수 도구
 
 현재 설정은 언어 서버 실행 파일이 있을 때만 Eglot을 시작한다. 없는 서버 때문에 파일을 열 때 에러가 나지 않는다.
