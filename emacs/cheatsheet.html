@@ -378,7 +378,7 @@
         <a href="#project">프로젝트 <span>3</span></a>
         <a href="#lsp">LSP/Eglot <span>12</span></a>
         <a href="#org">Org <span>3</span></a>
-        <a href="#debug">Debug <span>10</span></a>
+        <a href="#debug">Debug <span>12</span></a>
         <a href="#git">Git/Magit <span>10</span></a>
         <a href="#tree">Treemacs <span>6</span></a>
       </div>
@@ -435,9 +435,9 @@
             <kbd>C-c l r</kbd>
             <div><span class="command">eglot-rename <span class="tag blue">lsp</span></span><span class="desc">심볼 이름 변경</span></div>
           </div>
-          <div class="key-row" data-keywords="C-c d d dap-debug debug configuration">
+          <div class="key-row" data-keywords="C-c d d dape debug jvm attach">
             <kbd>C-c d d</kbd>
-            <div><span class="command">dap-debug <span class="tag red">debug</span></span><span class="desc">Debug configuration 실행</span></div>
+            <div><span class="command">dape <span class="tag red">debug</span></span><span class="desc">디버그 세션 시작 (jvm-attach 등)</span></div>
           </div>
           <div class="key-row" data-keywords="C-c o l org-store-link org link">
             <kbd>C-c o l</kbd>
@@ -589,48 +589,56 @@
       <div class="sheet-section" id="debug">
         <div class="section-head">
           <h2>Debug</h2>
-          <span class="scope">dap-mode</span>
+          <span class="scope">dape</span>
         </div>
         <div class="rows">
-          <div class="key-row" data-keywords="C-c d d dap-debug JVM Attach localhost 5005 Python Attach localhost 5678">
+          <div class="key-row" data-keywords="C-c d d dape jvm-attach localhost 5005 debugpy-attach 5678 debug">
             <kbd>C-c d d</kbd>
-            <div><span class="command">dap-debug</span><span class="desc">JVM Attach localhost:5005, Python Attach localhost:5678 선택</span></div>
+            <div><span class="command">dape</span><span class="desc">디버그 세션 시작 — jvm-attach(5005), debugpy-attach(5678), jdtls launch</span></div>
           </div>
-          <div class="key-row" data-keywords="C-c d e dap-debug-edit-template edit template">
-            <kbd>C-c d e</kbd>
-            <div><span class="command">dap-debug-edit-template</span><span class="desc">Debug template 편집</span></div>
-          </div>
-          <div class="key-row" data-keywords="C-c d b dap-breakpoint-toggle breakpoint">
+          <div class="key-row" data-keywords="C-c d b dape-breakpoint-toggle breakpoint">
             <kbd>C-c d b</kbd>
-            <div><span class="command">dap-breakpoint-toggle</span><span class="desc">Breakpoint toggle</span></div>
+            <div><span class="command">dape-breakpoint-toggle</span><span class="desc">Breakpoint toggle</span></div>
           </div>
-          <div class="key-row" data-keywords="C-c d B dap-breakpoint-condition breakpoint condition">
+          <div class="key-row" data-keywords="C-c d B dape-breakpoint-expression breakpoint condition 조건부">
             <kbd>C-c d B</kbd>
-            <div><span class="command">dap-breakpoint-condition</span><span class="desc">조건부 breakpoint</span></div>
+            <div><span class="command">dape-breakpoint-expression</span><span class="desc">조건부 breakpoint</span></div>
           </div>
-          <div class="key-row" data-keywords="C-c d D dap-breakpoint-delete-all delete breakpoints">
+          <div class="key-row" data-keywords="C-c d D dape-breakpoint-remove-all delete breakpoints">
             <kbd>C-c d D</kbd>
-            <div><span class="command">dap-breakpoint-delete-all</span><span class="desc">모든 breakpoint 삭제</span></div>
+            <div><span class="command">dape-breakpoint-remove-all</span><span class="desc">모든 breakpoint 삭제</span></div>
           </div>
-          <div class="key-row" data-keywords="C-c d c dap-continue continue">
+          <div class="key-row" data-keywords="C-c d c dape-continue continue">
             <kbd>C-c d c</kbd>
-            <div><span class="command">dap-continue</span><span class="desc">Continue</span></div>
+            <div><span class="command">dape-continue</span><span class="desc">Continue</span></div>
           </div>
-          <div class="key-row" data-keywords="C-c d n dap-next step over">
+          <div class="key-row" data-keywords="C-c d n dape-next step over">
             <kbd>C-c d n</kbd>
-            <div><span class="command">dap-next</span><span class="desc">Step over</span></div>
+            <div><span class="command">dape-next</span><span class="desc">Step over</span></div>
           </div>
-          <div class="key-row" data-keywords="C-c d i dap-step-in step in">
+          <div class="key-row" data-keywords="C-c d i dape-step-in step in">
             <kbd>C-c d i</kbd>
-            <div><span class="command">dap-step-in</span><span class="desc">Step in</span></div>
+            <div><span class="command">dape-step-in</span><span class="desc">Step in</span></div>
           </div>
-          <div class="key-row" data-keywords="C-c d o dap-step-out step out">
+          <div class="key-row" data-keywords="C-c d o dape-step-out step out">
             <kbd>C-c d o</kbd>
-            <div><span class="command">dap-step-out</span><span class="desc">Step out</span></div>
+            <div><span class="command">dape-step-out</span><span class="desc">Step out</span></div>
           </div>
-          <div class="key-row" data-keywords="C-c d q dap-disconnect quit disconnect">
+          <div class="key-row" data-keywords="C-c d q dape-quit quit disconnect">
             <kbd>C-c d q</kbd>
-            <div><span class="command">dap-disconnect</span><span class="desc">Debug disconnect</span></div>
+            <div><span class="command">dape-quit</span><span class="desc">디버그 세션 종료</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c d r dape-repl repl evaluate">
+            <kbd>C-c d r</kbd>
+            <div><span class="command">dape-repl</span><span class="desc">디버그 REPL (식 평가)</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c d w dape-watch-dwim watch expression">
+            <kbd>C-c d w</kbd>
+            <div><span class="command">dape-watch-dwim</span><span class="desc">Watch 식 추가/제거</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c d l dape-info locals stack breakpoints">
+            <kbd>C-c d l</kbd>
+            <div><span class="command">dape-info</span><span class="desc">Locals/Stack/Breakpoints 정보 버퍼</span></div>
           </div>
         </div>
       </div>

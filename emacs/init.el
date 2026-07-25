@@ -290,55 +290,73 @@ dape가 jdtls를 통해 디버그 세션을 시작하려면 이 번들이 필요
 (use-package yaml-mode
   :mode ("\\.ya?ml\\'" . yaml-mode))
 
-;;; Debugging - Debug Adapter Protocol
-(use-package lsp-java
-  :commands (lsp lsp-deferred)
-  :custom
-  (lsp-java-jdt-ls-prefer-native-command t)
-  (lsp-java-jdt-ls-command "jdtls"))
+;;; Debugging - dape (eglot의 jdtls 세션을 그대로 사용, IDE-PLAN.md Phase 3)
+(defun jy/eglot-jdtls-server ()
+  "현재 프로젝트에서 java-debug 번들을 실은 jdtls eglot 서버를 찾는다.
+Kotlin 버퍼에서도 같은 프로젝트의 jdtls 세션을 찾아 쓸 수 있다."
+  (when-let* ((project (project-current)))
+    (cl-find-if
+     (lambda (server)
+       (ignore-errors
+         (seq-contains-p
+          (plist-get (plist-get (eglot--capabilities server)
+                                :executeCommandProvider)
+                     :commands)
+          "vscode.java.startDebugSession")))
+     (gethash project eglot--servers-by-project))))
 
-(use-package dap-mode
-  :commands (dap-debug
-             dap-debug-edit-template
-             dap-breakpoint-toggle
-             dap-breakpoint-condition
-             dap-breakpoint-delete-all
-             dap-continue
-             dap-next
-             dap-step-in
-             dap-step-out
-             dap-disconnect)
-  :bind (("C-c d d" . dap-debug)
-         ("C-c d e" . dap-debug-edit-template)
-         ("C-c d b" . dap-breakpoint-toggle)
-         ("C-c d B" . dap-breakpoint-condition)
-         ("C-c d D" . dap-breakpoint-delete-all)
-         ("C-c d c" . dap-continue)
-         ("C-c d n" . dap-next)
-         ("C-c d i" . dap-step-in)
-         ("C-c d o" . dap-step-out)
-         ("C-c d q" . dap-disconnect))
+(defun jy/dape-jdtls-adapter (config)
+  "jdtls로 java-debug DAP 서버를 띄워 CONFIG에 어댑터 포트를 채운다.
+`dape-configs'의 fn 자리에서 쓴다."
+  (let ((server (or (jy/eglot-jdtls-server)
+                    (user-error
+                     "jdtls eglot 세션이 없다 — 프로젝트의 Java 파일을 먼저 열어라"))))
+    (with-no-warnings
+      (thread-first config
+                    (plist-put 'host "localhost")
+                    (plist-put 'port (eglot-execute-command
+                                      server
+                                      "vscode.java.startDebugSession" nil))))))
+
+(use-package dape
+  :bind (("C-c d d" . dape)
+         ("C-c d b" . dape-breakpoint-toggle)
+         ("C-c d B" . dape-breakpoint-expression)
+         ("C-c d D" . dape-breakpoint-remove-all)
+         ("C-c d c" . dape-continue)
+         ("C-c d n" . dape-next)
+         ("C-c d i" . dape-step-in)
+         ("C-c d o" . dape-step-out)
+         ("C-c d q" . dape-quit)
+         ("C-c d r" . dape-repl)
+         ("C-c d w" . dape-watch-dwim)
+         ("C-c d l" . dape-info))
+  :init
+  (setq dape-default-breakpoints-file
+        (expand-file-name "dape-breakpoints" jy/emacs-state-directory))
   :config
-  (setq dap-auto-configure-features '(sessions locals controls tooltip))
-  (setq dap-python-debugger 'debugpy)
-  (dap-mode 1)
-  (dap-ui-mode 1)
-  (dap-ui-controls-mode 1)
-  (require 'dap-java)
-  (require 'dap-python)
-  (dap-register-debug-template
-   "JVM Attach localhost:5005"
-   (list :type "java"
-         :request "attach"
-         :name "JVM Attach localhost:5005"
-         :hostName "localhost"
-         :port 5005))
-  (dap-register-debug-template
-   "Python Attach localhost:5678"
-   (list :type "python"
-         :request "attach"
-         :name "Python Attach localhost:5678"
-         :connect (list :host "localhost" :port 5678))))
+  (setq dape-buffer-window-arrangement 'right)
+  ;; breakpoint fringe 표시를 모든 버퍼에서 유지
+  (dape-breakpoint-global-mode 1)
+  ;; 실행 중인 JVM에 attach (bootRun --debug-jvm, test --debug-jvm, K8s port-forward)
+  ;; 어댑터 자체는 eglot jdtls의 java-debug 번들이 제공한다.
+  (add-to-list 'dape-configs
+               `(jvm-attach
+                 modes (java-mode java-ts-mode kotlin-mode kotlin-ts-mode)
+                 fn jy/dape-jdtls-adapter
+                 :type "java"
+                 :request "attach"
+                 :hostName "localhost"
+                 :port 5005))
+  ;; python -m debugpy --listen 5678 프로세스에 attach
+  (add-to-list 'dape-configs
+               `(debugpy-attach
+                 modes (python-mode python-ts-mode)
+                 host "localhost"
+                 port 5678
+                 :request "attach"
+                 :type "python"
+                 :justMyCode nil)))
 
 ;;; Git - Magit
 (use-package magit
