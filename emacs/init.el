@@ -41,6 +41,13 @@
 (column-number-mode 1)
 (setq inhibit-startup-screen t)
 
+;; 터미널(emacs -nw)에서도 마우스 클릭/드래그/휠 스크롤 사용.
+;; GUI 프레임에는 영향이 없으므로 조건 없이 켠다(데몬 + 터미널 클라이언트 대응).
+(xterm-mouse-mode 1)
+(setq mouse-wheel-scroll-amount '(3 ((shift) . 1) ((meta) . hscroll))
+      mouse-wheel-progressive-speed nil
+      mouse-wheel-follow-mouse t)
+
 ;; Theme - 시스템 다크/라이트 모드를 따라감 (macOS)
 (use-package doom-themes
   :config
