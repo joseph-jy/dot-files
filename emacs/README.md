@@ -4,14 +4,17 @@ Vanilla Emacs를 Java/Kotlin 백엔드 개발, AI agent 결과 리뷰, GitHub En
 
 ## 현재 방향
 
-- `eglot`: Java/Kotlin/TypeScript/Python/Bash/YAML LSP 클라이언트
+- `eglot`: Java/Kotlin/TypeScript/Python/Bash/YAML LSP 클라이언트 (단일 LSP 스택)
 - `magit` + `forge`: Git 및 GitHub Enterprise PR/issue 확인
-- `projectile` + `consult`: 프로젝트 이동, 파일/텍스트 검색
+- `projectile` + `consult` + `consult-eglot`: 프로젝트 이동, 파일/텍스트/심볼 검색
 - `treemacs`: 좌측 디렉토리/프로젝트 사이드바
 - `corfu`: 버퍼 안 completion
 - `flymake`: Eglot 진단 확인
-- `dap-mode`: JVM/Python debug attach 및 Java test debug
+- `dape`: 디버거 — eglot의 jdtls 세션을 그대로 사용 (JVM/Python attach, test debug)
+- `lisp/jy-gradle.el`: Gradle 테스트 러너 (`C-c g`) — 메서드/클래스 단위 실행·디버그
 - `org`: 할 일, 회의/리뷰 메모
+
+IntelliJ 대체 계획과 진행 상황은 `IDE-PLAN.md` 참고.
 
 ## 필수 도구
 
@@ -38,42 +41,64 @@ brew install pyright
 brew install bash-language-server shellcheck
 ```
 
+디버깅에는 microsoft/java-debug 플러그인 jar가 필요하다. eglot이 jdtls를 띄울 때
+`~/.local/share/java-debug/`의 jar를 자동으로 주입한다.
+
+```bash
+mkdir -p ~/.local/share/java-debug
+curl -fL -o ~/.local/share/java-debug/com.microsoft.java.debug.plugin-0.53.1.jar \
+  https://repo1.maven.org/maven2/com/microsoft/java/com.microsoft.java.debug.plugin/0.53.1/com.microsoft.java.debug.plugin-0.53.1.jar
+```
+
 JetBrains `kotlin-lsp`는 intellij-server build 만료 이슈가 생길 수 있어 `kotlin-language-server`를 기본값으로 둔다. `kotlin-lsp`를 최신 build로 갱신해 안정화되면 `jy/kotlin-eglot-server`의 우선순위를 다시 바꾼다.
+
+## 빌드/테스트 (Gradle 러너)
+
+`lisp/jy-gradle.el`이 IntelliJ의 test runner를 대체한다. 테스트 파일에 커서만 놓고:
+
+- `C-c g t`: 커서 위치의 테스트 메서드 하나만 실행
+- `C-c g c`: 현재 클래스 테스트 전부 실행
+- `C-c g m`: 현재 모듈 테스트 전부 실행
+- `C-c g r`: 마지막 명령 재실행 (IntelliJ `Ctrl+R` 대응)
+- `C-c g b`: Spring Boot `bootRun` (`C-u`로 profile 지정)
+
+모듈(`:app:core`), 클래스 FQN, 메서드 이름을 자동으로 감지해
+`./gradlew :app:core:test --tests 'FQN.method'`를 `compile`로 실행한다.
+Java/Kotlin 모두 지원하고 Kotlin 백틱 테스트 이름도 잡는다.
+실패하면 스택트레이스에서 `M-g n`으로 소스에 점프한다.
 
 ## 디버깅
 
-Emacs 디버깅은 `dap-mode`를 사용한다. 일상 코드 탐색은 Eglot으로 유지하고, Java launch/test debug처럼 `lsp-java`가 필요한 기능만 디버깅 세션에서 별도로 켠다.
+디버거는 `dape`를 사용한다. dape는 eglot이 띄운 jdtls의 java-debug 번들로
+디버그 세션을 시작하므로 **LSP 전환 없이** 평소 세션 그대로 디버깅한다.
+(예전의 `eglot-shutdown` 후 `M-x lsp` 전환은 더 이상 필요 없다.)
 
-### JVM attach 우선
+### 테스트 디버그 (원버튼)
 
-Spring Boot, Gradle test, K8s process는 JVM을 debug mode로 띄운 뒤 Emacs에서 attach한다.
+breakpoint를 찍고(`C-c d b`):
+
+- `C-c g d`: 커서 위치의 테스트 메서드를 `--debug-jvm`으로 실행
+- `C-c g D`: 클래스 단위
+
+Gradle 출력에서 `Listening for transport dt_socket ...` 포트를 감지해
+자동으로 dape attach 세션이 시작된다. Java/Kotlin 동일한 플로우다.
+
+### JVM attach
+
+이미 debug mode로 떠 있는 JVM에는 직접 attach한다.
 
 ```bash
 # Spring Boot / application
 ./gradlew bootRun --debug-jvm
 
-# 특정 테스트
-./gradlew test --debug-jvm --tests 'com.example.SomeTest'
-
 # 직접 JVM 옵션을 넣을 때
 -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005
 ```
 
-Emacs에서는 `C-c d d` 후 `JVM Attach localhost:5005`를 선택한다.
-
-주의: Java DAP adapter는 `lsp-java`의 JDT LS workspace를 사용한다. JVM attach가 adapter 문제로 실패하면 Java/Kotlin 버퍼에서 먼저 `M-x eglot-shutdown` 후 `M-x lsp`를 실행하고 다시 attach한다. 평소 편집은 계속 Eglot을 사용하면 된다.
-
-### Java main/test debug
-
-IntelliJ에 가까운 Java main/test debug는 `lsp-java`가 필요하다.
-
-1. Java 파일을 연다.
-2. `M-x eglot-shutdown`으로 현재 버퍼의 Eglot 세션을 끈다.
-3. `M-x lsp`로 `lsp-java` workspace를 시작한다.
-4. `C-c d d`로 `Java Run Configuration`, `Java Attach` 등을 선택한다.
-5. 테스트 메서드/클래스는 `M-x dap-java-debug-test-method`, `M-x dap-java-debug-test-class`를 사용한다.
-
-이 흐름은 JDT LS가 classpath, test runner, debug server를 계산해야 하므로 Eglot만으로는 충분하지 않다.
+Emacs에서 `C-c d d` 후 `jvm-attach`를 선택한다 (기본 localhost:5005,
+`jvm-attach :port 5006`처럼 미니버퍼에서 덮어쓸 수 있다).
+attach 전에 같은 프로젝트의 Java 파일이 한 번은 열려 있어야 한다
+(jdtls 세션이 debug adapter를 제공하므로).
 
 ### K8s 원격 JVM
 
@@ -83,23 +108,18 @@ K8s에서는 debug port를 외부로 직접 열지 말고 port-forward로 연결
 kubectl port-forward pod/<pod-name> 5005:5005
 ```
 
-그 다음 Emacs에서 `JVM Attach localhost:5005`를 선택한다.
+그 다음 Emacs에서 `jvm-attach`를 선택한다.
 
 ### Python
-
-로컬 launch debug는 프로젝트 virtualenv에 `debugpy`가 필요하다.
-
-```bash
-python -m pip install debugpy
-```
 
 이미 실행 중인 프로세스에 attach하려면 target process를 다음처럼 띄운다.
 
 ```bash
+python -m pip install debugpy
 python -m debugpy --listen 5678 --wait-for-client script.py
 ```
 
-Emacs에서는 `C-c d d` 후 `Python Attach localhost:5678`을 선택한다.
+Emacs에서는 `C-c d d` 후 `debugpy-attach`를 선택한다.
 
 ## GitHub Enterprise / Forge
 
@@ -136,18 +156,23 @@ machine github.daumkakao.com/api/v3 login <github-username>^forge password <toke
 - `C-c o l`: Org link 저장
 - `M-.`: 정의로 이동
 - `M-,`: 이전 위치로 복귀
+- `M-g s`: 워크스페이스 클래스/심볼 검색 (IntelliJ `Cmd+O` 대응)
+- `M-?`: 참조 위치 모두 찾기 (Find Usages)
 - `C-c l a`: LSP code action
 - `C-c l r`: LSP rename
 - `C-c l f`: LSP format
 - `C-c l d`: 현재 버퍼 진단 목록
-- `C-c l g r`: 참조 위치 모두 찾기
-- `C-c d d`: debug configuration 실행
+- `C-c l g i`: 인터페이스 구현체로 이동
+- `C-c g t`: 커서 위치 테스트 메서드 실행
+- `C-c g r`: 마지막 Gradle 명령 재실행
+- `C-c g d`: 테스트 메서드 디버그 (자동 attach)
+- `C-c d d`: 디버그 세션 시작 (jvm-attach 등)
 - `C-c d b`: breakpoint toggle
 - `C-c d c`: continue
 - `C-c d n`: step over
 - `C-c d i`: step in
 - `C-c d o`: step out
-- `C-c d q`: debug disconnect
+- `C-c d q`: 디버그 세션 종료
 
 ## 학습 로드맵
 
