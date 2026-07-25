@@ -491,6 +491,23 @@ Kotlin 버퍼에서도 같은 프로젝트의 jdtls 세션을 찾아 쓸 수 있
   :hook ((org-mode . org-modern-mode)
          (org-agenda-finalize . org-modern-agenda)))
 
+;;; Config reload
+(defun jy/reload-init ()
+  "init.el 을 다시 읽는다.
+`require' 는 이미 로드된 feature 를 건너뛰므로, lisp/ 아래 로컬 모듈은
+먼저 unload 해서 수정 사항이 반영되게 한다."
+  (interactive)
+  (require 'loadhist)
+  (let ((lisp-dir (expand-file-name "lisp/" user-emacs-directory)))
+    (dolist (feature (copy-sequence features))
+      (let ((file (ignore-errors (feature-file feature))))
+        (when (and file (string-prefix-p lisp-dir (expand-file-name file)))
+          (ignore-errors (unload-feature feature t))))))
+  (load-file (expand-file-name "init.el" user-emacs-directory))
+  (message "init.el reloaded"))
+
+(global-set-key (kbd "C-c r") #'jy/reload-init)
+
 ;;; Keybindings
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-S-d") #'jy/duplicate-line-below)
