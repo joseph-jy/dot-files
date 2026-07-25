@@ -150,7 +150,11 @@
          ("C-x b" . consult-buffer)
          ("M-g g" . consult-goto-line)
          ("M-g f" . consult-flymake)
-         ("M-s r" . consult-ripgrep)))
+         ("M-s r" . consult-ripgrep))
+  :custom
+  ;; Find Usages(M-?) 결과를 미리보기 되는 minibuffer 목록으로
+  (xref-show-xrefs-function #'consult-xref)
+  (xref-show-definitions-function #'consult-xref))
 
 ;;; In-buffer Completion - Corfu
 (use-package corfu
@@ -169,6 +173,25 @@
   "Start Eglot when one of EXECUTABLES is available."
   (when (jy/executable-find-any executables)
     (eglot-ensure)))
+
+(defconst jy/java-debug-bundle-directory
+  (expand-file-name "~/.local/share/java-debug/")
+  "microsoft/java-debug 플러그인 jar가 놓인 디렉토리.
+Maven Central의 com.microsoft.java.debug.plugin-<ver>.jar를 받아 둔다.
+dape가 jdtls를 통해 디버그 세션을 시작하려면 이 번들이 필요하다.")
+
+(defun jy/java-debug-bundles ()
+  "jdtls :initializationOptions에 넣을 java-debug 번들 jar 목록."
+  (when (file-directory-p jy/java-debug-bundle-directory)
+    (directory-files jy/java-debug-bundle-directory t
+                     "com\\.microsoft\\.java\\.debug\\.plugin-.*\\.jar\\'")))
+
+(defun jy/jdtls-contact (&optional _interactive _project)
+  "jdtls contact. java-debug 번들이 있으면 :bundles로 주입한다."
+  (let ((bundles (jy/java-debug-bundles)))
+    (if bundles
+        `("jdtls" :initializationOptions (:bundles ,(vconcat bundles)))
+      '("jdtls"))))
 
 (defun jy/kotlin-eglot-server (&optional _interactive _project)
   "Prefer the stable Kotlin language server and fall back to JetBrains' LSP."
@@ -216,6 +239,9 @@
   (jy/remove-eglot-server-programs '(kotlin-mode kotlin-ts-mode))
   (add-to-list 'eglot-server-programs
                '((kotlin-mode kotlin-ts-mode) . jy/kotlin-eglot-server))
+  (jy/remove-eglot-server-programs '(java-mode java-ts-mode))
+  (add-to-list 'eglot-server-programs
+               '((java-mode java-ts-mode) . jy/jdtls-contact))
   (add-to-list 'eglot-server-programs
                '((yaml-mode yaml-ts-mode) "yaml-language-server" "--stdio"))
   (dolist (hook '(java-mode-hook java-ts-mode-hook))
@@ -249,6 +275,12 @@
               (lambda ()
                 (jy/eglot-ensure-when-server-present
                  '("typescript-language-server"))))))
+
+;; 워크스페이스 심볼 검색 — IntelliJ Cmd+O(클래스)/Cmd+Opt+O(심볼) 대응
+(use-package consult-eglot
+  :bind (("M-g s" . consult-eglot-symbols)
+         :map jy/lsp-command-map
+         ("g s" . consult-eglot-symbols)))
 
 ;;; Kotlin
 (use-package kotlin-mode
