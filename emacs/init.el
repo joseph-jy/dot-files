@@ -193,12 +193,21 @@ dape가 jdtls를 통해 디버그 세션을 시작하려면 이 번들이 필요
     (directory-files jy/java-debug-bundle-directory t
                      "com\\.microsoft\\.java\\.debug\\.plugin-.*\\.jar\\'")))
 
+(defconst jy/jdtls-jvm-args '("--jvm-arg=-Xmx2G")
+  "jdtls 런처(/opt/homebrew/bin/jdtls)에 넘길 추가 JVM 인자.
+런처는 -Xms1G만 하드코딩하고 -Xmx는 주지 않아서, 힙 상한이 JVM 기본값인
+물리 메모리의 1/4(36GB 머신에서 약 9GB)까지 열린다. 대형 프로젝트를
+인덱싱하면 그만큼 먹고 반납하지 않아 머신 전체가 스왑으로 밀린다.
+런처 스크립트의 --jvm-arg는 -Xms1G 뒤에 append되므로 여기서 상한을 고정한다.
+(JDTLS_JVM_ARGS 같은 환경변수는 이 런처가 읽지 않는다.)")
+
 (defun jy/jdtls-contact (&optional _interactive _project)
   "jdtls contact. java-debug 번들이 있으면 :bundles로 주입한다."
-  (let ((bundles (jy/java-debug-bundles)))
+  (let ((bundles (jy/java-debug-bundles))
+        (command (cons "jdtls" jy/jdtls-jvm-args)))
     (if bundles
-        `("jdtls" :initializationOptions (:bundles ,(vconcat bundles)))
-      '("jdtls"))))
+        `(,@command :initializationOptions (:bundles ,(vconcat bundles)))
+      command)))
 
 (defun jy/kotlin-eglot-server (&optional _interactive _project)
   "Prefer the stable Kotlin language server and fall back to JetBrains' LSP."
@@ -243,6 +252,10 @@ dape가 jdtls를 통해 디버그 세션을 시작하려면 이 번들이 필요
   :config
   (setq eglot-autoshutdown t)
   (setq eglot-connect-timeout 120)
+  ;; eglot-autoreconnect는 기본값 3(초). 서버가 죽고 3초 뒤까지 살아 있었으면
+  ;; eglot이 자동 재접속한다. 즉 jdtls를 `kill`로 잡아도 곧바로 다시 떠서
+  ;; 재인덱싱이 돈다 — 메모리를 정말 회수하려면 버퍼를 닫아
+  ;; eglot-autoshutdown 경로로 내리거나 M-x eglot-shutdown을 쓸 것.
   (jy/remove-eglot-server-programs '(kotlin-mode kotlin-ts-mode))
   (add-to-list 'eglot-server-programs
                '((kotlin-mode kotlin-ts-mode) . jy/kotlin-eglot-server))
