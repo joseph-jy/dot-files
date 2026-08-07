@@ -51,11 +51,53 @@
 ;; Theme - 시스템 다크/라이트 모드를 따라감 (macOS)
 (use-package doom-themes
   :config
+  ;; ghostty(~/.config/ghostty/config)가 light/dark 모두 Cyberdyne(다크)으로
+  ;; 고정되어 있으므로 emacs도 두 모드 모두 같은 다크 테마를 사용한다.
+  ;; Cyberdyne(bg #151144 / fg #00ff92)과 accent 팔레트가 가장 가까운 것이
+  ;; doom-challenger-deep (red #FF8080, cyan #AAFFE4, blue #91DDFF ...).
+  ;; 라이트 모드를 되살리려면 jy/theme-light 를 'doom-nord-light 로 바꾸면 된다.
+  (defvar jy/theme-dark 'doom-challenger-deep
+    "다크 모드에서 사용할 테마.")
+  (defvar jy/theme-light 'doom-challenger-deep
+    "라이트 모드에서 사용할 테마.")
+
+  ;; challenger-deep 의 배경(#1E1C31)은 hue 는 맞지만 채도가 27% 라 보라-회색으로
+  ;; 보인다. accent 팔레트는 그대로 두고 배경/선택/커서만 ghostty Cyberdyne
+  ;; 실제 값으로 덮어쓴다. 이 블록만 지우면 원래 challenger-deep 으로 돌아간다.
+  (defconst jy/cyberdyne-bg      "#151144" "ghostty background (hue 245도, 채도 60%).")
+  (defconst jy/cyberdyne-bg-dark "#0e0b2d" "비활성 modeline 용 더 어두운 인디고.")
+  (defconst jy/cyberdyne-bg-hl   "#221d63" "현재 줄/modeline 용 밝은 인디고.")
+  (defconst jy/cyberdyne-sel     "#454d96" "ghostty selection-background.")
+  (defconst jy/cyberdyne-sel-fg  "#f4f4f4" "ghostty selection-foreground.")
+  (defconst jy/cyberdyne-cursor  "#00ff9c" "ghostty cursor-color.")
+
+  (defun jy/apply-cyberdyne-colors ()
+    "ghostty Cyberdyne 의 배경/선택/커서 색을 현재 테마 위에 덮어쓴다.
+GUI 프레임은 배경을 `jy/cyberdyne-bg' 로 직접 지정한다.
+터미널 프레임은 배경을 지정하지 않아서 ghostty 자체 배경(같은 #151144)이
+그대로 비친다 — 256색 근사를 거치지 않으므로 터미널에서 오히려 정확하다."
+    (custom-theme-set-faces
+     'user
+     `(default    ((((type graphic)) :background ,jy/cyberdyne-bg)
+                   (t :background unspecified)))
+     `(fringe     ((((type graphic)) :background ,jy/cyberdyne-bg)
+                   (t :background unspecified)))
+     `(line-number ((((type graphic)) :background ,jy/cyberdyne-bg)
+                    (t :background unspecified)))
+     `(cursor     ((t :background ,jy/cyberdyne-cursor)))
+     `(region     ((t :background ,jy/cyberdyne-sel :foreground ,jy/cyberdyne-sel-fg)))
+     `(hl-line    ((t :background ,jy/cyberdyne-bg-hl)))
+     `(mode-line  ((t :background ,jy/cyberdyne-bg-hl)))
+     `(mode-line-inactive ((t :background ,jy/cyberdyne-bg-dark)))
+     `(vertical-border    ((t :foreground ,jy/cyberdyne-bg-hl)))))
+
   (defun jy/load-theme-by-appearance (appearance)
     "시스템 APPEARANCE(`dark' 또는 `light')에 맞춰 doom 테마를 로드한다."
     (mapc #'disable-theme custom-enabled-themes)
-    (load-theme (if (eq appearance 'light) 'doom-nord-light 'doom-one) t)
-    (doom-themes-org-config))
+    (load-theme (if (eq appearance 'light) jy/theme-light jy/theme-dark) t)
+    (doom-themes-org-config)
+    ;; load-theme 이 face 를 재설정하므로 반드시 그 뒤에 덮어쓴다.
+    (jy/apply-cyberdyne-colors))
   (defun jy/detect-system-appearance ()
     "macOS 시스템 외관을 반환한다. `light' 또는 `dark'."
     (if (eq system-type 'darwin)
