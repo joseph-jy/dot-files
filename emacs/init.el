@@ -504,7 +504,14 @@ Kotlin 버퍼에서도 같은 프로젝트의 jdtls 세션을 찾아 쓸 수 있
 (global-unset-key (kbd "C-c t"))
 (use-package treemacs
   :defer t
-  :bind (("C-c t t" . treemacs)
+  ;; `treemacs' 는 treemacs-persist-file 에 저장된 워크스페이스를 복원하므로
+  ;; 예전에 열었던 디렉토리가 계속 남는다. 대신
+  ;; `treemacs-add-and-display-current-project-exclusively' 를 쓰면
+  ;; 현재 위치를 유일한 루트로 만들고 나머지 프로젝트는 제거한다.
+  ;; (프로젝트가 아닌 디렉토리에서도 default-directory 로 폴백되므로 항상 동작)
+  :bind (("C-c t t" . treemacs-add-and-display-current-project-exclusively)
+         ("C-c t T" . treemacs)     ; 저장된 워크스페이스 그대로 열기
+         ("C-c t a" . treemacs-add-and-display-current-project) ; 기존 유지 + 추가
          ("C-c t s" . treemacs-select-window))
   :init
   (setq treemacs-persist-file
