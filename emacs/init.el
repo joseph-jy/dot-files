@@ -147,6 +147,22 @@ GUI 프레임은 배경을 `jy/cyberdyne-bg' 로 직접 지정한다.
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 
+;; 외부 프로세스(git checkout, 빌드, 다른 에디터 등)가 파일이나 디렉토리를
+;; 바꿨을 때 버퍼에 자동 반영한다.
+(use-package autorevert
+  :ensure nil                       ; 내장 패키지
+  :diminish auto-revert-mode
+  :init
+  ;; dired/ibuffer 처럼 파일이 아닌 버퍼도 갱신 대상에 포함.
+  ;; 이게 nil 이면 디렉토리 목록이 예전 상태로 남는다.
+  (setq global-auto-revert-non-file-buffers t)
+  ;; 폴링 없이 파일시스템 알림(kqueue)만 사용 -> 즉시 반영되고 CPU 도 안 쓴다.
+  (setq auto-revert-avoid-polling t)
+  ;; "Reverting buffer..." 메시지로 미니버퍼를 채우지 않는다.
+  (setq auto-revert-verbose nil)
+  :config
+  (global-auto-revert-mode 1))
+
 ;; Duplicate line
 (defun jy/duplicate-line-below ()
   "Duplicate the current line below the cursor."
