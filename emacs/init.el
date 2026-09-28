@@ -89,7 +89,10 @@ GUI 프레임은 배경을 `jy/cyberdyne-bg' 로 직접 지정한다.
      `(hl-line    ((t :background ,jy/cyberdyne-bg-hl)))
      `(mode-line  ((t :background ,jy/cyberdyne-bg-hl)))
      `(mode-line-inactive ((t :background ,jy/cyberdyne-bg-dark)))
-     `(vertical-border    ((t :foreground ,jy/cyberdyne-bg-hl)))))
+     `(vertical-border    ((t :foreground ,jy/cyberdyne-bg-hl)))
+     ;; 테마 기본 org-table(violet #906CFF)은 인디고 배경과 hue 가 겹쳐 묻힌다.
+     ;; org-modern 이 표 선도 이 색으로 그리므로 본문 fg 로 맞춘다.
+     `(org-table  ((t :foreground ,(doom-color 'fg))))))
 
   (defun jy/load-theme-by-appearance (appearance)
     "시스템 APPEARANCE(`dark' 또는 `light')에 맞춰 doom 테마를 로드한다."
