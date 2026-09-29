@@ -48,6 +48,22 @@
       mouse-wheel-progressive-speed nil
       mouse-wheel-follow-mouse t)
 
+;;; Encoding
+;; emacsclient -t 프레임은 클라이언트 쉘의 locale 로 키보드/터미널 인코딩을
+;; 터미널마다 따로 정한다. LANG 이 빠진 환경에서 뜨면 한글이 \354\225\210 처럼
+;; 날바이트로 깨지므로, 모든 tty 프레임을 UTF-8 로 고정한다.
+(set-language-environment "UTF-8")
+(prefer-coding-system 'utf-8)
+(defun jy/tty-force-utf8 (&optional frame)
+  "tty FRAME 의 키보드/터미널 인코딩을 UTF-8 로 고정한다."
+  (let ((frame (or frame (selected-frame))))
+    (unless (display-graphic-p frame)
+      (let ((term (frame-terminal frame)))
+        (set-keyboard-coding-system 'utf-8 term)
+        (set-terminal-coding-system 'utf-8 term)))))
+(jy/tty-force-utf8)
+(add-hook 'after-make-frame-functions #'jy/tty-force-utf8)
+
 ;; Theme - 시스템 다크/라이트 모드를 따라감 (macOS)
 (use-package doom-themes
   :config
@@ -118,8 +134,8 @@ GUI 프레임은 배경을 `jy/cyberdyne-bg' 로 직접 지정한다.
              'light 'dark)))
     ;; 터미널: macOS defaults로 외관 감지, 새 프레임마다 재확인
     (jy/load-theme-by-appearance (jy/detect-system-appearance))
-    (add-hook 'server-after-make-frame-functions
-              (lambda (_frame)
+    (add-hook 'server-after-make-frame-hook
+              (lambda ()
                 (jy/load-theme-by-appearance (jy/detect-system-appearance))))))
 
 ;; Icons (doom-modeline 의존성)
