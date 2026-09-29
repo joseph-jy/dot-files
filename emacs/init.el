@@ -110,9 +110,22 @@ GUI 프레임은 배경을 `jy/cyberdyne-bg' 로 직접 지정한다.
      ;; org-modern 이 표 선도 이 색으로 그리므로 본문 fg 로 맞춘다.
      `(org-table  ((t :foreground ,(doom-color 'fg))))))
 
+  (defun jy/break-gnus-face-cycle ()
+    "doom-themes 의 gnus-group-news-low 상속 순환을 끊는다.
+doom 은 news-low-empty 를 `((t :inherit gnus-group-news-low))' 로, news-low 는
+색 개수별(min-colors 16 이상) 스펙으로만 준다. 색이 없는 프레임(데몬 초기 프레임)
+에서는 news-low 가 기본 defface(:inherit news-low-empty)로 떨어져 순환이 생기고
+load-theme 자체가 에러로 멈춘다. 그 프레임에서만 news-low 의 상속을 없앤다."
+    (custom-theme-set-faces
+     'user
+     '(gnus-group-news-low ((((class color) (min-colors 16)))
+                            (t :inherit unspecified :weight bold)))))
+
   (defun jy/load-theme-by-appearance (appearance)
     "시스템 APPEARANCE(`dark' 또는 `light')에 맞춰 doom 테마를 로드한다."
     (mapc #'disable-theme custom-enabled-themes)
+    ;; load-theme 도중에 face 를 재계산하며 터지므로 반드시 그 앞에 둔다.
+    (jy/break-gnus-face-cycle)
     (load-theme (if (eq appearance 'light) jy/theme-light jy/theme-dark) t)
     (doom-themes-org-config)
     ;; load-theme 이 face 를 재설정하므로 반드시 그 뒤에 덮어쓴다.
