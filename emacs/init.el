@@ -610,11 +610,11 @@ Kotlin 버퍼에서도 같은 프로젝트의 jdtls 세션을 찾아 쓸 수 있
   (setq org-todo-keywords
         '((sequence "TODO(t)" "IN-PROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
   (setq org-capture-templates
-        '(("t" "Task" entry (file+headline "~/Documents/org/notes.org" "Tasks")
+        '(("t" "Task" entry (file+headline "~/Documents/notes/notes.org" "Tasks")
            "* TODO %?\n  %i\n  %a")
-          ("n" "Note" entry (file+headline "~/Documents/org/notes.org" "Notes")
+          ("n" "Note" entry (file+headline "~/Documents/notes/notes.org" "Notes")
            "* %?\n  %i\n  %a")
-          ("b" "Bookmark" entry (file+headline "~/Documents/org/notes.org" "Bookmarks")
+          ("b" "Bookmark" entry (file+headline "~/Documents/notes/notes.org" "Bookmarks")
            "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n%a\n" :empty-lines 1))))
 
 (use-package org-modern
