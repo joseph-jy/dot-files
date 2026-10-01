@@ -108,7 +108,26 @@ GUI 프레임은 배경을 `jy/cyberdyne-bg' 로 직접 지정한다.
      `(vertical-border    ((t :foreground ,jy/cyberdyne-bg-hl)))
      ;; 테마 기본 org-table(violet #906CFF)은 인디고 배경과 hue 가 겹쳐 묻힌다.
      ;; org-modern 이 표 선도 이 색으로 그리므로 본문 fg 로 맞춘다.
-     `(org-table  ((t :foreground ,(doom-color 'fg))))))
+     `(org-table  ((t :foreground ,(doom-color 'fg))))
+     ;; 테마 기본 헤딩색 중 violet(#906CFF, 대비 4.8:1)/magenta(#C991E1)가 인디고
+     ;; 배경에 묻힌다. 헤딩은 ghostty Cyberdyne 의 밝은 ANSI 슬롯으로 바꾼다
+     ;; (#151144 대비 모두 8.9:1 이상).
+     '(org-level-1 ((t :inherit outline-1 :foreground "#6bffdd"))) ; palette 6
+     '(org-level-2 ((t :inherit outline-2 :foreground "#ff90fe"))) ; palette 5
+     '(org-level-3 ((t :inherit outline-3 :foreground "#c2e3ff"))) ; palette 12
+     '(org-level-4 ((t :inherit outline-4 :foreground "#ffc4be"))) ; palette 9
+     '(org-level-5 ((t :inherit outline-5 :foreground "#d6fcba"))) ; palette 10
+     '(org-level-6 ((t :inherit outline-6 :foreground "#ffb2fe"))) ; palette 13
+     '(org-level-7 ((t :inherit outline-7 :foreground "#fffed5"))) ; palette 11
+     '(org-level-8 ((t :inherit outline-8 :foreground "#e6e7fe"))) ; palette 14
+     ;; org-modern 태그/날짜 라벨은 secondary-selection(거의 검정)·gray20 배경이라
+     ;; 인디고 위에서 구멍처럼 보인다. 선택 영역과 같은 인디고 톤으로 맞춘다.
+     `(org-modern-tag ((t :inherit org-modern-label
+                          :background ,jy/cyberdyne-sel :foreground ,jy/cyberdyne-sel-fg)))
+     `(org-modern-date-active ((t :inherit org-modern-label
+                                  :background ,jy/cyberdyne-bg-hl :foreground "#c2e3ff")))
+     `(org-modern-date-inactive ((t :inherit org-modern-label
+                                    :background ,jy/cyberdyne-bg-hl :foreground "#828299")))))
 
   (defun jy/break-gnus-face-cycle ()
     "doom-themes 의 gnus-group-news-low 상속 순환을 끊는다.
@@ -599,7 +618,12 @@ Kotlin 버퍼에서도 같은 프로젝트의 jdtls 세션을 찾아 쓸 수 있
 (use-package org-modern
   :after org
   :hook ((org-mode . org-modern-mode)
-         (org-agenda-finalize . org-modern-agenda)))
+         (org-agenda-finalize . org-modern-agenda))
+  :config
+  ;; 기본값의 3레벨 "⯈/⯆"(U+2BC8/U+2BC6)는 macOS 에 그 글리프를 가진 폰트가
+  ;; 없어서(.LastResort 뿐) 터미널에 �로 찍힌다. 어디서나 있는 삼각형으로 바꾼다.
+  (setq org-modern-fold-stars
+        '(("▶" . "▼") ("▷" . "▽") ("▸" . "▾") ("▹" . "▿") ("▸" . "▾"))))
 
 ;;; Config reload
 (defun jy/reload-init ()
