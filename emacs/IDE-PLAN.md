@@ -56,7 +56,7 @@ Phase 0–4, 6 구현 완료. 남은 것은 **업무 Gradle 멀티모듈 프로�
 | GoTo definition/implementation | eglot + xref (`M-.`, `C-c l g i`) | 동작함 |
 | GoTo class/symbol (프로젝트 전역) | **없음** | IntelliJ `Cmd+O`/`Cmd+Opt+O` 대응 부재. consult-eglot 필요 |
 | Find Usages | `xref-find-references` (`M-?`) | 동작하나 결과 UX가 IntelliJ 대비 빈약 |
-| 파일 탐색 | projectile + consult + treemacs | 충분함. 손대지 않음 |
+| 파일 탐색 | project.el + consult | 충분함. 손대지 않음 |
 | 테스트 메서드/클래스별 실행 | **없음** (수동으로 gradle 명령 입력) | 핵심 결손. Gradle 러너 elisp 필요 |
 | 디버거 (attach) | dap-mode + `JVM Attach localhost:5005` | 동작하나 아래 문제 있음 |
 | 디버거 (test debug) | lsp-java 필요 → `eglot-shutdown` 후 `M-x lsp` 수동 전환 | **최대 고통 지점.** LSP 이중 스택 |

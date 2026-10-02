@@ -45,7 +45,6 @@ IntelliJ의 "에디터 탭" 대신 Emacs는 **버퍼**(열린 파일)와 **창**
 | `C-x C-f` | 경로로 파일 열기 |
 | `C-c p f` | **프로젝트 안** 파일 이름으로 찾기 (IntelliJ `Cmd+Shift+O`) |
 | `C-x C-s` | 저장 |
-| `C-c t t` | treemacs 파일 트리 토글 |
 
 ## 편집 자주 쓰는 것
 

@@ -69,14 +69,13 @@ prefix별로 정리한 커스텀 키 전체 목록. 바닐라 Emacs 기본 키�
 | `M-g d` | 버퍼 진단 목록 |
 | `M-g f` | 진단 검색 (consult-flymake) |
 
-## 프로젝트/트리/Git
+## 프로젝트/Git
 
 | 키 | 동작 |
 |---|---|
 | `C-c p p` | 프로젝트 전환 |
 | `C-c p f` | 프로젝트 파일 찾기 |
-| `C-c t t` | treemacs 토글 |
-| `C-c t s` | treemacs 창으로 이동 |
+| `C-c p b` | 프로젝트 버퍼 전환 |
 | `C-x g` | magit status |
 
 ## 편집/기타

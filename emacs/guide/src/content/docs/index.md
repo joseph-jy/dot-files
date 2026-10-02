@@ -13,8 +13,7 @@ description: Java/Kotlin + Spring Boot 개발자를 위한 Emacs 실무 가이�
 | 테스트/빌드 러너 | jy-gradle.el (자작 Gradle 러너) | `C-c g` |
 | 디버거 | dape (jdtls의 java-debug 사용) | `C-c d` |
 | Git / GitHub Enterprise PR | magit + forge | `C-x g` |
-| 프로젝트/파일 이동 | projectile + consult | `C-c p`, `M-s r` |
-| 파일 트리 | treemacs | `C-c t t` |
+| 프로젝트/파일 이동 | project.el(내장) + consult | `C-x p`(= `C-c p`), `M-s r` |
 | 자동완성 | corfu | 자동 팝업 |
 | 진단(경고/에러) | flymake | `M-g n` / `M-g p` |
 

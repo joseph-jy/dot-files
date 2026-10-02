@@ -281,6 +281,11 @@
       min-width: auto;
     }
 
+    .keys .or {
+      align-self: center;
+      color: var(--muted);
+    }
+
     .command {
       display: block;
       font-weight: 720;
@@ -373,15 +378,16 @@
   <div class="layout">
     <div class="sidebar" aria-label="Sections">
       <div class="nav" role="navigation">
-        <a href="#focus">자주 쓰는 키 <span>11</span></a>
-        <a href="#search">검색/이동 <span>8</span></a>
-        <a href="#project">프로젝트 <span>3</span></a>
-        <a href="#lsp">LSP/Eglot <span>12</span></a>
+        <a href="#focus">자주 쓰는 키 <span>10</span></a>
+        <a href="#search">검색/이동 <span>6</span></a>
+        <a href="#project">프로젝트 <span>5</span></a>
+        <a href="#lsp">LSP/Eglot <span>8</span></a>
+        <a href="#diag">진단 <span>4</span></a>
         <a href="#org">Org <span>3</span></a>
         <a href="#gradle">Gradle <span>7</span></a>
         <a href="#debug">Debug <span>12</span></a>
         <a href="#git">Git/Magit <span>10</span></a>
-        <a href="#tree">Treemacs <span>6</span></a>
+        <a href="#edit">편집/기타 <span>3</span></a>
       </div>
 
       <div class="prefixes">
@@ -390,8 +396,7 @@
           <div class="prefix-item"><kbd>C-c l</kbd><span>LSP</span></div>
           <div class="prefix-item"><kbd>C-c g</kbd><span>Gradle</span></div>
           <div class="prefix-item"><kbd>C-c d</kbd><span>Debug</span></div>
-          <div class="prefix-item"><kbd>C-c p</kbd><span>Project</span></div>
-          <div class="prefix-item"><kbd>C-c t</kbd><span>Tree</span></div>
+          <div class="prefix-item"><kbd>C-x p</kbd><span>Project</span></div>
           <div class="prefix-item"><kbd>C-c o</kbd><span>Org</span></div>
           <div class="prefix-item"><kbd>C-x g</kbd><span>Git</span></div>
         </div>
@@ -413,17 +418,13 @@
             <kbd>M-s r</kbd>
             <div><span class="command">consult-ripgrep <span class="tag blue">search</span></span><span class="desc">프로젝트 전체 텍스트 검색</span></div>
           </div>
-          <div class="key-row" data-keywords="C-c p f projectile-find-file 프로젝트 파일 찾기">
-            <kbd>C-c p f</kbd>
-            <div><span class="command">projectile-find-file <span class="tag green">project</span></span><span class="desc">현재 프로젝트 안에서 파일 열기</span></div>
+          <div class="key-row" data-keywords="C-x p f project-find-file 프로젝트 파일 찾기">
+            <kbd>C-x p f</kbd>
+            <div><span class="command">project-find-file <span class="tag green">project</span></span><span class="desc">현재 프로젝트 안에서 파일 열기</span></div>
           </div>
           <div class="key-row" data-keywords="C-x g magit-status git status">
             <kbd>C-x g</kbd>
             <div><span class="command">magit-status <span class="tag amber">git</span></span><span class="desc">Git status와 diff 작업 시작</span></div>
-          </div>
-          <div class="key-row" data-keywords="C-c t t treemacs sidebar directory project tree">
-            <kbd>C-c t t</kbd>
-            <div><span class="command">treemacs <span class="tag green">tree</span></span><span class="desc">좌측 디렉토리/프로젝트 사이드바</span></div>
           </div>
           <div class="key-row" data-keywords="M-. xref-find-definitions eglot definition jump">
             <kbd>M-.</kbd>
@@ -455,40 +456,32 @@
       <div class="sheet-section" id="search">
         <div class="section-head">
           <h2>검색/이동</h2>
-          <span class="scope">consult + xref</span>
+          <span class="scope">consult</span>
         </div>
         <div class="rows">
           <div class="key-row" data-keywords="C-s consult-line line search buffer">
             <kbd>C-s</kbd>
             <div><span class="command">consult-line</span><span class="desc">현재 버퍼 검색</span></div>
           </div>
-          <div class="key-row" data-keywords="C-x b consult-buffer buffer switch">
-            <kbd>C-x b</kbd>
-            <div><span class="command">consult-buffer</span><span class="desc">버퍼 전환</span></div>
-          </div>
-          <div class="key-row" data-keywords="M-g g consult-goto-line goto line">
-            <kbd>M-g g</kbd>
-            <div><span class="command">consult-goto-line</span><span class="desc">라인 번호로 이동</span></div>
-          </div>
-          <div class="key-row" data-keywords="M-g f consult-flymake diagnostics flymake">
-            <kbd>M-g f</kbd>
-            <div><span class="command">consult-flymake</span><span class="desc">Flymake 진단 위치로 이동</span></div>
-          </div>
           <div class="key-row" data-keywords="M-s r consult-ripgrep ripgrep project search">
             <kbd>M-s r</kbd>
             <div><span class="command">consult-ripgrep</span><span class="desc">프로젝트 텍스트 검색</span></div>
           </div>
-          <div class="key-row" data-keywords="M-g s consult-eglot-symbols workspace symbol class 클래스 심볼 검색 IntelliJ Cmd+O">
-            <kbd>M-g s</kbd>
+          <div class="key-row" data-keywords="M-g s C-c l g s consult-eglot-symbols workspace symbol class 클래스 심볼 검색 IntelliJ Cmd+O">
+            <div class="keys"><kbd>M-g s</kbd><span class="or">/</span><kbd>C-c l g s</kbd></div>
             <div><span class="command">consult-eglot-symbols</span><span class="desc">워크스페이스 클래스/심볼 검색 (IntelliJ Cmd+O 대응)</span></div>
           </div>
-          <div class="key-row" data-keywords="M-. xref-find-definitions definition eglot">
-            <kbd>M-.</kbd>
-            <div><span class="command">xref-find-definitions</span><span class="desc">정의로 이동</span></div>
+          <div class="key-row" data-keywords="C-x b consult-buffer buffer switch">
+            <kbd>C-x b</kbd>
+            <div><span class="command">consult-buffer</span><span class="desc">버퍼 전환</span></div>
           </div>
-          <div class="key-row" data-keywords="M-, xref-go-back pop marker return">
-            <kbd>M-,</kbd>
-            <div><span class="command">xref-go-back</span><span class="desc">이전 위치로 복귀</span></div>
+          <div class="key-row" data-keywords="C-x C-b ibuffer buffer list 버퍼 목록">
+            <kbd>C-x C-b</kbd>
+            <div><span class="command">ibuffer</span><span class="desc">버퍼 목록 관리 (일괄 닫기 등)</span></div>
+          </div>
+          <div class="key-row" data-keywords="M-g g consult-goto-line goto line">
+            <kbd>M-g g</kbd>
+            <div><span class="command">consult-goto-line</span><span class="desc">라인 번호로 이동</span></div>
           </div>
         </div>
       </div>
@@ -496,20 +489,28 @@
       <div class="sheet-section" id="project">
         <div class="section-head">
           <h2>프로젝트</h2>
-          <span class="scope">projectile</span>
+          <span class="scope">project.el (C-c p 도 동일)</span>
         </div>
         <div class="rows">
-          <div class="key-row" data-keywords="C-c p projectile command map project menu">
-            <kbd>C-c p</kbd>
-            <div><span class="command">projectile-command-map</span><span class="desc">Projectile 명령 prefix</span></div>
+          <div class="key-row" data-keywords="C-x p C-c p project-prefix-map project menu">
+            <kbd>C-x p</kbd>
+            <div><span class="command">project-prefix-map</span><span class="desc">프로젝트 명령 prefix (C-c p 도 같은 메뉴)</span></div>
           </div>
-          <div class="key-row" data-keywords="C-c p f projectile-find-file project file">
-            <kbd>C-c p f</kbd>
-            <div><span class="command">projectile-find-file</span><span class="desc">프로젝트 파일 찾기</span></div>
+          <div class="key-row" data-keywords="C-x p f project-find-file project file">
+            <kbd>C-x p f</kbd>
+            <div><span class="command">project-find-file</span><span class="desc">프로젝트 파일 찾기</span></div>
           </div>
-          <div class="key-row" data-keywords="C-c p p projectile-switch-project project switch">
-            <kbd>C-c p p</kbd>
-            <div><span class="command">projectile-switch-project</span><span class="desc">다른 프로젝트로 이동</span></div>
+          <div class="key-row" data-keywords="C-x p p project-switch-project project switch">
+            <kbd>C-x p p</kbd>
+            <div><span class="command">project-switch-project</span><span class="desc">다른 프로젝트로 이동</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-x p b project-switch-to-buffer project buffer">
+            <kbd>C-x p b</kbd>
+            <div><span class="command">project-switch-to-buffer</span><span class="desc">프로젝트 버퍼로 전환</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-x p k project-kill-buffers project close buffers">
+            <kbd>C-x p k</kbd>
+            <div><span class="command">project-kill-buffers</span><span class="desc">프로젝트 버퍼 모두 닫기</span></div>
           </div>
         </div>
       </div>
@@ -532,25 +533,17 @@
             <kbd>C-c l f</kbd>
             <div><span class="command">eglot-format</span><span class="desc">현재 버퍼 또는 선택 영역 format</span></div>
           </div>
-          <div class="key-row" data-keywords="C-c l d flymake-show-buffer-diagnostics diagnostics">
-            <kbd>C-c l d</kbd>
-            <div><span class="command">flymake-show-buffer-diagnostics</span><span class="desc">현재 버퍼 진단 목록</span></div>
-          </div>
-          <div class="key-row" data-keywords="M-. definition jump xref eglot">
-            <kbd>M-.</kbd>
+          <div class="key-row" data-keywords="M-. C-c l g d xref-find-definitions definition jump">
+            <div class="keys"><kbd>M-.</kbd><span class="or">/</span><kbd>C-c l g d</kbd></div>
             <div><span class="command">xref-find-definitions</span><span class="desc">정의로 이동</span></div>
           </div>
-          <div class="key-row" data-keywords="M-, back xref eglot">
-            <kbd>M-,</kbd>
-            <div><span class="command">xref-go-back</span><span class="desc">정의 이동 전 위치로 복귀</span></div>
+          <div class="key-row" data-keywords="M-, C-c l g b xref-go-back back return navigation">
+            <div class="keys"><kbd>M-,</kbd><span class="or">/</span><kbd>C-c l g b</kbd></div>
+            <div><span class="command">xref-go-back</span><span class="desc">이전 위치로 복귀</span></div>
           </div>
-          <div class="key-row" data-keywords="C-c l g d xref-find-definitions definition jump">
-            <kbd>C-c l g d</kbd>
-            <div><span class="command">xref-find-definitions</span><span class="desc">정의로 이동 (M-. 과 동일)</span></div>
-          </div>
-          <div class="key-row" data-keywords="C-c l g r xref-find-references references usages">
-            <kbd>C-c l g r</kbd>
-            <div><span class="command">xref-find-references</span><span class="desc">참조 위치 모두 찾기 (M-? 과 동일)</span></div>
+          <div class="key-row" data-keywords="M-? C-c l g r xref-find-references references usages">
+            <div class="keys"><kbd>M-?</kbd><span class="or">/</span><kbd>C-c l g r</kbd></div>
+            <div><span class="command">xref-find-references</span><span class="desc">참조 위치 모두 찾기</span></div>
           </div>
           <div class="key-row" data-keywords="C-c l g i eglot-find-implementation implementation interface">
             <kbd>C-c l g i</kbd>
@@ -560,13 +553,30 @@
             <kbd>C-c l g t</kbd>
             <div><span class="command">eglot-find-typeDefinition</span><span class="desc">타입 정의로 이동</span></div>
           </div>
-          <div class="key-row" data-keywords="C-c l g b xref-go-back back return navigation">
-            <kbd>C-c l g b</kbd>
-            <div><span class="command">xref-go-back</span><span class="desc">이전 위치로 복귀 (M-, 과 동일)</span></div>
+        </div>
+      </div>
+
+      <div class="sheet-section" id="diag">
+        <div class="section-head">
+          <h2>진단</h2>
+          <span class="scope">flymake</span>
+        </div>
+        <div class="rows">
+          <div class="key-row" data-keywords="M-g n flymake-goto-next-error next error diagnostics">
+            <kbd>M-g n</kbd>
+            <div><span class="command">flymake-goto-next-error</span><span class="desc">다음 에러/경고로 이동</span></div>
           </div>
-          <div class="key-row" data-keywords="C-c l g s consult-eglot-symbols workspace symbol 워크스페이스 심볼 검색">
-            <kbd>C-c l g s</kbd>
-            <div><span class="command">consult-eglot-symbols</span><span class="desc">워크스페이스 심볼 검색 (M-g s 와 동일)</span></div>
+          <div class="key-row" data-keywords="M-g p flymake-goto-prev-error previous error diagnostics">
+            <kbd>M-g p</kbd>
+            <div><span class="command">flymake-goto-prev-error</span><span class="desc">이전 에러/경고로 이동</span></div>
+          </div>
+          <div class="key-row" data-keywords="M-g f consult-flymake diagnostics flymake">
+            <kbd>M-g f</kbd>
+            <div><span class="command">consult-flymake</span><span class="desc">진단 목록에서 골라 이동</span></div>
+          </div>
+          <div class="key-row" data-keywords="M-g d C-c l d flymake-show-buffer-diagnostics diagnostics">
+            <div class="keys"><kbd>M-g d</kbd><span class="or">/</span><kbd>C-c l d</kbd></div>
+            <div><span class="command">flymake-show-buffer-diagnostics</span><span class="desc">현재 버퍼 진단 목록 창</span></div>
           </div>
         </div>
       </div>
@@ -735,35 +745,23 @@
         </div>
       </div>
 
-      <div class="sheet-section" id="tree">
+      <div class="sheet-section" id="edit">
         <div class="section-head">
-          <h2>Treemacs</h2>
-          <span class="scope">global + Treemacs buffer</span>
+          <h2>편집/기타</h2>
+          <span class="scope">global</span>
         </div>
         <div class="rows">
-          <div class="key-row" data-keywords="C-c t t treemacs sidebar project tree">
-            <kbd>C-c t t</kbd>
-            <div><span class="command">treemacs</span><span class="desc">사이드바 열기/닫기 토글</span></div>
+          <div class="key-row" data-keywords="C-S-d M-S-down jy/duplicate-line-below duplicate line 줄 복제">
+            <div class="keys"><kbd>C-S-d</kbd><span class="or">/</span><kbd>M-S-&lt;down&gt;</kbd></div>
+            <div><span class="command">jy/duplicate-line-below</span><span class="desc">현재 줄을 아래로 복제</span></div>
           </div>
-          <div class="key-row" data-keywords="RET treemacs open file directory">
-            <kbd>RET</kbd>
-            <div><span class="command">treemacs-RET-action</span><span class="desc">파일 열기 또는 디렉토리 이동</span></div>
+          <div class="key-row" data-keywords="M-S-up jy/duplicate-line-above duplicate line 줄 복제">
+            <kbd>M-S-&lt;up&gt;</kbd>
+            <div><span class="command">jy/duplicate-line-above</span><span class="desc">현재 줄을 위로 복제</span></div>
           </div>
-          <div class="key-row" data-keywords="TAB treemacs expand collapse node">
-            <kbd>TAB</kbd>
-            <div><span class="command">treemacs-TAB-action</span><span class="desc">노드 펼치기/접기</span></div>
-          </div>
-          <div class="key-row" data-keywords="g treemacs refresh">
-            <kbd>g</kbd>
-            <div><span class="command">treemacs-refresh</span><span class="desc">Tree 새로고침</span></div>
-          </div>
-          <div class="key-row" data-keywords="q treemacs quit window">
-            <kbd>q</kbd>
-            <div><span class="command">quit-window</span><span class="desc">Treemacs 창 닫기</span></div>
-          </div>
-          <div class="key-row" data-keywords="C-c t s treemacs-select-window focus switch window select">
-            <kbd>C-c t s</kbd>
-            <div><span class="command">treemacs-select-window</span><span class="desc">편집 버퍼 → Treemacs 창으로 포커스 이동</span></div>
+          <div class="key-row" data-keywords="C-c r jy/reload-init reload config 설정 다시 읽기">
+            <kbd>C-c r</kbd>
+            <div><span class="command">jy/reload-init</span><span class="desc">init.el 다시 읽기 (lisp/ 모듈 포함)</span></div>
           </div>
         </div>
       </div>

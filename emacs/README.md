@@ -6,8 +6,7 @@ Vanilla Emacs를 Java/Kotlin 백엔드 개발, AI agent 결과 리뷰, GitHub En
 
 - `eglot`: Java/Kotlin/TypeScript/Python/Bash/YAML LSP 클라이언트 (단일 LSP 스택)
 - `magit` + `forge`: Git 및 GitHub Enterprise PR/issue 확인
-- `projectile` + `consult` + `consult-eglot`: 프로젝트 이동, 파일/텍스트/심볼 검색
-- `treemacs`: 좌측 디렉토리/프로젝트 사이드바
+- `project.el`(내장) + `consult` + `consult-eglot`: 프로젝트 이동, 파일/텍스트/심볼 검색
 - `corfu`: 버퍼 안 completion
 - `flymake`: Eglot 진단 확인
 - `dape`: 디버거 — eglot의 jdtls 세션을 그대로 사용 (JVM/Python attach, test debug)
@@ -151,7 +150,7 @@ machine github.daumkakao.com/api/v3 login <github-username>^forge password <toke
 
 ## 단축키 유지보수 규칙
 
-`emacs/init.el`에서 package, keybinding, prefix map, debug template, LSP command, Git/Magit/Treemacs 흐름을 바꾸면 같은 변경 안에서 `emacs/cheatsheet.html`도 함께 확인하고 갱신한다. `emacs/README.md`의 "먼저 익힐 키" 목록을 바꿀 때도 동일하게 `emacs/cheatsheet.html`을 맞춘다.
+`emacs/init.el`에서 package, keybinding, prefix map, debug template, LSP command, Git/Magit 흐름을 바꾸면 같은 변경 안에서 `emacs/cheatsheet.html`도 함께 확인하고 갱신한다. `emacs/README.md`의 "먼저 익힐 키" 목록을 바꿀 때도 동일하게 `emacs/cheatsheet.html`을 맞춘다.
 
 `emacs/reference-card.html`은 일반 Emacs 기본 키 레퍼런스이므로 개인 설정 변경만으로는 수정하지 않는다.
 
@@ -162,8 +161,7 @@ machine github.daumkakao.com/api/v3 login <github-username>^forge password <toke
 - `C-x 1`, `C-x 2`, `C-x 3`, `C-x 0`: 창 제어
 - `C-s`: 현재 버퍼 검색
 - `M-s r`: 프로젝트 ripgrep 검색
-- `C-c t`: Treemacs 디렉토리/프로젝트 사이드바 열기
-- `C-c p f`: 프로젝트 파일 찾기
+- `C-x p f` (또는 `C-c p f`): 프로젝트 파일 찾기
 - `C-x g`: Magit status
 - `C-c o l`: Org link 저장
 - `M-.`: 정의로 이동
@@ -190,7 +188,7 @@ machine github.daumkakao.com/api/v3 login <github-username>^forge password <toke
 
 ### 1주차: 생존 키와 검색
 
-파일/버퍼/창 전환, `consult-line`, `consult-ripgrep`, `projectile-find-file`만 반복한다. 이 단계에서는 IDE 기능을 욕심내지 말고 AI agent가 만든 diff를 빠르게 찾고 읽는 데 집중한다.
+파일/버퍼/창 전환, `consult-line`, `consult-ripgrep`, `project-find-file`만 반복한다. 이 단계에서는 IDE 기능을 욕심내지 말고 AI agent가 만든 diff를 빠르게 찾고 읽는 데 집중한다.
 
 ### 2주차: 코드 읽기
 

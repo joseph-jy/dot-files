@@ -336,11 +336,6 @@ dape가 jdtls를 통해 디버그 세션을 시작하려면 이 번들이 필요
              (cl-some (lambda (mode) (memq mode entry-modes)) modes)))
          eglot-server-programs)))
 
-(defun jy/projectile-ignored-project-p (project-root)
-  "Return non-nil when PROJECT-ROOT should not be treated as a project."
-  (file-equal-p (expand-file-name project-root)
-                (expand-file-name "~")))
-
 (define-prefix-command 'jy/lsp-command-map)
 (global-set-key (kbd "C-c l") 'jy/lsp-command-map)
 
@@ -533,51 +528,14 @@ Kotlin 버퍼에서도 같은 프로젝트의 jdtls 세션을 찾아 쓸 수 있
                  "github.daumkakao.com"
                  forge-github-repository)))
 
-;;; Project Management
-(use-package projectile
-  :diminish projectile-mode
+;;; Project Management - project.el (내장)
+;; `C-x p' 가 기본 prefix. 예전 습관대로 `C-c p' 로도 같은 메뉴를 쓴다.
+(use-package project
+  :ensure nil
+  :bind-keymap ("C-c p" . project-prefix-map)
   :config
-  (setq projectile-ignored-project-function #'jy/projectile-ignored-project-p)
-  (projectile-mode +1)
-  ;; `package.json` 같은 manifest만 있는 홈 디렉토리는 프로젝트로 취급하지 않음.
-  (projectile-discard-root-cache)
-  ;; 'alien' = git/fd 등 외부 도구 사용 (.gitignore 존중, 빠름)
-  (setq projectile-indexing-method 'alien)
-  ;; 프로젝트들이 위치한 상위 디렉토리 (필요시 수정)
-  (setq projectile-project-search-path '("~/projects" "~/work" "~/Documents/github.com"))
-  ;; 일반적으로 무시할 디렉토리
-  (setq projectile-globally-ignored-directories
-        '(".git" ".hg" ".svn" ".cache" ".gradle"
-          "node_modules" "build" "dist" "target" "out"))
-  :bind-keymap ("C-c p" . projectile-command-map))
-
-;;; Sidebar - Treemacs
-(global-unset-key (kbd "C-c t"))
-(use-package treemacs
-  :defer t
-  ;; `treemacs' 는 treemacs-persist-file 에 저장된 워크스페이스를 복원하므로
-  ;; 예전에 열었던 디렉토리가 계속 남는다. 대신
-  ;; `treemacs-add-and-display-current-project-exclusively' 를 쓰면
-  ;; 현재 위치를 유일한 루트로 만들고 나머지 프로젝트는 제거한다.
-  ;; (프로젝트가 아닌 디렉토리에서도 default-directory 로 폴백되므로 항상 동작)
-  :bind (("C-c t t" . treemacs-add-and-display-current-project-exclusively)
-         ("C-c t T" . treemacs)     ; 저장된 워크스페이스 그대로 열기
-         ("C-c t a" . treemacs-add-and-display-current-project) ; 기존 유지 + 추가
-         ("C-c t s" . treemacs-select-window))
-  :init
-  (setq treemacs-persist-file
-        (expand-file-name "treemacs-persist" jy/emacs-state-directory))
-  (setq treemacs-last-error-persist-file
-        (expand-file-name "treemacs-persist-at-last-error"
-                          jy/emacs-state-directory))
-  :config
-  (setq treemacs-width 34)
-  (setq treemacs-follow-after-init t)
-  (setq treemacs-is-never-other-window t)
-  (setq treemacs-sorting 'alphabetic-asc))
-
-(use-package treemacs-projectile
-  :after (treemacs projectile))
+  ;; git 저장소가 아닌 디렉토리는 루트에 빈 `.project' 파일을 두면 프로젝트로 인식
+  (setq project-vc-extra-root-markers '(".project")))
 
 ;;; Which-key - Keybinding hints
 (use-package which-key
