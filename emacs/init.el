@@ -83,6 +83,7 @@
   (defconst jy/cyberdyne-bg      "#151144" "ghostty background (hue 245도, 채도 60%).")
   (defconst jy/cyberdyne-bg-dark "#0e0b2d" "비활성 modeline 용 더 어두운 인디고.")
   (defconst jy/cyberdyne-bg-hl   "#221d63" "현재 줄/modeline 용 밝은 인디고.")
+  (defconst jy/cyberdyne-bg-table "#1b1756" "org 표 배경 — bg 와 bg-hl 사이 톤.")
   (defconst jy/cyberdyne-sel     "#454d96" "ghostty selection-background.")
   (defconst jy/cyberdyne-sel-fg  "#f4f4f4" "ghostty selection-foreground.")
   (defconst jy/cyberdyne-cursor  "#00ff9c" "ghostty cursor-color.")
@@ -108,13 +109,18 @@ GUI 프레임은 배경을 `jy/cyberdyne-bg' 로 직접 지정한다.
      `(vertical-border    ((t :foreground ,jy/cyberdyne-bg-hl)))
      ;; 테마 기본 org-table(violet #906CFF)은 인디고 배경과 hue 가 겹쳐 묻힌다.
      ;; org-modern 이 표 선도 이 색으로 그리므로 본문 fg 로 맞춘다.
-     `(org-table  ((t :foreground ,(doom-color 'fg))))
+     ;; 배경을 한 톤 밝게 깔아 표가 본문과 구분되는 상자로 보이게 한다.
+     `(org-table  ((t :foreground ,(doom-color 'fg) :background ,jy/cyberdyne-bg-table)))
+     ;; 헤더 행(첫 구분선 위)과 org-table-header-line-mode 의 고정 헤더가 같이 쓴다.
+     `(org-table-header ((t :inherit org-table :weight bold
+                            :foreground "#fffed5" :background ,jy/cyberdyne-bg-hl)))
      ;; 테마 기본 헤딩색 중 violet(#906CFF, 대비 4.8:1)/magenta(#C991E1)가 인디고
      ;; 배경에 묻힌다. 헤딩은 ghostty Cyberdyne 의 밝은 ANSI 슬롯으로 바꾼다
      ;; (#151144 대비 모두 8.9:1 이상).
-     '(org-level-1 ((t :inherit outline-1 :foreground "#6bffdd"))) ; palette 6
-     '(org-level-2 ((t :inherit outline-2 :foreground "#ff90fe"))) ; palette 5
-     '(org-level-3 ((t :inherit outline-3 :foreground "#c2e3ff"))) ; palette 12
+     ;; 1~3레벨은 크기도 키워 구조가 보이게 한다(터미널에서는 :height 가 무시된다).
+     '(org-level-1 ((t :inherit outline-1 :foreground "#6bffdd" :height 1.3)))  ; palette 6
+     '(org-level-2 ((t :inherit outline-2 :foreground "#ff90fe" :height 1.15))) ; palette 5
+     '(org-level-3 ((t :inherit outline-3 :foreground "#c2e3ff" :height 1.05))) ; palette 12
      '(org-level-4 ((t :inherit outline-4 :foreground "#ffc4be"))) ; palette 9
      '(org-level-5 ((t :inherit outline-5 :foreground "#d6fcba"))) ; palette 10
      '(org-level-6 ((t :inherit outline-6 :foreground "#ffb2fe"))) ; palette 13
@@ -565,6 +571,16 @@ Kotlin 버퍼에서도 같은 프로젝트의 jdtls 세션을 찾아 쓸 수 있
   (setq org-return-follows-link t)
   (setq org-startup-indented t)
   (setq org-hide-leading-stars t)
+  ;; 가독성: 강조 기호(*, /, =)는 숨기고 커서가 올라갈 때만 보인다(org-appear).
+  (setq org-hide-emphasis-markers t)
+  (setq org-pretty-entities t)
+  (setq org-ellipsis " ▾")
+  ;; 긴 표에서 헤더 행이 화면 밖으로 나가면 header-line 에 고정한다.
+  (setq org-table-header-line-p t)
+  ;; [[./images/foo.png]] 같은 이미지 링크를 파일을 열 때 바로 그림으로 보여준다.
+  ;; 너비는 #+ATTR_ORG: :width 가 있으면 그 값, 없으면 600px.
+  (setq org-startup-with-inline-images t)
+  (setq org-image-actual-width '(600))
   (setq org-todo-keywords
         '((sequence "TODO(t)" "IN-PROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
   (setq org-capture-templates
@@ -573,7 +589,48 @@ Kotlin 버퍼에서도 같은 프로젝트의 jdtls 세션을 찾아 쓸 수 있
           ("n" "Note" entry (file+headline "~/Documents/notes/notes.org" "Notes")
            "* %?\n  %i\n  %a")
           ("b" "Bookmark" entry (file+headline "~/Documents/notes/notes.org" "Bookmarks")
-           "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n%a\n" :empty-lines 1))))
+           "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n%a\n" :empty-lines 1)))
+
+  (defun jy/org-table-header-row-p ()
+    "현재 줄이 표의 헤더 행이면 non-nil.
+헤더 행은 위로는 표 시작까지 구분선(|-)이 없고, 아래로는 표가 끝나기 전에
+구분선을 만나는 행이다. 구분선이 없는 표에는 헤더가 없다."
+    (save-excursion
+      (beginning-of-line)
+      (and (save-excursion
+             (let ((ok t))
+               (while (and ok (zerop (forward-line -1)) (looking-at-p "[ \t]*|"))
+                 (when (looking-at-p "[ \t]*|-") (setq ok nil)))
+               ok))
+           (let (sep)
+             (while (and (not sep) (zerop (forward-line 1)) (looking-at-p "[ \t]*|"))
+               (when (looking-at-p "[ \t]*|-") (setq sep t)))
+             sep))))
+
+  (defun jy/org-table-header-matcher (limit)
+    "font-lock 매처: LIMIT 전까지 다음 표 헤더 행을 찾는다."
+    (let (found)
+      (while (and (not found) (re-search-forward "^[ \t]*|[^-\n]" limit t))
+        (let ((bol (line-beginning-position))
+              (eol (line-end-position)))
+          (when (jy/org-table-header-row-p)
+            (set-match-data (list (+ bol (current-indentation)) eol))
+            (setq found t))
+          (forward-line 1)))
+      found))
+
+  (defun jy/org-fontify-table-header ()
+    "표 헤더 행에 `org-table-header' face 를 입힌다."
+    (font-lock-add-keywords
+     nil '((jy/org-table-header-matcher 0 'org-table-header prepend)) 'append))
+
+  (defun jy/org-reading-setup ()
+    "Org 버퍼 가독성 설정: 줄 번호 끄기, 줄 간격(GUI)."
+    (display-line-numbers-mode -1)
+    (setq-local line-spacing 0.15))
+
+  (add-hook 'org-mode-hook #'jy/org-fontify-table-header)
+  (add-hook 'org-mode-hook #'jy/org-reading-setup))
 
 (use-package org-modern
   :after org
@@ -583,7 +640,22 @@ Kotlin 버퍼에서도 같은 프로젝트의 jdtls 세션을 찾아 쓸 수 있
   ;; 기본값의 3레벨 "⯈/⯆"(U+2BC8/U+2BC6)는 macOS 에 그 글리프를 가진 폰트가
   ;; 없어서(.LastResort 뿐) 터미널에 �로 찍힌다. 어디서나 있는 삼각형으로 바꾼다.
   (setq org-modern-fold-stars
-        '(("▶" . "▼") ("▷" . "▽") ("▸" . "▾") ("▹" . "▿") ("▸" . "▾"))))
+        '(("▶" . "▼") ("▷" . "▽") ("▸" . "▾") ("▹" . "▿") ("▸" . "▾")))
+  ;; 표 세로선 기본값(3px, 터미널에선 3칸)은 굵어서 셀 내용보다 선이 먼저 보인다.
+  (setq org-modern-table-vertical 1)
+  ;; TODO 키워드를 상태별 색 배지로 구분한다(Cyberdyne 팔레트, 글자는 배경색).
+  (setq org-modern-todo-faces
+        '(("TODO"        :background "#ff8080" :foreground "#151144" :weight bold)
+          ("IN-PROGRESS" :background "#6bffdd" :foreground "#151144" :weight bold)
+          ("WAITING"     :background "#ffc4be" :foreground "#151144")
+          ("CANCELLED"   :background "#221d63" :foreground "#828299"))))
+
+(use-package org-appear
+  :hook (org-mode . org-appear-mode))
+
+(use-package olivetti
+  :hook (org-mode . olivetti-mode)
+  :custom (olivetti-body-width 100))
 
 ;;; Config reload
 (defun jy/reload-init ()
