@@ -93,6 +93,27 @@
 ;; daemon 은 프레임이 닫힐 때, 단독 실행은 종료할 때 저장된다.
 (add-hook 'delete-frame-functions #'jy/frame-geometry-save)
 (add-hook 'kill-emacs-hook #'jy/frame-geometry-save)
+
+;; 세션 복원: 열린 파일/버퍼, 창 배치, 프레임
+(setq desktop-path (list jy/emacs-state-directory)
+      desktop-dirname jy/emacs-state-directory
+      desktop-save t                    ; 종료 시 묻지 않고 저장
+      desktop-load-locked-desktop t     ; 비정상 종료 후 lock 남아도 로드
+      desktop-restore-eager 10)         ; 10개만 즉시, 나머지는 지연 로드
+(desktop-save-mode 1)
+
+;; 파일마다 마지막 커서 위치
+(setq save-place-file (expand-file-name "places" jy/emacs-state-directory))
+(save-place-mode 1)
+
+;; 최근 파일 목록
+(setq recentf-save-file (expand-file-name "recentf" jy/emacs-state-directory)
+      recentf-max-saved-items 200)
+(recentf-mode 1)
+
+;; 미니버퍼 입력 히스토리 (M-x, find-file 등)
+(setq savehist-file (expand-file-name "history" jy/emacs-state-directory))
+(savehist-mode 1)
 (global-display-line-numbers-mode 1)
 (column-number-mode 1)
 (setq inhibit-startup-screen t)
