@@ -641,16 +641,32 @@ Kotlin 버퍼에서도 같은 프로젝트의 jdtls 세션을 찾아 쓸 수 있
          ("C-c c" . org-capture)
          ("C-c o l" . org-store-link))
   :config
-  (setq org-directory "~/org")
-  (setq org-agenda-files '("~/org"))
-  (setq org-default-notes-file "~/org/inbox.org")
+  (setq org-directory "~/Documents/notes")
+  (setq org-agenda-files '("~/Documents/notes/notes.org"))
+  (setq org-default-notes-file "~/Documents/notes/notes.org")
   (setq org-log-done 'time)
+  ;; 시간 기록은 :LOGBOOK: 서랍에, 0분 기록은 지우고, DONE 이 되면 자동으로 clock out.
+  (setq org-clock-into-drawer t)
+  (setq org-clock-out-remove-zero-time-clocks t)
+  (setq org-clock-out-when-done t)
+  ;; clock in 하면 자동으로 IN-PROGRESS 로 바꾼다.
+  (setq org-clock-in-switch-to-state "IN-PROGRESS")
+  ;; Emacs 를 껐다 켜도 돌고 있던 시계와 이력을 이어간다.
+  (setq org-clock-persist t)
+  (setq org-clock-persist-query-resume nil)
+  (org-clock-persistence-insinuate)
+  ;; agenda 의 R 리포트: 링크 달고, 3레벨까지, 0분 파일은 빼고, 좁게.
+  (setq org-agenda-clockreport-parameter-plist
+        '(:link t :maxlevel 3 :fileskip0 t :compact t :narrow 80))
   (setq org-return-follows-link t)
   (setq org-startup-indented t)
   (setq org-hide-leading-stars t)
   ;; 가독성: 강조 기호(*, /, =)는 숨기고 커서가 올라갈 때만 보인다(org-appear).
   (setq org-hide-emphasis-markers t)
   (setq org-pretty-entities t)
+  ;; 밑줄 단어(software_development 등)가 아래첨자로 보이지 않게, a_{1} 처럼 중괄호를 쓸 때만 첨자로.
+  (setq org-use-sub-superscripts '{})
+  (setq org-export-with-sub-superscripts '{})
   (setq org-ellipsis " ▾")
   ;; 긴 표에서 헤더 행이 화면 밖으로 나가면 header-line 에 고정한다.
   (setq org-table-header-line-p t)
@@ -659,14 +675,92 @@ Kotlin 버퍼에서도 같은 프로젝트의 jdtls 세션을 찾아 쓸 수 있
   (setq org-startup-with-inline-images t)
   (setq org-image-actual-width '(600))
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "IN-PROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+        ;; SOMEDAY: 꼭 할 일(TODO)과 구분해 "언젠가 할 수도 있는 일"을 적어 둔다.
+        '((sequence "TODO(t)" "IN-PROGRESS(i)" "WAITING(w)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELLED(c)")))
+  ;; Task/Note 는 모두 * Tasks(수신함)로 받고 나중에 refile 로 정리한다.
+  ;; %U(캡처 시각)는 수신함을 정리할 때 언제 들어온 일인지 보려고 남긴다.
   (setq org-capture-templates
         '(("t" "Task" entry (file+headline "~/Documents/notes/notes.org" "Tasks")
-           "* TODO %?\n  %i\n  %a")
-          ("n" "Note" entry (file+headline "~/Documents/notes/notes.org" "Notes")
-           "* %?\n  %i\n  %a")
+           "* TODO %?\n  %U\n  %i\n  %a")
+          ("n" "Note" entry (file+headline "~/Documents/notes/notes.org" "Tasks")
+           "* %? :note:\n  %U\n  %i\n  %a")
+          ("j" "Journal" entry (file+olp+datetree "~/Documents/notes/notes.org" "Journals")
+           "* %?\n  %U\n")
           ("b" "Bookmark" entry (file+headline "~/Documents/notes/notes.org" "Bookmarks")
            "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n%a\n" :empty-lines 1)))
+
+  ;; 레벨1은 분류, 그 아래 장/프로젝트(레벨2)와 소제목(레벨3)까지 refile 대상으로 둔다.
+  (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
+  ;; 경로를 "부모/자식"으로 보여주고, vertico 로 한 번에 검색한다.
+  (setq org-refile-use-outline-path t)
+  (setq org-outline-path-complete-in-steps nil)
+  (setq org-refile-allow-creating-parent-nodes 'confirm)
+  (defun jy/org-refile-target-not-done-p ()
+    "DONE 상태 헤딩은 refile 대상에서 뺀다."
+    (not (member (nth 2 (org-heading-components)) org-done-keywords)))
+  (setq org-refile-target-verify-function #'jy/org-refile-target-not-done-p)
+  ;; 보관은 별도 파일(notes.org_archive) 대신 notes.org 안의 * Archive 헤딩으로.
+  (setq org-archive-location "::* Archive")
+  (setq org-archive-mark-done nil)
+
+  ;; --- Norang 18장에서 고른 것들 ---
+  ;; C-c C-, 블록 삽입 목록에 mermaid 추가(m).
+  (add-to-list 'org-structure-template-alist '("m" . "src mermaid"))
+  ;; 상태 변경 기록도 :LOGBOOK: 서랍에 넣는다.
+  (setq org-log-into-drawer t)
+  ;; 하위 TODO 가 남아 있으면 상위를 DONE 으로 못 바꾼다.
+  (setq org-enforce-todo-dependencies t)
+  ;; 접혀서 안 보이는 내용을 모르고 고치지 않게 막는다.
+  (setq org-catch-invisible-edits 'show-and-error)
+  ;; 헤딩에서 C-a/C-e/C-k 가 별표·태그를 피해 가고, 붙여 넣은 트리 레벨을 맞춘다.
+  (setq org-special-ctrl-a/e t)
+  (setq org-special-ctrl-k t)
+  (setq org-yank-adjusted-subtrees t)
+  ;; 헤딩 맨 앞에서 키 하나로 명령(n/p 이동, t 상태, c 접기, ? 도움말).
+  (setq org-use-speed-commands t)
+  ;; agenda 필터(/)를 다시 열어도 유지한다.
+  (setq org-agenda-persistent-filter t)
+  ;; 반복 일정이 다음 회차로 넘어갈 때 :RESET_CHECK_BOXES: t 인 항목은 체크박스를 비운다.
+  ;; (org-contrib 의 org-checklist 대신 직접 구현)
+  (defun jy/org-reset-checkboxes-on-repeat ()
+    "RESET_CHECK_BOXES 속성이 있으면 하위 트리의 체크박스를 비운다."
+    (when (org-entry-get (point) "RESET_CHECK_BOXES")
+      (org-reset-checkbox-state-subtree)))
+  (add-hook 'org-todo-repeat-hook #'jy/org-reset-checkboxes-on-repeat)
+  ;; 습관 추적: :STYLE: habit 인 반복 일정을 agenda 에 달성 그래프로 보여준다.
+  (require 'org-habit)
+  (setq org-habit-graph-column 50)
+  ;; 1시간마다 저장 안 된 org 버퍼를 저장한다(Norang 20.1 의 저장 부분만).
+  ;; 디스크 파일이 밖에서 바뀐 버퍼는 덮어쓰지 않게 건너뛴다.
+  (defun jy/org-save-all-safely ()
+    "디스크 파일이 바뀌지 않은 수정된 org 버퍼만 저장한다."
+    (dolist (buf (buffer-list))
+      (with-current-buffer buf
+        (when (and (derived-mode-p 'org-mode)
+                   (buffer-file-name)
+                   (buffer-modified-p)
+                   (verify-visited-file-modtime buf))
+          (let ((save-silently t))
+            (save-buffer))))))
+  (defvar jy/org-save-timer nil)
+  (when (timerp jy/org-save-timer)
+    (cancel-timer jy/org-save-timer))
+  (setq jy/org-save-timer (run-with-timer 3600 3600 #'jy/org-save-all-safely))
+  ;; C-c a SPC: 오늘 일정 + 수신함 + 상태별 할 일을 한 화면에. C-c a N: :note: 모아 보기.
+  ;; 수신함은 notes.org 의 * Tasks 에 단 CATEGORY "Inbox" 로 찾는다.
+  (setq org-agenda-custom-commands
+        '(("N" "Notes" tags "note"
+           ((org-agenda-overriding-header "Notes")))
+          (" " "Agenda"
+           ((agenda "" ((org-agenda-span 'day)))
+            (tags "CATEGORY=\"Inbox\"+LEVEL=2"
+                  ((org-agenda-overriding-header "수신함 (refile 대기)")))
+            (todo "IN-PROGRESS"
+                  ((org-agenda-overriding-header "진행 중")))
+            (todo "WAITING"
+                  ((org-agenda-overriding-header "대기 중")))
+            (tags-todo "CATEGORY<>\"Inbox\"/TODO"
+                       ((org-agenda-overriding-header "할 일")))))))
 
   (defun jy/org-table-header-row-p ()
     "현재 줄이 표의 헤더 행이면 non-nil.
@@ -725,7 +819,18 @@ Kotlin 버퍼에서도 같은 프로젝트의 jdtls 세션을 찾아 쓸 수 있
         '(("TODO"        :background "#ff8080" :foreground "#151144" :weight bold)
           ("IN-PROGRESS" :background "#6bffdd" :foreground "#151144" :weight bold)
           ("WAITING"     :background "#ffc4be" :foreground "#151144")
+          ("SOMEDAY"     :background "#c2e3ff" :foreground "#151144")
           ("CANCELLED"   :background "#221d63" :foreground "#828299"))))
+
+;; org 코드 블록에서 mermaid 다이어그램을 그린다(mmdc 사용). C-c C-c 로 실행.
+(use-package mermaid-mode)
+(use-package ob-mermaid
+  :after org
+  :config
+  (org-babel-do-load-languages 'org-babel-load-languages
+                               '((emacs-lisp . t) (mermaid . t)))
+  ;; 그림을 다시 만들면 화면의 인라인 이미지도 새로 고친다.
+  (add-hook 'org-babel-after-execute-hook #'org-redisplay-inline-images))
 
 (use-package org-appear
   :hook (org-mode . org-appear-mode))

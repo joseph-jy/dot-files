@@ -589,11 +589,31 @@
         <div class="rows">
           <div class="key-row" data-keywords="C-c a org-agenda agenda">
             <kbd>C-c a</kbd>
-            <div><span class="command">org-agenda</span><span class="desc">Org agenda 열기</span></div>
+            <div><span class="command">org-agenda</span><span class="desc">Org agenda 열기 — SPC: 오늘+수신함+상태별 할 일, N: :note: 모아 보기, 닫기 q</span></div>
           </div>
           <div class="key-row" data-keywords="C-c c org-capture capture note task bookmark">
             <kbd>C-c c</kbd>
-            <div><span class="command">org-capture</span><span class="desc">캡처 — t: Task, n: Note, b: Bookmark</span></div>
+            <div><span class="command">org-capture</span><span class="desc">캡처 — t: Task, n: Note(Tasks 수신함, :note:), j: Journal, b: Bookmark</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c C-w org-refile refile 옮기기 수신함">
+            <kbd>C-c C-w</kbd>
+            <div><span class="command">org-refile</span><span class="desc">헤딩을 다른 헤딩 아래로 옮기기 (레벨3까지, C-u 면 이동만)</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c C-x C-i C-o org-clock-in clock out 시간 측정">
+            <kbd>C-c C-x C-i</kbd>
+            <div><span class="command">org-clock-in</span><span class="desc">시간 측정 시작(IN-PROGRESS 로 전환) — C-o 종료, C-q 취소, C-j 진행 중 헤딩으로 이동</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c $ org-archive-subtree archive 보관">
+            <kbd>C-c $</kbd>
+            <div><span class="command">org-archive-subtree</span><span class="desc">끝난 헤딩을 notes.org 의 * Archive 로 보관 (agenda 에서는 $, 여러 개는 m 후 B $)</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-c C-, org-insert-structure-template block src comment mermaid 블록">
+            <kbd>C-c C-,</kbd>
+            <div><span class="command">org-insert-structure-template</span><span class="desc">블록 삽입 — s: src, C: comment, e: example, q: quote, m: mermaid</span></div>
+          </div>
+          <div class="key-row" data-keywords="speed commands org-use-speed-commands 헤딩 한 키">
+            <kbd>헤딩 맨 앞</kbd>
+            <div><span class="command">speed commands</span><span class="desc">n/p 이동, t 상태, c 접기, w refile, a 보관(확인), ? 전체 목록</span></div>
           </div>
           <div class="key-row" data-keywords="C-c o l org-store-link link store">
             <kbd>C-c o l</kbd>

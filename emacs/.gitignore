@@ -17,3 +17,7 @@ transient/
 eln-cache/
 .cache/
 projects
+
+# Runtime state (org clock persist, bookmarks)
+org-clock-save.el
+bookmarks.eld
