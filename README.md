@@ -27,6 +27,9 @@ ln -s $(pwd)/nvim ~/.config/nvim
 
 # Emacs
 ln -s $(pwd)/emacs ~/.emacs.d
+# emacs-plus 빌드 옵션(아이콘). 변경 후 brew reinstall --cask emacs-plus-app
+mkdir -p ~/.config/emacs-plus
+ln -s $(pwd)/emacs/emacs-plus/build.yml ~/.config/emacs-plus/build.yml
 
 # Tmux
 ln -s $(pwd)/tmux/tmux.conf.local ~/.tmux.conf.local

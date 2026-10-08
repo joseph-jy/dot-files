@@ -27,16 +27,72 @@
 (menu-bar-mode -1)
 (when (display-graphic-p)
   (tool-bar-mode -1)
-  (scroll-bar-mode -1)
-  (let ((jy/default-font-height (if (eq system-type 'darwin) 150 130)))
-    (set-face-attribute 'default nil
-                        :family "Maple Mono"
-                        :height jy/default-font-height)
-    (add-to-list 'default-frame-alist
-                 `(font . ,(format "Maple Mono-%d"
-                                    (/ jy/default-font-height 10)))))
-  (set-fontset-font t 'hangul (font-spec :family "NanumGothicCoding"))
-  (add-to-list 'default-frame-alist '(fullscreen . maximized)))
+  (scroll-bar-mode -1))
+;; daemon 은 init 시점에 GUI 가 없어 위 블록을 건너뛰므로 프레임 파라미터로도 끈다.
+(dolist (param '((tool-bar-lines . 0)
+                 (vertical-scroll-bars . nil)
+                 (horizontal-scroll-bars . nil)))
+  (add-to-list 'default-frame-alist param))
+
+;; 폰트: Ghostty 와 맞춘 Neo둥근모 Code (한글 포함, 18pt, 줄 간격 +15%).
+;; daemon 은 init 시점에 GUI 프레임이 없어 set-fontset-font 가 먹지 않으므로
+;; GUI 프레임이 만들어질 때마다 다시 적용한다.
+(defvar jy/default-font-family "NeoDunggeunmo Code")
+(defvar jy/default-font-height (if (eq system-type 'darwin) 180 130))
+(setq-default line-spacing 0.15)
+(add-to-list 'default-frame-alist
+             `(font . ,(format "%s-%d" jy/default-font-family
+                               (/ jy/default-font-height 10))))
+
+(defun jy/apply-fonts (&optional frame)
+  "GUI FRAME 에 기본/한글 폰트를 적용한다."
+  (let ((frame (or frame (selected-frame))))
+    (when (display-graphic-p frame)
+      (set-face-attribute 'default frame
+                          :family jy/default-font-family
+                          :height jy/default-font-height)
+      (set-fontset-font t 'hangul (font-spec :family jy/default-font-family)
+                        frame))))
+(jy/apply-fonts)
+(add-hook 'after-make-frame-functions #'jy/apply-fonts)
+
+;; 마지막 GUI 프레임의 위치/크기를 기억했다가 다음 프레임에 적용한다.
+;; daemon 은 init 시점에 GUI 프레임이 없어 display-graphic-p 가 nil 이므로,
+;; emacsclient -c 프레임에도 걸리도록 조건 밖에서 default-frame-alist 에 넣는다.
+(defvar jy/frame-geometry-file
+  (expand-file-name "frame-geometry.el" jy/emacs-state-directory)
+  "마지막 GUI 프레임의 위치/크기를 저장하는 파일.")
+
+(defun jy/frame-geometry-save (&optional frame)
+  "GUI FRAME 의 위치/크기를 `jy/frame-geometry-file' 에 저장한다."
+  (let ((frame (or frame (selected-frame))))
+    (when (display-graphic-p frame)
+      (let* ((fullscreen (frame-parameter frame 'fullscreen))
+             (geometry
+              (if (memq fullscreen '(maximized fullboth))
+                  `((fullscreen . ,fullscreen))
+                `((left . ,(frame-parameter frame 'left))
+                  (top . ,(frame-parameter frame 'top))
+                  (width . (text-pixels . ,(frame-text-width frame)))
+                  (height . (text-pixels . ,(frame-text-height frame)))))))
+        (with-temp-file jy/frame-geometry-file
+          (prin1 geometry (current-buffer)))))))
+
+(defun jy/frame-geometry-load ()
+  "`jy/frame-geometry-file' 의 프레임 파라미터를 읽는다. 없거나 깨졌으면 nil."
+  (when (file-readable-p jy/frame-geometry-file)
+    (ignore-errors
+      (with-temp-buffer
+        (insert-file-contents jy/frame-geometry-file)
+        (read (current-buffer))))))
+
+;; 저장된 값이 없으면(첫 실행) 기존처럼 최대화로 연다.
+(setq default-frame-alist
+      (append (or (jy/frame-geometry-load) '((fullscreen . maximized)))
+              default-frame-alist))
+;; daemon 은 프레임이 닫힐 때, 단독 실행은 종료할 때 저장된다.
+(add-hook 'delete-frame-functions #'jy/frame-geometry-save)
+(add-hook 'kill-emacs-hook #'jy/frame-geometry-save)
 (global-display-line-numbers-mode 1)
 (column-number-mode 1)
 (setq inhibit-startup-screen t)
