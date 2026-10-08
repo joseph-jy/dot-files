@@ -84,5 +84,7 @@ prefix별로 정리한 커스텀 키 전체 목록. 바닐라 Emacs 기본 키�
 |---|---|
 | `C-S-d`, `M-S-↓` | 줄 아래로 복제 |
 | `M-S-↑` | 줄 위로 복제 |
+| `M-p` / `M-n` | 커서는 두고 화면만 한 줄 위/아래 스크롤 |
+| `M-c` | 커서 줄을 화면 중앙으로 |
 | `C-x C-b` | ibuffer |
 | `C-c a` / `C-c c` / `C-c o l` | org agenda / capture / link 저장 |

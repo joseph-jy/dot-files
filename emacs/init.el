@@ -735,6 +735,12 @@ Kotlin 버퍼에서도 같은 프로젝트의 jdtls 세션을 찾아 쓸 수 있
 (global-set-key (kbd "C-S-d") #'jy/duplicate-line-below)
 (global-set-key (kbd "M-S-<down>") #'jy/duplicate-line-below)
 (global-set-key (kbd "M-S-<up>") #'jy/duplicate-line-above)
+;; vim C-y / C-e 처럼 커서는 두고 화면만 한 줄씩 스크롤한다.
+;; 커서가 화면 밖으로 밀려날 때만 따라 움직인다.
+(global-set-key (kbd "M-p") #'scroll-down-line)
+(global-set-key (kbd "M-n") #'scroll-up-line)
+;; 커서 줄을 화면 중앙으로 (기본 M-c capitalize-word 대체).
+(global-set-key (kbd "M-c") #'recenter)
 
 ;;; Custom file (keep init.el clean)
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
