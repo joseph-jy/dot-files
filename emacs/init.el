@@ -666,7 +666,11 @@ Kotlin 버퍼에서도 같은 프로젝트의 jdtls 세션을 찾아 쓸 수 있
           ("n" "Note" entry (file+headline "~/Documents/notes/notes.org" "Notes")
            "* %?\n  %i\n  %a")
           ("b" "Bookmark" entry (file+headline "~/Documents/notes/notes.org" "Bookmarks")
-           "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n%a\n" :empty-lines 1)))
+           "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n%a\n" :empty-lines 1)
+          ;; 잡생각: notes.org 의 Journals 아래 연/월/일 datetree 에 시각이 붙은 항목으로 쌓는다.
+          ("j" "잡생각 (Journal)" entry
+           (file+olp+datetree "~/Documents/notes/notes.org" "Journals")
+           "* %<%H:%M> %?\n" :empty-lines 1)))
 
   (defun jy/org-table-header-row-p ()
     "현재 줄이 표의 헤더 행이면 non-nil.
