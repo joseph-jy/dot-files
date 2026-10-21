@@ -687,7 +687,11 @@ Kotlin 버퍼에서도 같은 프로젝트의 jdtls 세션을 찾아 쓸 수 있
           ("j" "Journal" entry (file+olp+datetree "~/Documents/notes/notes.org" "Journals")
            "* %?\n  %U\n")
           ("b" "Bookmark" entry (file+headline "~/Documents/notes/notes.org" "Bookmarks")
-           "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n%a\n" :empty-lines 1)))
+           "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n%a\n" :empty-lines 1)
+          ;; 잡생각: notes.org 의 Journals 아래 연/월/일 datetree 에 시각이 붙은 항목으로 쌓는다.
+          ("j" "잡생각 (Journal)" entry
+           (file+olp+datetree "~/Documents/notes/notes.org" "Journals")
+           "* %<%H:%M> %?\n" :empty-lines 1)))
 
   ;; 레벨1은 분류, 그 아래 장/프로젝트(레벨2)와 소제목(레벨3)까지 refile 대상으로 둔다.
   (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
