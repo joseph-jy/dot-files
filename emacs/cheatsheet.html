@@ -381,6 +381,7 @@
         <a href="#focus">자주 쓰는 키 <span>10</span></a>
         <a href="#search">검색/이동 <span>6</span></a>
         <a href="#project">프로젝트 <span>5</span></a>
+        <a href="#dired">Dired/Dirvish <span>8</span></a>
         <a href="#lsp">LSP/Eglot <span>8</span></a>
         <a href="#diag">진단 <span>4</span></a>
         <a href="#org">Org <span>10</span></a>
@@ -511,6 +512,47 @@
           <div class="key-row" data-keywords="C-x p k project-kill-buffers project close buffers">
             <kbd>C-x p k</kbd>
             <div><span class="command">project-kill-buffers</span><span class="desc">프로젝트 버퍼 모두 닫기</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sheet-section" id="dired">
+        <div class="section-head">
+          <h2>Dired/Dirvish</h2>
+          <span class="scope">dired + dirvish</span>
+        </div>
+        <div class="rows">
+          <div class="key-row" data-keywords="C-x d dired dirvish directory directory editor">
+            <kbd>C-x d</kbd>
+            <div><span class="command">dired</span><span class="desc">디렉토리 열기 (dirvish 가 오버라이드)</span></div>
+          </div>
+          <div class="key-row" data-keywords="C-x C-d dirvish-side side panel 사이드 패널">
+            <kbd>C-x C-d</kbd>
+            <div><span class="command">dirvish-side</span><span class="desc">사이드 패널 파일 탐색기</span></div>
+          </div>
+          <div class="key-row" data-keywords="TAB dirvish-subtree-toggle expand collapse 디렉토리 펼치기">
+            <kbd>TAB</kbd>
+            <div><span class="command">dirvish-subtree-toggle</span><span class="desc">디렉토리 펼치기/접기</span></div>
+          </div>
+          <div class="key-row" data-keywords="s dirvish-quicksort sort 정렬">
+            <kbd>s</kbd>
+            <div><span class="command">dirvish-quicksort</span><span class="desc">정렬 기준 변경 (이름/시간/크기)</span></div>
+          </div>
+          <div class="key-row" data-keywords="N dirvish-narrow narrow 필터">
+            <kbd>N</kbd>
+            <div><span class="command">dirvish-narrow</span><span class="desc">현재 파일 목록 실시간 필터링</span></div>
+          </div>
+          <div class="key-row" data-keywords="r dirvish-history-jump recent 최근 방문">
+            <kbd>r</kbd>
+            <div><span class="command">dirvish-history-jump</span><span class="desc">최근 방문 디렉토리 목록</span></div>
+          </div>
+          <div class="key-row" data-keywords="a dirvish-setup-menu attributes 속성 설정">
+            <kbd>a</kbd>
+            <div><span class="command">dirvish-setup-menu</span><span class="desc">속성 설정 (아이콘/시간/크기 토글)</span></div>
+          </div>
+          <div class="key-row" data-keywords="? dirvish-dispatch cheatsheet 치트시트">
+            <kbd>?</kbd>
+            <div><span class="command">dirvish-dispatch</span><span class="desc">dirvish 치트시트 (모든 명령)</span></div>
           </div>
         </div>
       </div>

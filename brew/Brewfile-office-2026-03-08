@@ -34,6 +34,7 @@ brew "dnsmasq"
 brew "docker", link: false
 brew "docker-compose"
 brew "eza"
+brew "coreutils"
 brew "fd"
 brew "ffmpeg"
 brew "fzf"

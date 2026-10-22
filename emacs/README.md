@@ -7,6 +7,7 @@ Vanilla Emacs를 Java/Kotlin 백엔드 개발, AI agent 결과 리뷰, GitHub En
 - `eglot`: Java/Kotlin/TypeScript/Python/Bash/YAML LSP 클라이언트 (단일 LSP 스택)
 - `magit` + `forge`: Git 및 GitHub Enterprise PR/issue 확인
 - `project.el`(내장) + `consult` + `consult-eglot`: 프로젝트 이동, 파일/텍스트/심볼 검색
+- `dirvish`: dired 기반 파일 탐색 — 멀티 패널, 미리보기, 트리 네비게이션 (`C-x d` / `C-x C-d`)
 - `corfu`: 버퍼 안 completion
 - `flymake`: Eglot 진단 확인
 - `dape`: 디버거 — eglot의 jdtls 세션을 그대로 사용 (JVM/Python attach, test debug)

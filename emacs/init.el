@@ -620,6 +620,50 @@ Kotlin 버퍼에서도 같은 프로젝트의 jdtls 세션을 찾아 쓸 수 있
   ;; git 저장소가 아닌 디렉토리는 루트에 빈 `.project' 파일을 두면 프로젝트로 인식
   (setq project-vc-extra-root-markers '(".project")))
 
+;;; Dired + Dirvish — 파일 탐색
+;; dired 를 모던하게: 멀티 패널, 파일 미리보기, 트리 네비게이션.
+;; nerd-icons(이미 설치됨)로 파일 아이콘 표시.
+;; macOS 에서는 gls(coreutils) 필요: brew install coreutils
+(use-package dired
+  :ensure nil
+  :config
+  ;; macOS 는 BSD ls 이므로 GNU ls(gls) 가 있으면 사용한다.
+  ;; 설치 필요: brew install coreutils
+  (when (and (eq system-type 'darwin) (executable-find "gls"))
+    (setq insert-directory-program "gls"))
+  ;; GNU ls(gls) 가 있으면 GNU long flags 사용, 없으면 BSD ls 호환 flags
+  (setq dired-listing-switches
+        (if (string= insert-directory-program "gls")
+            "-l --almost-all --human-readable --group-directories-first --no-group"
+          "-l -A -h"))   ; BSD ls 호환 (macOS 기본 ls)
+  (put 'dired-find-alternate-file 'disabled nil))
+
+(use-package dirvish
+  :init
+  (dirvish-override-dired-mode)
+  :config
+  ;; 좌측 부모 디렉토리 트리 + 우측 미리보기 + 아이콘/크기/시간 표시
+  (setq dirvish-attributes
+        '(vc-state subtree-state nerd-icons collapse file-time file-size))
+  (setq dirvish-side-attributes
+        '(vc-state nerd-icons collapse file-size))
+  ;; 대규모 디렉토리(20000개 이상)는 fd 로 비동기 로드
+  (setq dirvish-large-directory-threshold 20000)
+  :bind
+  ;; C-x d: 일반 dired (dirvish 가 오버라이드), C-x C-d: 사이드 패널
+  (("C-x d" . dired)
+   ("C-x C-d" . dirvish-side)
+   :map dirvish-mode-map
+   ("TAB" . dirvish-subtree-toggle)   ; 디렉토리 펼치기/접기
+   ("a"   . dirvish-setup-menu)       ; 속성 설정 메뉴
+   ("s"   . dirvish-quicksort)        ; 정렬 기준 변경
+   ("r"   . dirvish-history-jump)     ; 최근 방문 디렉토리
+   ("f"   . dirvish-file-info-menu)   ; 파일 정보
+   ("M-f" . dirvish-history-go-forward)
+   ("M-b" . dirvish-history-go-backward)
+   ("N"   . dirvish-narrow)           ; 현재 목록 narrowing 필터
+   ("?"   . dirvish-dispatch)))       ; 치트시트
+
 ;;; Which-key - Keybinding hints
 (use-package which-key
   :diminish which-key-mode
