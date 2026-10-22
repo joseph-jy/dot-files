@@ -27,9 +27,10 @@ ln -s $(pwd)/nvim ~/.config/nvim
 
 # Emacs
 ln -s $(pwd)/emacs ~/.emacs.d
-# emacs-plus 빌드 옵션(아이콘). 변경 후 brew reinstall --cask emacs-plus-app
+# emacs-plus 빌드 옵션(아이콘). 변경 후 다시 복사하고 brew reinstall --cask emacs-plus-app
+# 심볼릭 링크 불가: cask postflight가 Homebrew 샌드박스에서 돌아 ~/Documents 아래 원본을 못 읽는다
 mkdir -p ~/.config/emacs-plus
-ln -s $(pwd)/emacs/emacs-plus/build.yml ~/.config/emacs-plus/build.yml
+cp $(pwd)/emacs/emacs-plus/build.yml ~/.config/emacs-plus/build.yml
 
 # Tmux
 ln -s $(pwd)/tmux/tmux.conf.local ~/.tmux.conf.local
