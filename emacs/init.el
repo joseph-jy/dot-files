@@ -40,14 +40,12 @@
 (defvar jy/default-font-family "NeoDunggeunmo Code")
 (defvar jy/default-font-height (if (eq system-type 'darwin) 180 130))
 (setq-default line-spacing 0.15)
-(add-to-list 'default-frame-alist
-             `(font . ,(format "%s-%d" jy/default-font-family
-                               (/ jy/default-font-height 10))))
 
 (defun jy/apply-fonts (&optional frame)
-  "GUI FRAME 에 기본/한글 폰트를 적용한다."
+  "GUI FRAME 에 기본/한글 폰트를 적용한다. 폰트가 설치돼 있지 않으면 건너뛴다."
   (let ((frame (or frame (selected-frame))))
-    (when (display-graphic-p frame)
+    (when (and (display-graphic-p frame)
+               (find-font (font-spec :family jy/default-font-family) frame))
       (set-face-attribute 'default frame
                           :family jy/default-font-family
                           :height jy/default-font-height)
