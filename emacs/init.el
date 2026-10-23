@@ -647,6 +647,9 @@ Kotlin 버퍼에서도 같은 프로젝트의 jdtls 세션을 찾아 쓸 수 있
         '(vc-state subtree-state nerd-icons collapse file-time file-size))
   (setq dirvish-side-attributes
         '(vc-state nerd-icons collapse file-size))
+  ;; 사이드 패널을 프로젝트 트리처럼: 현재 파일 위치를 따라가며 하이라이트
+  (setq dirvish-side-width 34)
+  (dirvish-side-follow-mode 1)
   ;; 대규모 디렉토리(20000개 이상)는 fd 로 비동기 로드
   (setq dirvish-large-directory-threshold 20000)
   :bind
